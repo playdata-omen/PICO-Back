@@ -55,9 +55,6 @@ public class Estimate {
     @Column(name="end_date")
     private LocalDate endDate;
 
-    @Column(length = 100)
-    private String location;
-
     @OneToMany(mappedBy = "estimate")
     @JsonBackReference
     List<Apply> applyList = new ArrayList<>();
