@@ -26,25 +26,21 @@ public class Photographer {
     @JsonManagedReference
     private User user;
 
-    @Column(length = 100)
-    private String city;
-
-    @Column(length = 100)
-    private String address;
-
     @Column(name="is_studio")//ERD 에는 studio로 되어있지만 bool 타입은 is_로 통일하기로 합의.
     private boolean isStudio;
 
     @Column
     private float grade;
 
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Apply> applyList = new ArrayList<>();
+    @Column(length = 100)
+    private String city;
+
+    @Column(length = 100)
+    private String address;
 
     @OneToMany(mappedBy = "photographer")
     @JsonBackReference
-    List<Category> categoryList = new ArrayList<>();
+    List<Apply> applyList = new ArrayList<>();
 
     @OneToMany(mappedBy = "photographer")
     @JsonBackReference
@@ -53,4 +49,8 @@ public class Photographer {
     @OneToMany(mappedBy = "photographer")
     @JsonBackReference
     List<Review> reviewList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "photographer")
+    @JsonBackReference
+    List<PCategory> pCategoryList = new ArrayList<>();
 }

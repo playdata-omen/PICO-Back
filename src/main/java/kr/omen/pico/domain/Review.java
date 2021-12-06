@@ -33,9 +33,9 @@ public class Review {
     @CreationTimestamp
     private Timestamp created;
 
-    @Column
-    private float grade;
-
     @Column(length = 100)
     private String content;
+
+    @Column
+    private float grade;
 }
