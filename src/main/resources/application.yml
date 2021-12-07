@@ -1,0 +1,27 @@
+spring:
+
+  profiles:
+    active: local
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+    add-properties: false
+
+  freemarker:
+    cache: false
+
+  jwt:
+    secret: govlepel@$&
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        #      show_sql: true
+        format_sql: true
+
+server:
+  port: 80
