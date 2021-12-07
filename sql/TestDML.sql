@@ -10,10 +10,10 @@ insert into category values(3,'화보');
 
 -- photographer
 insert into photographer values(1,'기흥구','용인시',4.3,true,1);
-
+select * from estimate;
 -- estimate
-insert into estimate values(1,'기흥구','용인시','찍어주세요.',now(),DATE_ADD(NOW(), INTERVAL 100 SECOND),now(),1,1);
-insert into estimate values(2,'기흥구','용인시','찍어주세요.',now(),DATE_ADD(NOW(), INTERVAL 100 SECOND),now(),2,2);
+insert into estimate values(1,'기흥구','용인시','찍어주세요.',now(),DATE_ADD(NOW(), INTERVAL 100 SECOND),now(),'1',1,1);
+insert into estimate values(2,'기흥구','용인시','찍어주세요.',now(),DATE_ADD(NOW(), INTERVAL 100 SECOND),now(),'1',2,2);
 
 -- p_category
 insert into p_category values(1,'웨딩',1,1);

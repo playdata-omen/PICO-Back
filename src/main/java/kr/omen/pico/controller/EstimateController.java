@@ -34,10 +34,15 @@ public class EstimateController {
         estimateDTO.setStartDate(LocalDate.parse(req.getParameter("startdate"), DateTimeFormatter.ISO_DATE));
         estimateDTO.setEndDate(LocalDate.parse(req.getParameter("enddate"), DateTimeFormatter.ISO_DATE));
         estimateDTO.setCategory(Long.parseLong(req.getParameter("category")));
-
+        estimateDTO.setStatus("1");
         estimateService.createGlobalEstimate(estimateDTO);
 
 
         return estimateDTO;
     }
+
+//    @PostMapping("/estimate/addPE")
+//    public EstimateDTO insertPickedEstimate(HttpServletRequest req){
+//
+//    }
 }
