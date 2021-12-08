@@ -2,10 +2,7 @@ package kr.omen.pico.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -20,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
+@Builder
 public class Estimate {
 
     @Id
@@ -54,6 +52,9 @@ public class Estimate {
 
     @Column(name="end_date")
     private LocalDate endDate;
+
+    @Column(columnDefinition = "varchar(255) default '1'")
+    private String status;
 
     @OneToMany(mappedBy = "estimate")
     @JsonBackReference
