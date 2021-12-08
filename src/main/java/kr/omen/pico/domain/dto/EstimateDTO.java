@@ -29,5 +29,6 @@ public class EstimateDTO {
         this.address=entity.getAddress();
         this.startDate=entity.getStartDate();
         this.endDate=entity.getEndDate();
+        this.status=entity.getStatus();
     }
 }

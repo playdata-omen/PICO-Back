@@ -44,6 +44,19 @@ public class EstimateController {
     @PostMapping("/estimate/addPE")
     public EstimateDTO insertPickedEstimate(HttpServletRequest req){
 
-        return new EstimateDTO();
+        EstimateDTO estimateDTO = new EstimateDTO();
+        long pidx = Long.parseLong(req.getParameter("photographer"));
+        estimateDTO.setUser(Long.parseLong(req.getParameter("useridx2")));
+        System.out.println(estimateDTO.getUser());
+        estimateDTO.setAddress((String) req.getParameter("address2"));
+        estimateDTO.setCity((String)req.getParameter("city2"));
+        estimateDTO.setContent((String)req.getParameter("content2"));
+        estimateDTO.setStartDate(LocalDate.parse(req.getParameter("startdate2"), DateTimeFormatter.ISO_DATE));
+        estimateDTO.setEndDate(LocalDate.parse(req.getParameter("enddate2"), DateTimeFormatter.ISO_DATE));
+        estimateDTO.setCategory(Long.parseLong(req.getParameter("category2")));
+        estimateDTO.setStatus("2");
+        estimateService.createPickedEstimate(estimateDTO,pidx);
+
+        return estimateDTO;
     }
 }

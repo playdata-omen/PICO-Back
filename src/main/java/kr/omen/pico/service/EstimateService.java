@@ -122,5 +122,29 @@ public class EstimateService {
         return new EstimateDTO(estimate);
     }
 
+    public EstimateDTO createPickedEstimate(EstimateDTO estimateDTO,long photographerIdx){
 
+        Photographer photographer = photographerRepository.findById(photographerIdx).get();
+        Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
+        User user = userRepository.findById(estimateDTO.getUser()).get();
+
+        Estimate estimate = new Estimate();
+        estimate.setAddress(estimateDTO.getAddress());
+        estimate.setCity(estimateDTO.getCity());
+        estimate.setCategory(category);
+        estimate.setUser(user);
+        estimate.setStartDate(estimateDTO.getStartDate());
+        estimate.setEndDate(estimateDTO.getEndDate());
+        estimate.setContent(estimateDTO.getContent());
+        estimate.setStatus(estimateDTO.getStatus());
+        estimateRepository.save(estimate);
+
+        Apply apply = new Apply();
+        apply.setStatus("2");
+        apply.setEstimate(estimate);
+        apply.setPhotographer(photographer);
+        applyRepository.save(apply);
+
+        return new EstimateDTO(estimate);
+    }
 }
