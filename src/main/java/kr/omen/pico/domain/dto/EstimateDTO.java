@@ -19,6 +19,7 @@ public class EstimateDTO {
     private String address;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
 
     public EstimateDTO(Estimate entity){
         this.user=entity.getUser().getUserIdx();
@@ -28,5 +29,6 @@ public class EstimateDTO {
         this.address=entity.getAddress();
         this.startDate=entity.getStartDate();
         this.endDate=entity.getEndDate();
+        this.status=entity.getStatus();
     }
 }

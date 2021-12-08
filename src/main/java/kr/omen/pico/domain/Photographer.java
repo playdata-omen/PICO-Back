@@ -38,6 +38,12 @@ public class Photographer {
     @Column(length = 100)
     private String address;
 
+    @Column(length= 100)
+    private String studioAddress;
+
+    @Column(length = 100)
+    private boolean otherArea;
+
     @OneToMany(mappedBy = "photographer")
     @JsonBackReference
     List<Apply> applyList = new ArrayList<>();
