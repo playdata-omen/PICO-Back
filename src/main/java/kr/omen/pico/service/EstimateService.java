@@ -31,6 +31,7 @@ public class EstimateService {
     @Autowired
     private PCategoryRepository pCategoryRepository;
 
+    //글로벌 견적요청 API
     //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
     // principaldetail인가? 거기서 getUser 형식으로 가져와서 사용 할 것으로 예상됨.
     public EstimateDTO createGlobalEstimate(EstimateDTO estimateDTO){
@@ -122,6 +123,7 @@ public class EstimateService {
         return new EstimateDTO(estimate);
     }
 
+    //작가 지정 견적요청 API
     public EstimateDTO createPickedEstimate(EstimateDTO estimateDTO,long photographerIdx){
 
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
