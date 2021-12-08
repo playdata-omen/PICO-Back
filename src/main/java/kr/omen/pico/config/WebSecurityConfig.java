@@ -34,11 +34,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("지명123")
+                .withUser("KJM123")
                 .password("{noop}1234")
                 .roles("USER")
                 .and()
-                .withUser("기환123")
+                .withUser("LGH123")
                 .password("{noop}1234")
                 .roles("USER")
                 .and()

@@ -1,4 +1,4 @@
-package com.websocket.chat.config;
+package kr.omen.pico.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +24,12 @@ public class EmbeddedRedisConfig {
     public void redisServer() {
         redisServer = new RedisServer(redisPort);
         redisServer.start();
+//        redisServer = RedisServer.builder()
+//                .port(redisPort)
+//                //.redisExecProvider(customRedisExec) //com.github.kstyrc (not com.orange.redis-embedded)
+//                .setting("maxmemory 128M") //maxheap 128M
+//                .build();
+//        redisServer.start();
     }
 
     @PreDestroy
