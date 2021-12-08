@@ -41,8 +41,9 @@ public class EstimateController {
         return estimateDTO;
     }
 
-//    @PostMapping("/estimate/addPE")
-//    public EstimateDTO insertPickedEstimate(HttpServletRequest req){
-//
-//    }
+    @PostMapping("/estimate/addPE")
+    public EstimateDTO insertPickedEstimate(HttpServletRequest req){
+
+        return new EstimateDTO();
+    }
 }
