@@ -1,6 +1,7 @@
 package kr.omen.pico.controller;
 
 import kr.omen.pico.model.ChatMessage;
+import kr.omen.pico.repo.ChatMessageRepository;
 import kr.omen.pico.repo.ChatRoomRepository;
 import kr.omen.pico.service.ChatService;
 import kr.omen.pico.service.JwtTokenProvider;
@@ -18,7 +19,7 @@ public class ChatController {
     private final JwtTokenProvider jwtTokenProvider;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatService chatService;
-
+    private final ChatMessageRepository chatMessageRepository;
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
@@ -30,6 +31,8 @@ public class ChatController {
         message.setSender(nickname);
         // 채팅방 인원수 세팅
         message.setUserCount(chatRoomRepository.getUserCount(message.getRoomId()));
+
+        chatMessageRepository.save(message);
         // Websocket에 발행된 메시지를 redis로 발행(publish)
         System.out.println("token:" + token);
         chatService.sendChatMessage(message);

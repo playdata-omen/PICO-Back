@@ -1,3 +1,32 @@
+#spring:
+#
+#  profiles:
+#    active: local
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: false
+#    add-properties: false
+#
+#  freemarker:
+#    cache: false
+#
+#  jwt:
+#    secret: govlepel@$&
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        #      show_sql: true
+#        format_sql: true
+##        이슈 작성할 것 - 이미 정의된 Bean Overriding이 먹히지 않을때 사용
+#  main:
+#    allow-bean-definition-overriding: true
+#server:
+#  port: 80
 spring:
 
   profiles:
@@ -22,6 +51,8 @@ spring:
       hibernate:
         #      show_sql: true
         format_sql: true
-
+  #        이슈 작성할 것 - 이미 정의된 Bean Overriding이 먹히지 않을때 사용
+  main:
+    allow-bean-definition-overriding: true
 server:
   port: 80
