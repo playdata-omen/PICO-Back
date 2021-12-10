@@ -6,7 +6,7 @@ import kr.omen.pico.model.LoginInfo;
 import kr.omen.pico.repo.ChatRoomRepo;
 import kr.omen.pico.repo.ChatRoomRepository;
 import kr.omen.pico.repo.LoginInfoRepository;
-import kr.omen.pico.service.ChatService;
+import kr.omen.pico.service.ChatRoomService;
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -27,7 +27,7 @@ public class ChatRoomController {
     private final JwtTokenProvider jwtTokenProvider;
     private final LoginInfoRepository loginInfoRepository;
     private final ChatRoomRepo chatRoomRepo;
-    private final ChatService chatService;
+    private final ChatRoomService chatService;
 
     @GetMapping("/room")
     public String rooms() {
@@ -38,7 +38,11 @@ public class ChatRoomController {
     @ResponseBody
     public List<ChatRoom> room() {
         List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
+        System.out.println("---111---- " + chatRooms.get(0).getIdx() + "  --- " + chatRooms.get(0).getName());
         chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
+
+        System.out.println("---222---- " + chatRooms.get(0).getIdx() + "  --- " + chatRooms.get(0).getName());
+
         return chatRooms;
     }
 

@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class ChatService {
+public class ChatRoomService {
 
     private final ChannelTopic channelTopic;
     private final RedisTemplate redisTemplate;
@@ -62,7 +62,7 @@ public class ChatService {
     public ChatRoom findOne(Long chatRoomIdx) throws NotFoundException{
         ChatRoom chatRoom = null;
         try {
-            chatRoom = chatRoomRepo.findById(chatRoomIdx).orElseThrow(() -> new Exception.NotFoundException("Student with idx: " + chatRoomIdx + " is not valid"));
+            chatRoom = chatRoomRepo.findById(chatRoomIdx).orElseThrow(() -> new Exception.NotFoundException("ChatRoom with idx: " + chatRoomIdx + " is not valid"));
         } catch (Exception.NotFoundException e) {
 //            e.printStackTrace();
         }

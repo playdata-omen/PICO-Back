@@ -2,7 +2,7 @@ package kr.omen.pico.config.handler;
 
 import kr.omen.pico.model.ChatMessage;
 import kr.omen.pico.repo.ChatRoomRepository;
-import kr.omen.pico.service.ChatService;
+import kr.omen.pico.service.ChatRoomService;
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class StompHandler implements ChannelInterceptor {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ChatRoomRepository chatRoomRepository;
-    private final ChatService chatService;
+    private final ChatRoomService chatService;
 
     // websocket을 통해 들어온 요청이 처리 되기전 실행된다.
     @Override
