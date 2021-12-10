@@ -1,7 +1,7 @@
 package kr.omen.pico.service;
 
 import kr.omen.pico.model.ChatMessage;
-import kr.omen.pico.repo.ChatRoomRepository;
+import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.ChannelTopic;

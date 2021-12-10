@@ -34,20 +34,12 @@ public class EstimateService {
     //글로벌 견적요청 API
     //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
     // principaldetail인가? 거기서 getUser 형식으로 가져와서 사용 할 것으로 예상됨.
-    public EstimateDTO createGlobalEstimate(EstimateDTO estimateDTO){
+    public EstimateDTO.Create createGlobalEstimate(EstimateDTO.Create estimateDTO){
 
-        Estimate estimate = new Estimate();
         User user = userRepository.findById(estimateDTO.getUser()).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
+        Estimate estimate = estimateDTO.toEntity(user,category);
 
-        estimate.setAddress(estimateDTO.getAddress());
-        estimate.setCity(estimateDTO.getCity());
-        estimate.setCategory(category);
-        estimate.setUser(user);
-        estimate.setStartDate(estimateDTO.getStartDate());
-        estimate.setEndDate(estimateDTO.getEndDate());
-        estimate.setContent(estimateDTO.getContent());
-        estimate.setStatus(estimateDTO.getStatus());
         estimateRepository.save(estimate);
 
         //글로벌 견적 요청 후 저장 시, 해당 견적서에 설정된 City가 주 활동지역인 작가들의 list 뽑아낸 후
@@ -120,25 +112,17 @@ public class EstimateService {
             applyRepository.save(apply);
         }
 
-        return new EstimateDTO(estimate);
+        return estimateDTO;
     }
 
     //작가 지정 견적요청 API
-    public EstimateDTO createPickedEstimate(EstimateDTO estimateDTO,long photographerIdx){
+    public EstimateDTO.Create createPickedEstimate(EstimateDTO.Create estimateDTO,long photographerIdx){
 
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
         User user = userRepository.findById(estimateDTO.getUser()).get();
 
-        Estimate estimate = new Estimate();
-        estimate.setAddress(estimateDTO.getAddress());
-        estimate.setCity(estimateDTO.getCity());
-        estimate.setCategory(category);
-        estimate.setUser(user);
-        estimate.setStartDate(estimateDTO.getStartDate());
-        estimate.setEndDate(estimateDTO.getEndDate());
-        estimate.setContent(estimateDTO.getContent());
-        estimate.setStatus(estimateDTO.getStatus());
+        Estimate estimate = estimateDTO.toEntity(user,category);
         estimateRepository.save(estimate);
 
         Apply apply = new Apply();
@@ -147,6 +131,7 @@ public class EstimateService {
         apply.setPhotographer(photographer);
         applyRepository.save(apply);
 
-        return new EstimateDTO(estimate);
+        return estimateDTO;
     }
+
 }

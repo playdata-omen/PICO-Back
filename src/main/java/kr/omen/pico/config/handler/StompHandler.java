@@ -1,7 +1,7 @@
 package kr.omen.pico.config.handler;
 
 import kr.omen.pico.model.ChatMessage;
-import kr.omen.pico.repo.ChatRoomRepository;
+import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import kr.omen.pico.service.ChatService;
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;

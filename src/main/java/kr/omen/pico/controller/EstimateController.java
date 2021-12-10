@@ -3,12 +3,10 @@ package kr.omen.pico.controller;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.service.EstimateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @RestController
 public class EstimateController {
@@ -22,41 +20,16 @@ public class EstimateController {
     //2. Category를 radiobutton 등으로 체크해서 String으로 받아오고 그에 해당하는 카테고리 idx 기준으로 category 객체 생성 후 set
     //3. 대충 이런방식으로 생성된 estimate를 기준으로 활동 시/구 가 일치하는 작가들(임시)에게 해당 견적서 정보 발송하는 방식으로 구축하면
     //될 것으로 생각됨.
-    @PostMapping("/estimate/addGE")
-    public EstimateDTO insertGlobalEstimate(HttpServletRequest req){
-
-        EstimateDTO estimateDTO = new EstimateDTO();
-        estimateDTO.setUser(Long.parseLong(req.getParameter("useridx")));
-        System.out.println(estimateDTO.getUser());
-        estimateDTO.setAddress((String) req.getParameter("address"));
-        estimateDTO.setCity((String)req.getParameter("city"));
-        estimateDTO.setContent((String)req.getParameter("content"));
-        estimateDTO.setStartDate(LocalDate.parse(req.getParameter("startdate"), DateTimeFormatter.ISO_DATE));
-        estimateDTO.setEndDate(LocalDate.parse(req.getParameter("enddate"), DateTimeFormatter.ISO_DATE));
-        estimateDTO.setCategory(Long.parseLong(req.getParameter("category")));
-        estimateDTO.setStatus("1");
-        estimateService.createGlobalEstimate(estimateDTO);
-
-
-        return estimateDTO;
+    @PostMapping(value = "/estimate/addGE")
+    public EstimateDTO.Create insertGlobalEstimate(@RequestBody EstimateDTO.Create dto){
+        dto.setStatus("1");
+        return estimateService.createGlobalEstimate(dto);
     }
 
-    @PostMapping("/estimate/addPE")
-    public EstimateDTO insertPickedEstimate(HttpServletRequest req){
-
-        EstimateDTO estimateDTO = new EstimateDTO();
-        long pidx = Long.parseLong(req.getParameter("photographer"));
-        estimateDTO.setUser(Long.parseLong(req.getParameter("useridx2")));
-        System.out.println(estimateDTO.getUser());
-        estimateDTO.setAddress((String) req.getParameter("address2"));
-        estimateDTO.setCity((String)req.getParameter("city2"));
-        estimateDTO.setContent((String)req.getParameter("content2"));
-        estimateDTO.setStartDate(LocalDate.parse(req.getParameter("startdate2"), DateTimeFormatter.ISO_DATE));
-        estimateDTO.setEndDate(LocalDate.parse(req.getParameter("enddate2"), DateTimeFormatter.ISO_DATE));
-        estimateDTO.setCategory(Long.parseLong(req.getParameter("category2")));
-        estimateDTO.setStatus("2");
-        estimateService.createPickedEstimate(estimateDTO,pidx);
-
-        return estimateDTO;
+    @PostMapping("/estimate/addPE/{pId}")
+    public EstimateDTO.Create insertPickedEstimate(@RequestBody EstimateDTO.Create dto, @PathVariable Long pId){
+        dto.setStatus("2");
+        estimateService.createPickedEstimate(dto,pId);
+        return dto;
     }
 }

@@ -2,9 +2,9 @@ package kr.omen.pico.controller;
 
 import kr.omen.pico.model.ChatRoom;
 import kr.omen.pico.model.LoginInfo;
-import kr.omen.pico.repo.ChatRoomRepo;
-import kr.omen.pico.repo.ChatRoomRepository;
-import kr.omen.pico.repo.LoginInfoRepository;
+import kr.omen.pico.dao.chatdao.ChatRoomRepo;
+import kr.omen.pico.dao.chatdao.ChatRoomRepository;
+import kr.omen.pico.dao.chatdao.LoginInfoRepository;
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

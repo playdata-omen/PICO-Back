@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
+@Builder
 public class User {
 
     @Id
