@@ -1,17 +1,14 @@
 package kr.omen.pico.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @Entity(name="p_category")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PCategory {
 
@@ -20,15 +17,21 @@ public class PCategory {
     @Column(name="p_category_idx")
     private Long pCategoryIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_idx")
     @JsonManagedReference
     private Category category;
 
     private String kind;
+
+    public PCategory(Photographer photographer,Category category,String kind){
+        this.photographer=photographer;
+        this.category=category;
+        this.kind=kind;
+    }
 }

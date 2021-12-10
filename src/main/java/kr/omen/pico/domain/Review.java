@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@AllArgsConstructor
 //@RequiredArgsConstructor
 public class Review {
 
@@ -20,12 +20,12 @@ public class Review {
     @Column(name="review_idx")
     private Long reviewIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;
@@ -38,4 +38,13 @@ public class Review {
 
     @Column
     private float grade;
+
+    @Builder
+    public Review(User user, Photographer photographer,Timestamp created, String content, float grade){
+        this.user=user;
+        this.photographer=photographer;
+        this.created=created;
+        this.content=content;
+        this.grade=grade;
+    }
 }

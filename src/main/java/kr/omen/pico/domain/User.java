@@ -1,18 +1,14 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @Builder
 public class User {
 
@@ -51,16 +47,31 @@ public class User {
     @Column(name="is_photographer")
     private boolean isPhotographer;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    List<Estimate> estimateList = new ArrayList<>();
+//    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Estimate> estimateList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Photographer> photographerList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Review> reviewList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    List<Photographer> photographerList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    List<Review> reviewList = new ArrayList<>();
+//    @Builder
+//    public User(String id,String provider,String providerId,String nickName,String name,String email,String phone,
+//                String role,boolean isRegister,boolean isPhotographer){
+//        this.id=id;
+//        this.provider=provider;
+//        this.providerId=providerId;
+//        this.nickName=nickName;
+//        this.name=name;
+//        this.email=email;
+//        this.phone=phone;
+//        this.role=role;
+//        this.isRegister=isRegister;
+//        this.isPhotographer=isPhotographer;
+//    }
 
 }

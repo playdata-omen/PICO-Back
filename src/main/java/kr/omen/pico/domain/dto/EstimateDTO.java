@@ -32,5 +32,7 @@ public class EstimateDTO {
                     .status(status)
                     .build();
         }
+
     }
+
 }

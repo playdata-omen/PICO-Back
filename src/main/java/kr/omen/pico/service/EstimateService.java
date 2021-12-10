@@ -3,6 +3,7 @@ package kr.omen.pico.service;
 import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.EstimateDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -134,4 +135,35 @@ public class EstimateService {
         return estimateDTO;
     }
 
+    //유저가 요청한 견적 요청 list조회
+    public List<ResponseDTO.EstimateResponse> getUserAllEstimate(Long idx){
+        User user = userRepository.findById(idx).get();
+        List<Estimate> list = estimateRepository.findAllByUser(user);
+        List<ResponseDTO.EstimateResponse> list2 = new ArrayList<>();
+
+        for(Estimate estimate : list){
+            list2.add(new ResponseDTO.EstimateResponse(estimate));
+        }
+
+        System.out.println("--- " + list2);
+        return list2;
+    }
+
+    //견적요청 상세 list 조회
+    //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력.
+    public ResponseDTO.DetailResponse getUserOneEstimate(Long estimateId){
+        Estimate estimate = estimateRepository.findById(estimateId).get();
+        List<Apply> photographers = applyRepository.findAllByEstimate(estimate);
+        Iterator<Apply> iter = photographers.iterator();
+
+        System.out.println(photographers.size());
+        while(iter.hasNext()){
+            Apply apply = iter.next();
+            if(!apply.getStatus().equals("1"))
+                iter.remove();
+        }
+        System.out.println(photographers.toString());
+        System.out.println(photographers.size());
+        return  new ResponseDTO.DetailResponse(estimate,photographers);
+    }
 }
