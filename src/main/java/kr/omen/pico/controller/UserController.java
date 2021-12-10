@@ -15,10 +15,9 @@ public class UserController {
 
     @PostMapping("/login")
     public String userLogin(@RequestBody UserDTO.Login data) throws Exception {
-        System.out.println("------------------------- " + data.getProvider());
-        userService.userLogin(data.getCode(), data.getProvider());
+        UserDTO.Register result = userService.userLogin(data.getCode(), data.getProvider());
 
-        return "test";
+        return result.toString();
     }
 
 }

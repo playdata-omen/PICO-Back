@@ -1,5 +1,8 @@
 package kr.omen.pico.service;
 
+import kr.omen.pico.domain.dto.oauth.KakaoUserInfo;
+import kr.omen.pico.domain.dto.oauth.NaverUserInfo;
+import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +16,7 @@ public class Social {
 
 //    private static RestTemplate restTemplate = new RestTemplate();
 
-    public static JSONObject kakao (String code) {
-        System.out.println("kakao start----------");
+    public static OauthUserInfo kakao (String code) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -36,10 +38,6 @@ public class Social {
 
         JSONObject responseBody = response.getBody();
 
-        System.out.println(response);
-        System.out.println(responseBody);
-
-
         headers.clear();
         data.clear();
         headers.add("Authorization", "Bearer "+responseBody.get("access_token"));
@@ -51,13 +49,13 @@ public class Social {
                 JSONObject.class
         );
 
-        System.out.println("kakao me : " + response);
-//        UserDTO.Register().
-        return responseBody;
+        OauthUserInfo oauthUserInfo = new KakaoUserInfo(response.getBody());
+
+
+        return oauthUserInfo;
     }
 
-    public static JSONObject naver (String code) {
-        System.out.println("naver start");
+    public static OauthUserInfo naver (String code) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -79,8 +77,6 @@ public class Social {
         );
 
         JSONObject responseBody = response.getBody();
-        System.out.println(response);
-        System.out.println(responseBody);
 
         headers.clear();
         data.clear();
@@ -93,11 +89,12 @@ public class Social {
                 JSONObject.class
         );
 
-        System.out.println("naver me : " + response);
-        return responseBody;
+        OauthUserInfo oauthUserInfo = new NaverUserInfo(response.getBody());
+
+        return oauthUserInfo;
     }
 
-    public JSONObject google (String code) {
+    public OauthUserInfo google (String code) {
         return null;
     }
 }

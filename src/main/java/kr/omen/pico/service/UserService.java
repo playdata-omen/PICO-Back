@@ -1,6 +1,7 @@
 package kr.omen.pico.service;
 
-import net.minidev.json.JSONObject;
+import kr.omen.pico.domain.dto.UserDTO;
+import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
@@ -12,16 +13,24 @@ public class UserService {
 //    Social social;
 
     // naver or google or kakao
-    public JSONObject userLogin(String code, String provider) throws Exception {
+    public UserDTO.Register userLogin(String code, String provider) throws Exception {
 
-        JSONObject response = null;
-        System.out.println(provider); // kakao
-
+        OauthUserInfo oauthUserInfo = null;
+        UserDTO.Register test = null;
         try {
             Class social = Class.forName("kr.omen.pico.service.Social");
             Method method = social.getDeclaredMethod(provider, String.class);
-            response = (JSONObject) method.invoke(null, code);
-            System.out.println("----------- " + response);
+            oauthUserInfo = (OauthUserInfo) method.invoke(null, code);
+
+            test = UserDTO.Register.builder()
+                .id(oauthUserInfo.getProviderId() + "@" + oauthUserInfo.getProvider() + ".social")
+                    .name(oauthUserInfo.getName())
+                    .phone(oauthUserInfo.getPhone())
+                    .email(oauthUserInfo.getEmail())
+                    .provider(oauthUserInfo.getProvider())
+                    .providerId(oauthUserInfo.getProviderId())
+                    .build();
+
         } catch (Exception e) {
 
         }
@@ -30,4 +39,5 @@ public class UserService {
 
     }
 }
+
 
