@@ -6,6 +6,7 @@ import kr.omen.pico.service.EstimateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.List;
 
 @RestController
@@ -49,5 +50,11 @@ public class EstimateController {
     @GetMapping("/estimate/getUserOne/{estimateId}")
     public ResponseDTO.DetailResponse getUserOneEstimate(@PathVariable Long estimateId){
         return estimateService.getUserOneEstimate(estimateId);
+    }
+    @CrossOrigin
+    @GetMapping("/test")
+    public String teetResponse() {
+        System.out.println("요청");
+        return "호출 성공";
     }
 }

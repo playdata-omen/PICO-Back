@@ -1,5 +1,7 @@
 package kr.omen.pico.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import kr.omen.pico.domain.dto.Role;
 import lombok.*;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+//@RequiredArgsConstructor
 public class User {
 
     @Id
@@ -18,13 +21,13 @@ public class User {
     private Long userIdx;
 
     @Column(length = 100 , nullable = false)
-    private String id;
+    private String id; // 2026857599@kakao.social
 
     @Column(length = 100 , nullable = false)
-    private String provider;
+    private String provider; // kakao
 
     @Column(length = 100 , nullable = false)
-    private String providerId;
+    private String providerId; // 2026857599
 
     @Column(length = 100)
     private String nickName;
@@ -38,8 +41,9 @@ public class User {
     @Column(length = 100)
     private String phone;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 100 , nullable = false)
-    private String role;
+    private Role role;
 
     @Column(name="is_register")
     private boolean isRegister;

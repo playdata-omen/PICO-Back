@@ -1,11 +1,16 @@
 package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.User;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
+
 import lombok.Data;
 
 @Data
 public class UserDTO {
-
+  
     private Long userIdx;
     private String id;
     private String provider;
@@ -34,4 +39,23 @@ public class UserDTO {
                 .build();
 
     }
+
+    @Getter
+    public static class Login {
+        String code;
+        String provider;
+    }
+    @Builder
+    @ToString
+    public static class Register {
+        String id;
+        String provider;
+        String providerId;
+        String nickName;
+        String name;
+        String email;
+        String phone;
+        boolean isPhotographer;
+    }
+
 }
