@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  테스트페이지
+
+  <form action="/estimate/addGE" method="post">
+      <input type="text" name="useridx" value="유저번호">
+      <input type="text" name="city" value=주소(시)>
+      <input type="text" name="address" value=주소(군/구)>
+      <input type="text" name="content" value="내용">
+      <input type="date" name="startdate" value="시작일자">
+      <input type="date" name="enddate" value="마감일자">
+      <input type="text" name="category" value="신청유형">
+      <input type="submit" value="글로벌 견적요청">
+  </form><br>
+  <form action="/estimate/addPE" method="post">
+    <input type="text" name="useridx2" value="유저번호">
+      <input type="text" name="photographer" value="작가번호">
+      <input type="text" name="city2" value=주소(시)>
+      <input type="text" name="address2" value=주소(군/구)>
+      <input type="text" name="content2" value="내용">
+      <input type="date" name="startdate2" value="시작일자">
+      <input type="date" name="enddate2" value="마감일자">
+      <input type="text" name="category2" value="신청유형">
+      <input type="submit" value="작가지정 견적요청">
+  </form>
+</body>
+</html>

@@ -30,7 +30,7 @@ public class Apply {
     @JsonManagedReference
     private Photographer photographer;
 
-    @Column(length = 100)
+    @Column(columnDefinition = "varchar(255) default '1'")
     private String status;
 
     @CreationTimestamp
