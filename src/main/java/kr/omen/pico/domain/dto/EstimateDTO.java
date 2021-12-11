@@ -1,34 +1,38 @@
 package kr.omen.pico.domain.dto;
 
+import kr.omen.pico.domain.Category;
 import kr.omen.pico.domain.Estimate;
-import lombok.AllArgsConstructor;
+import kr.omen.pico.domain.User;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class EstimateDTO {
 
-    private long user;
-    private long category;
-    private String content;
-    private String city;
-    private String address;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private String status;
+    @Data
+    public static class Create{
+        private long user;
+        private long category;
+        private String content;
+        private String city;
+        private String address;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private String status;
 
-    public EstimateDTO(Estimate entity){
-        this.user=entity.getUser().getUserIdx();
-        this.category=entity.getCategory().getCategoryIdx();
-        this.content=entity.getContent();
-        this.city=entity.getCity();
-        this.address=entity.getAddress();
-        this.startDate=entity.getStartDate();
-        this.endDate=entity.getEndDate();
-        this.status=entity.getStatus();
+        public Estimate toEntity(User user,Category category){
+            return Estimate.builder()
+                    .user(user)
+                    .category(category)
+                    .content(content)
+                    .city(city)
+                    .address(address)
+                    .startDate(startDate)
+                    .endDate(endDate)
+                    .status(status)
+                    .build();
+        }
+
     }
+
 }

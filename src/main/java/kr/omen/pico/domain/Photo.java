@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@AllArgsConstructor
 //@RequiredArgsConstructor
 public class Photo {
 
@@ -18,7 +18,7 @@ public class Photo {
     @Column(name="photo_idx")
     private Long photoIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="work_idx")
     @JsonManagedReference
     private Work work;
@@ -31,4 +31,12 @@ public class Photo {
 
     @Column(name="file_size")
     private String fileSize;
+
+    @Builder
+    public Photo(Work work, String title, String storedFilePath,String fileSize){
+        this.work=work;
+        this.title=title;
+        this.storedFilePath=storedFilePath;
+        this.fileSize=fileSize;
+    }
 }
