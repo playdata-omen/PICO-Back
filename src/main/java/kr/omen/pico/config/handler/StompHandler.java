@@ -37,13 +37,18 @@ public class StompHandler implements ChannelInterceptor {
             System.out.println("====jwtToken===" + jwtToken);
             // Header의 jwt token 검증
             jwtTokenProvider.validateToken(jwtToken);
+
         } else if (StompCommand.SUBSCRIBE == accessor.getCommand()) { // 채팅룸 구독요청
             // header정보에서 구독 destination정보를 얻고, roomId를 추출한다.
+
+
             System.out.println("message header: =======================" + message.getHeaders());
             System.out.println("message Payload: ======================" +message.getPayload());
             String roomId = chatService.getRoomId(Optional.ofNullable((String) message.getHeaders().get("simpDestination")).orElse("InvalidRoomId"));
             // 채팅방에 들어온 클라이언트 sessionId를 roomId와 맵핑해 놓는다.(나중에 특정 세션이 어떤 채팅방에 들어가 있는지 알기 위함)
+            System.out.println(roomId);
             String sessionId = (String) message.getHeaders().get("simpSessionId");
+            System.out.println(sessionId);
             chatRoomRepository.setUserEnterInfo(sessionId, roomId);
             // 채팅방의 인원수를 +1한다.
 
