@@ -19,7 +19,7 @@ public class UserDTO {
     private String name;
     private String email;
     private String phone;
-    private String role;
+    private Role role;
     private boolean isRegister;
     private boolean isPhotographer;
 
@@ -33,7 +33,7 @@ public class UserDTO {
                 .name(name)
                 .email(email)
                 .phone(phone)
-                .role(role)
+                .role(Role.ROLE_USER)
                 .isRegister(isRegister)
                 .isPhotographer(isPhotographer)
                 .build();

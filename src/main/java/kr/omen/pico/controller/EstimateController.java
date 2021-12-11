@@ -37,20 +37,25 @@ public class EstimateController {
         return dto;
     }
 
-    //요청한 견적서 리스트 조회
+    //유저가 요청한 견적서 목록 출력
     @GetMapping("/estimate/getUserAll/{userId}")
-    public List<ResponseDTO.EstimateResponse> getUserAllEstimate(@PathVariable Long userId){
-        List<ResponseDTO.EstimateResponse> list = estimateService.getUserAllEstimate(userId);
-        System.out.println(list);
-
-        return list;
+    public List<ResponseDTO.SimpleCard> getUserAllEstimate(@PathVariable Long userId){
+        return estimateService.getUserAllEstimate(userId);
     }
 
-    //견적서 목록중 하나 클릭시 해당 견적서 상세 내용 및 지원한 작가 목록 출력
+    //견적서 목록중 하나 클릭시 해당 견적서 상세 내용 및 할당된 작가 목록(이름만) 출력
     @GetMapping("/estimate/getUserOne/{estimateId}")
     public ResponseDTO.DetailResponse getUserOneEstimate(@PathVariable Long estimateId){
         return estimateService.getUserOneEstimate(estimateId);
     }
+
+    //작가가 받은(할당된) 견적서 목록 출력
+    @GetMapping("/estimate/getPhotographerAll/{pId}")
+    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(@PathVariable Long pId){
+        return estimateService.getPhotographerAllEstimate(pId);
+    }
+
+
     @CrossOrigin
     @GetMapping("/test")
     public String teetResponse() {

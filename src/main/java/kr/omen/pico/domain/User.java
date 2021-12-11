@@ -1,6 +1,5 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import kr.omen.pico.domain.dto.Role;
 import lombok.*;
 

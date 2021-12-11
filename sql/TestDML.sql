@@ -1,12 +1,12 @@
 -- 테스트데이터 생성
 -- user
-insert into user values(1,'lgh95m@naver.com','naver-12345',true,false,'이기환','gh','010-885-6376','naver','12345','user');
-insert into user values(2,'lgh95m@kakao.com','kakao-12345',true,false,'이기환','gh','010-885-6376','kakao','12345','user');
-insert into user values(3,'lgh95m@kakao.com','kakao-12345',true,false,'조하운','gh','010-885-6376','kakao','12345','user');
-insert into user values(4,'lgh95m@kakao.com','kakao-12345',true,false,'김지명','gh','010-885-6376','kakao','12345','user');
-insert into user values(5,'lgh95m@kakao.com','kakao-12345',true,false,'임우송','gh','010-885-6376','kakao','12345','user');
-insert into user values(6,'lgh95m@kakao.com','kakao-12345',true,false,'차재훈','gh','010-885-6376','kakao','12345','user');
-insert into user values(7,'lgh95m@kakao.com','kakao-12345',true,false,'이기환2','gh','010-885-6376','kakao','12345','user');
+insert into user values(1,'lgh95m@naver.com','naver-12345',true,false,'이기환','gh','010-885-6376','naver','12345','ROLE_USER');
+insert into user values(2,'lgh95m@kakao.com','kakao-12345',true,false,'이기환','gh','010-885-6376','kakao','12345','ROLE_USER');
+insert into user values(3,'lgh95m@kakao.com','kakao-12345',true,false,'조하운','gh','010-885-6376','kakao','12345','ROLE_USER');
+insert into user values(4,'lgh95m@kakao.com','kakao-12345',true,false,'김지명','gh','010-885-6376','kakao','12345','ROLE_USER');
+insert into user values(5,'lgh95m@kakao.com','kakao-12345',true,false,'임우송','gh','010-885-6376','kakao','12345','ROLE_USER');
+insert into user values(6,'lgh95m@kakao.com','kakao-12345',true,false,'차재훈','gh','010-885-6376','kakao','12345','ROLE_USER');
+insert into user values(7,'lgh95m@kakao.com','kakao-12345',true,false,'이기환2','gh','010-885-6376','kakao','12345','ROLE_USER');
 
 -- category
 insert into category values(1,'웨딩');

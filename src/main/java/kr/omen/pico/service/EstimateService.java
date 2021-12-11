@@ -136,13 +136,13 @@ public class EstimateService {
     }
 
     //유저가 요청한 견적 요청 list조회
-    public List<ResponseDTO.EstimateResponse> getUserAllEstimate(Long idx){
+    public List<ResponseDTO.SimpleCard> getUserAllEstimate(Long idx){
         User user = userRepository.findById(idx).get();
         List<Estimate> list = estimateRepository.findAllByUser(user);
-        List<ResponseDTO.EstimateResponse> list2 = new ArrayList<>();
+        List<ResponseDTO.SimpleCard> list2 = new ArrayList<>();
 
         for(Estimate estimate : list){
-            list2.add(new ResponseDTO.EstimateResponse(estimate));
+            list2.add(new ResponseDTO.SimpleCard(estimate));
         }
 
         System.out.println("--- " + list2);
@@ -150,20 +150,49 @@ public class EstimateService {
     }
 
     //견적요청 상세 list 조회
-    //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력.
+    //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
     public ResponseDTO.DetailResponse getUserOneEstimate(Long estimateId){
         Estimate estimate = estimateRepository.findById(estimateId).get();
-        List<Apply> photographers = applyRepository.findAllByEstimate(estimate);
-        Iterator<Apply> iter = photographers.iterator();
-
-        System.out.println(photographers.size());
-        while(iter.hasNext()){
-            Apply apply = iter.next();
-            if(!apply.getStatus().equals("1"))
-                iter.remove();
+        List<Apply> applies = applyRepository.findAllByEstimate(estimate);
+        List<ResponseDTO.SimplePhotographerCard> names = new ArrayList<>();
+        //작가지정 견적서인 경우
+        if(estimate.getStatus().equals("2")){
+            for(Apply apply : applies){
+                if(apply.getStatus().equals("2")) {
+                    Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
+                    List<PCategory> pCategories = pCategoryRepository.findByPhotographer(photographer);
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,pCategories));
+                }
+            }
         }
-        System.out.println(photographers.toString());
-        System.out.println(photographers.size());
-        return  new ResponseDTO.DetailResponse(estimate,photographers);
+        //글로벌 견적서인 경우
+        else if(estimate.getStatus().equals("1")){
+            for (Apply apply : applies) {
+                if (apply.getStatus().equals("1")) {
+                    Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
+                    List<PCategory> pCategories = pCategoryRepository.findByPhotographer(photographer);
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,pCategories));
+                }
+            }
+        }
+
+        return  new ResponseDTO.DetailResponse(estimate,names);
+    }
+
+
+    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(Long pId){
+        Photographer photographer = photographerRepository.findById(pId).get();
+        List<Apply> applies = applyRepository.findAllByPhotographer(photographer);
+        List<ResponseDTO.SimpleCard> estimates = new ArrayList<>();
+        for(Apply apply : applies){
+            if(apply.getStatus().equals("1") || apply.getStatus().equals("2")){
+                estimates.add(
+                        new ResponseDTO.SimpleCard(
+                                estimateRepository.findById(apply.getEstimate().getEstimateIdx()).get()
+                        )
+                );
+            }
+        }
+        return estimates;
     }
 }

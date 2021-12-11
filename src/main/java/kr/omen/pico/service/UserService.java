@@ -13,7 +13,8 @@ public class UserService {
 //    Social social;
 
     // naver or google or kakao
-    public UserDTO.Register userLogin(String code, String provider) throws Exception {
+//    public UserDTO.Register userLogin(String code, String provider) throws Exception {
+    public String userLogin(String code, String provider) throws Exception {
 
         OauthUserInfo oauthUserInfo = null;
         UserDTO.Register test = null;
@@ -35,7 +36,7 @@ public class UserService {
 
         }
 
-        return test;
+        return test.toString();
 
     }
 }

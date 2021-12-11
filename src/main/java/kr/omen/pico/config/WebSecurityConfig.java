@@ -25,10 +25,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin() // 권한없이 페이지 접근하면 로그인 페이지로 이동한다.
             .and()
                 .authorizeRequests()
-                    .antMatchers("/templates/**").hasRole("USER") // chat으로 시작하는 리소스에 대한 접근 권한 설정
-                    .antMatchers("/user/**").authenticated()   // /user로 들어오는 모든 요청은 권한 필요
-                    .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")   // /admin으로 들어오는 모든 요청은 ADMIN이라는 역할이 있는 사람만 접근 가능 (스프링 시큐리티에서는 항상 ROLE_ADMIN 이런 형태여야 한다)
-                    .anyRequest().authenticated().and().formLogin().and().httpBasic();  // 그외 요청은 모두 접근 가능
+                .antMatchers("/templates/**").hasRole("USER") // chat으로 시작하는 리소스에 대한 접근 권한 설정
+                .antMatchers("/user/**").authenticated()   // /user로 들어오는 모든 요청은 권한 필요
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")  // /admin으로 들어오는 모든 요청은 ADMIN이라는 역할이 있는 사람만 접근 가능 (스프링 시큐리티에서는 항상 ROLE_ADMIN 이런 형태여야 한다)
+                .anyRequest().authenticated().and().formLogin().and().httpBasic();  // 그외 요청은 모두 접근 가능
 
 //        http.authorizeRequests()
 //                .antMatchers("/user/**").authenticated()   // /user로 들어오는 모든 요청은 권한 필요
