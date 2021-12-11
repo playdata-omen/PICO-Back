@@ -3,6 +3,8 @@ package kr.omen.pico.controller;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.service.EstimateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -58,5 +60,11 @@ public class EstimateController {
         estimateService.createPickedEstimate(estimateDTO,pidx);
 
         return estimateDTO;
+    }
+    @CrossOrigin
+    @GetMapping("/test")
+    public String teetResponse() {
+        System.out.println("요청");
+        return "호출 성공";
     }
 }
