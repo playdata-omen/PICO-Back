@@ -22,8 +22,8 @@ public class User {
     @Column(name="user_idx")
     private Long userIdx;
 
-    @Column(length = 100 , nullable = false)
-    private String id; // 2026857599@kakao.social
+    @Column(name = "user_id", length = 100 , nullable = false)
+    private String userId; // 2026857599@kakao.social
 
     @Column(length = 100 , nullable = false)
     private String provider; // kakao
