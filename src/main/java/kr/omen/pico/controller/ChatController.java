@@ -1,15 +1,26 @@
 package kr.omen.pico.controller;
 
+import javassist.NotFoundException;
+import kr.omen.pico.domain.dto.ChatMessageDTO;
 import kr.omen.pico.model.ChatMessage;
+<<<<<<< HEAD
 import kr.omen.pico.dao.chatdao.ChatMessageRepository;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import kr.omen.pico.service.ChatService;
+=======
+import kr.omen.pico.repo.ChatMessageRepository;
+import kr.omen.pico.repo.ChatRoomRepository;
+import kr.omen.pico.service.ChatMessageService;
+import kr.omen.pico.service.ChatRoomService;
+>>>>>>> 32a916a ([Update ChatMessage_Delete])
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -18,8 +29,9 @@ public class ChatController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final ChatRoomRepository chatRoomRepository;
-    private final ChatService chatService;
+    private final ChatRoomService chatService;
     private final ChatMessageRepository chatMessageRepository;
+    private final ChatMessageService chatMessageService;
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
@@ -40,5 +52,18 @@ public class ChatController {
         // Websocket에 발행된 메시지를 redis로 발행(publish)
         System.out.println("token:" + token);
         chatService.sendChatMessage(message);
+    }
+
+    @DeleteMapping("/chatmessage/delete")
+    @ResponseBody
+    public boolean deleteChatMessage(ChatMessageDTO.Delete dto) {
+        boolean result = false;
+        try {
+            chatMessageService.deleteChatMessage(dto);
+            result = true;
+        } catch (NotFoundException e) {
+//            e.printStackTrace();
+        }
+        return result;
     }
 }
