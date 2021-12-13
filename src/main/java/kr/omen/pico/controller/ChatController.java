@@ -3,16 +3,10 @@ package kr.omen.pico.controller;
 import javassist.NotFoundException;
 import kr.omen.pico.domain.dto.ChatMessageDTO;
 import kr.omen.pico.model.ChatMessage;
-<<<<<<< HEAD
 import kr.omen.pico.dao.chatdao.ChatMessageRepository;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
-import kr.omen.pico.service.ChatService;
-=======
-import kr.omen.pico.repo.ChatMessageRepository;
-import kr.omen.pico.repo.ChatRoomRepository;
 import kr.omen.pico.service.ChatMessageService;
 import kr.omen.pico.service.ChatRoomService;
->>>>>>> 32a916a ([Update ChatMessage_Delete])
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

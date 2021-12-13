@@ -1,13 +1,8 @@
 package kr.omen.pico.config.handler;
 
 import kr.omen.pico.model.ChatMessage;
-<<<<<<< HEAD
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
-import kr.omen.pico.service.ChatService;
-=======
-import kr.omen.pico.repo.ChatRoomRepository;
 import kr.omen.pico.service.ChatRoomService;
->>>>>>> 32a916a ([Update ChatMessage_Delete])
 import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
