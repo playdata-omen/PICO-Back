@@ -33,7 +33,7 @@ public class UserDTO {
                 .name(name)
                 .email(email)
                 .phone(phone)
-                .role(role)
+                .role(Role.ROLE_USER)
                 .isRegister(isRegister)
                 .isPhotographer(isPhotographer)
                 .build();
