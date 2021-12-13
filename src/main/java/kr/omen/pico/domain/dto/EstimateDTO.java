@@ -5,14 +5,17 @@ import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.User;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class EstimateDTO {
 
     @Data
     public static class Create{
+        private long idx;
         private long user;
         private long category;
+        private Timestamp created;
         private String content;
         private String city;
         private String address;
@@ -24,6 +27,7 @@ public class EstimateDTO {
             return Estimate.builder()
                     .user(user)
                     .category(category)
+                    .created(created)
                     .content(content)
                     .city(city)
                     .address(address)

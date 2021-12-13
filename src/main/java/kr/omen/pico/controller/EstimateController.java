@@ -24,17 +24,16 @@ public class EstimateController {
 
     //글로벌 견적요청
     @PostMapping(value = "/estimate/addGE")
-    public EstimateDTO.Create insertGlobalEstimate(@RequestBody EstimateDTO.Create dto){
+    public ResponseDTO.EstimateResponse insertGlobalEstimate(@RequestBody EstimateDTO.Create dto){
         dto.setStatus("1");
         return estimateService.createGlobalEstimate(dto);
     }
 
     //작가지정 견적요청
     @PostMapping("/estimate/addPE/{pId}")
-    public EstimateDTO.Create insertPickedEstimate(@RequestBody EstimateDTO.Create dto, @PathVariable Long pId){
+    public ResponseDTO.EstimateResponse insertPickedEstimate(@RequestBody EstimateDTO.Create dto, @PathVariable Long pId){
         dto.setStatus("2");
-        estimateService.createPickedEstimate(dto,pId);
-        return dto;
+        return estimateService.createPickedEstimate(dto,pId);
     }
 
     //유저가 요청한 견적서 목록 출력
@@ -55,7 +54,7 @@ public class EstimateController {
         return estimateService.getPhotographerAllEstimate(pId);
     }
 
-    //사용자가 요청한 견적서 취소(삭제) or 작가입장에서 할당된 견적서에 지원 안함(삭제)
+    //사용자가 요청한 견적서 취소(삭제)(연결되어있는 Apply리스트들은 status의 상태를 7로 변경)
     @DeleteMapping("/estimate/cancelEstimate/{estimateId}")
     public String deleteMyEstimate(@PathVariable Long estimateId){
         boolean cancel = estimateService.deleteMyEstimate(estimateId);
@@ -63,6 +62,17 @@ public class EstimateController {
             return "삭제성공";
         }else{
             return "삭제실패";
+        }
+    }
+
+    //지정견적 요청한 작가가 요청서를 받아들이지 않음(apply 삭제, estimate 상태 5로 변경)
+    @DeleteMapping("/estimate/ignoreEstimate/{estimateId}")
+    public String ignoreEstimate(@PathVariable Long estimateId){
+        boolean cancel = estimateService.ignoreEstimate(estimateId);
+        if(cancel){
+            return "견적서 지원하지않음 처리 성공";
+        }else{
+            return "견적서 지원하지않음 처리 실패";
         }
     }
 

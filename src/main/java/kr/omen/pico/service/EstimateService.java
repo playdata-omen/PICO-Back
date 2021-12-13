@@ -35,14 +35,12 @@ public class EstimateService {
     //글로벌 견적요청 API
     //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
     // principaldetail인가? 거기서 getUser 형식으로 가져와서 사용 할 것으로 예상됨.
-    public EstimateDTO.Create createGlobalEstimate(EstimateDTO.Create estimateDTO){
+    public ResponseDTO.EstimateResponse createGlobalEstimate(EstimateDTO.Create estimateDTO){
 
         User user = userRepository.findById(estimateDTO.getUser()).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
-        Estimate estimate = estimateDTO.toEntity(user,category);
-
-        estimateRepository.save(estimate);
-
+        Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
+        ResponseDTO.EstimateResponse responsedto = new ResponseDTO.EstimateResponse(estimate);
         //글로벌 견적 요청 후 저장 시, 해당 견적서에 설정된 City가 주 활동지역인 작가들의 list 뽑아낸 후
         //해당 작가들은 강제로 Status가 '1'인 상태로 해당 견적서에 지원하게 됨.(Status 1 == 글로벌 견적요청 할당됨)
         //1. findByCategoryidx -> 입력받은 견적서 category로 pcategory list 출력
@@ -56,7 +54,6 @@ public class EstimateService {
         List<Photographer> plist = new ArrayList<>();
         //1순위 저장(카테고리/시/구/ 3가지 매칭 시)
         while(iter.hasNext()){
-            System.out.println("1순위 진입?");
             PCategory pc = iter.next();
             if(i>=5)
                 break;
@@ -73,7 +70,6 @@ public class EstimateService {
         iter=list1.iterator();
         //2순위 저장(카테고리/시 2가지 매칭 시)
             while(iter.hasNext()){
-                System.out.println("2순위 진입?");
                 PCategory pc = iter.next();
                 if (i >= 5)
                     break;
@@ -90,7 +86,6 @@ public class EstimateService {
         iter=list1.iterator();
         //3순위 저장(카테고리가 일치하며 타지역 협의여부 true로 설정 한 나머지)
             while(iter.hasNext()){
-                System.out.println("3순위 진입?");
                 PCategory pc = iter.next();
                 if (i >= 5)
                     break;
@@ -113,18 +108,18 @@ public class EstimateService {
             applyRepository.save(apply);
         }
 
-        return estimateDTO;
+        return responsedto;
     }
 
     //작가 지정 견적요청 API
-    public EstimateDTO.Create createPickedEstimate(EstimateDTO.Create estimateDTO,long photographerIdx){
+    public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO,long photographerIdx){
 
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
         User user = userRepository.findById(estimateDTO.getUser()).get();
 
-        Estimate estimate = estimateDTO.toEntity(user,category);
-        estimateRepository.save(estimate);
+        Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
+        ResponseDTO.EstimateResponse responsedto = new ResponseDTO.EstimateResponse(estimate);
 
         Apply apply = new Apply();
         apply.setStatus("2");
@@ -132,7 +127,7 @@ public class EstimateService {
         apply.setPhotographer(photographer);
         applyRepository.save(apply);
 
-        return estimateDTO;
+        return responsedto;
     }
 
     //유저가 요청한 견적 요청 list조회
@@ -198,11 +193,31 @@ public class EstimateService {
 
     public boolean deleteMyEstimate(Long estimateId){
         Estimate estimate = estimateRepository.findById(estimateId).get();
+        List<Apply> list = applyRepository.findAllByEstimate(estimate);
         boolean cancel = false;
         try {
+            for(Apply apply : list){
+                apply.setStatus("7");
+                applyRepository.save(apply);
+            }
             estimateRepository.delete(estimate);
             cancel = true;
         }catch(Exception e){
+
+        }
+        return cancel;
+    }
+
+    public boolean ignoreEstimate(Long estimateId){
+        Estimate estimate=estimateRepository.findById(estimateId).get();
+        Apply apply = applyRepository.findByEstimateAndStatus(estimate,"2");
+        boolean cancel = false;
+        try{
+            estimate.setStatus("5");
+            estimateRepository.save(estimate);
+            applyRepository.delete(apply);
+            cancel = true;
+        }catch (Exception e){
 
         }
         return cancel;

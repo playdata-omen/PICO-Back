@@ -10,4 +10,6 @@ import java.util.List;
 public interface ApplyRepository extends JpaRepository<Apply,Long> {
     List<Apply> findAllByEstimate(Estimate estimate);
     List<Apply> findAllByPhotographer(Photographer photographer);
+    Apply findByPhotographerAndEstimate(Photographer photographer,Estimate estimate);
+    Apply findByEstimateAndStatus(Estimate estimate,String status);
 }
