@@ -1,8 +1,10 @@
 package kr.omen.pico.dao;
 
 import kr.omen.pico.domain.Photographer;
-import org.springframework.data.jpa.repository.JpaRepository;
+import kr.omen.pico.domain.User;
+import org.springframework.data.repository.CrudRepository;
 
-public interface PhotographerRepository extends JpaRepository<Photographer,Long> {
+public interface PhotographerRepository extends CrudRepository<Photographer,Long> {
 
+    Photographer findByUser(User user);
 }

@@ -24,7 +24,6 @@ public class UserService {
     @Autowired
     TokenProvider tokenProvider;
 
-    // naver or google or kakao
     public UserDTO.LoginInfo userLogin(String code, String provider) throws Exception {
 
         OauthUserInfo oauthUserInfo = null;
@@ -81,16 +80,15 @@ public class UserService {
     }
 
     public User getUser() {
-        System.out.println("Security util ----------- " + SecurityUtil.getCurrentUserIdx());
-        User user = userRepository.findByUserId(SecurityUtil.getCurrentUserIdx());
+
+        User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
+        System.out.println(user);
         return user;
     }
 
     // 유저 일반 회원가입(isRegister가 false일때)
     public UserDTO.LoginInfo userRegister(UserDTO.UserInfo data) {
-        System.out.println("UserService--------- " + data.toString());
         User user = userRepository.findById(data.getUserIdx()).get();
-        System.out.println("user ----------- " + user.toString());
         UserDTO.LoginInfo result = null;
 
         if (user != null) {
@@ -98,30 +96,29 @@ public class UserService {
             user.setName(data.getName());
             user.setNickName(data.getNickName());
             user.setPhone(data.getPhone());
-            user.setPhotographer(data.isPhotographer());
+            user.setPhotographer(data.getIsPhotographer());
             user.setRegister(true);
 
             user = userRepository.save(user);
 
-            if (!user.isPhotographer()) {
-                result = UserDTO.LoginInfo.builder()
-                        .userIdx(user.getUserIdx())
-                        .name(user.getName())
-                        .email(user.getEmail())
-                        .phone(user.getPhone())
-                        .nickName(user.getNickName())
-                        .isRegister(user.isRegister())
-                        .isPhotographer(user.isPhotographer())
-                        .build();
+            result = UserDTO.LoginInfo.builder()
+                    .userIdx(user.getUserIdx())
+                    .name(user.getName())
+                    .email(user.getEmail())
+                    .phone(user.getPhone())
+                    .nickName(user.getNickName())
+                    .isRegister(user.isRegister())
+                    .isPhotographer(user.isPhotographer())
+                    .build();
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
 
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                String jwt = tokenProvider.createToken(authentication);
-                result.setAccessToken(jwt);
-            }
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String jwt = tokenProvider.createToken(authentication);
+            result.setAccessToken(jwt);
+
         }
         return result;
     }

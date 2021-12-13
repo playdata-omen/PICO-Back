@@ -10,7 +10,9 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @Entity
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
@@ -21,7 +23,8 @@ public class Photographer {
     @Column(name="photographer_idx")
     private Long photographerIdx;
 
-    @ManyToOne
+//    @ManyToOne
+    @OneToOne
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;

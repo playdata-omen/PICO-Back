@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Getter()
 @Setter
 @Entity
 @NoArgsConstructor
@@ -57,9 +57,11 @@ public class User {
     @JsonBackReference
     List<Estimate> estimateList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+//    @OneToMany(mappedBy = "user")
+    @OneToOne(mappedBy = "user")
     @JsonBackReference
-    List<Photographer> photographerList = new ArrayList<>();
+//    List<Photographer> photographerList = new ArrayList<>();
+    private Photographer photographer;
 
     @OneToMany(mappedBy = "user")
     @JsonBackReference

@@ -17,15 +17,12 @@ public class UserController {
 
     @PostMapping("/login")
     public UserDTO.LoginInfo userLogin(@RequestBody UserDTO.Login data) throws Exception {
-        UserDTO.LoginInfo result = userService.userLogin(data.getCode(), data.getProvider());
-
-        return result;
+        return userService.userLogin(data.getCode(), data.getProvider());
     }
 
     @PostMapping("/user/register")
     public UserDTO.LoginInfo userRegister(@RequestBody UserDTO.UserInfo data) {
-        UserDTO.LoginInfo result = userService.userRegister(data);
-        return result;
+        return userService.userRegister(data);
     }
 
     @GetMapping("/user")

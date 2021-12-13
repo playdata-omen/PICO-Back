@@ -11,6 +11,7 @@ public class UserDTO {
         String code;
         String provider;
     }
+
     @Builder
     @Getter
     public static class Register {
@@ -51,17 +52,15 @@ public class UserDTO {
 
     @Getter
     public static class UserInfo {
-//        String userId;
         Long userIdx;
         String name;
         String email;
         String phone;
         String nickName;
-        boolean isPhotographer;
+        Boolean isPhotographer;
 
         public User toEntity() {
             return User.builder()
-//                    .userId(userId)
                     .userIdx(userIdx)
                     .name(name)
                     .email(email)
