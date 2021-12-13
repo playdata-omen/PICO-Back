@@ -55,6 +55,16 @@ public class EstimateController {
         return estimateService.getPhotographerAllEstimate(pId);
     }
 
+    //사용자가 요청한 견적서 취소(삭제) or 작가입장에서 할당된 견적서에 지원 안함(삭제)
+    @DeleteMapping("/estimate/cancelEstimate/{estimateId}")
+    public String deleteMyEstimate(@PathVariable Long estimateId){
+        boolean cancel = estimateService.deleteMyEstimate(estimateId);
+        if(cancel){
+            return "삭제성공";
+        }else{
+            return "삭제실패";
+        }
+    }
 
     @CrossOrigin
     @GetMapping("/test")

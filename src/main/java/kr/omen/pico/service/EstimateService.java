@@ -195,4 +195,16 @@ public class EstimateService {
         }
         return estimates;
     }
+
+    public boolean deleteMyEstimate(Long estimateId){
+        Estimate estimate = estimateRepository.findById(estimateId).get();
+        boolean cancel = false;
+        try {
+            estimateRepository.delete(estimate);
+            cancel = true;
+        }catch(Exception e){
+
+        }
+        return cancel;
+    }
 }
