@@ -33,14 +33,18 @@ public class Photographer {
     private float grade;
 
     @Column(length = 100)
-    private String city;
+    private String activityCity;
 
     @Column(length = 100)
-    private String address;
+    private String activityAddress;
+
+    @Column(length= 100)
+    private String studioCity;
 
     @Column(length= 100)
     private String studioAddress;
 
+    // 활동영역 타지역 협의가능 여부
     @Column(length = 100)
     private boolean otherArea;
 

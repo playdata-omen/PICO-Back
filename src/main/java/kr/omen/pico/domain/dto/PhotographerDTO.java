@@ -15,4 +15,12 @@ public class PhotographerDTO {
     private String studioAddress;
     private boolean otherArea;
 
+    public static class PhotographerInfo {
+        boolean isStudio;
+        String activityCity;;
+        String activityAddress;
+        String studioCity;
+        String studioAddress;
+        boolean otherArea;
+    }
 }

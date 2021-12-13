@@ -23,13 +23,13 @@ public class User {
     private Long userIdx;
 
     @Column(name = "user_id", length = 100 , nullable = false)
-    private String userId; // 2026857599@kakao.social
+    private String userId;
 
     @Column(length = 100 , nullable = false)
-    private String provider; // kakao
+    private String provider;
 
     @Column(length = 100 , nullable = false)
-    private String providerId; // 2026857599
+    private String providerId;
 
     @Column(length = 100)
     private String nickName;

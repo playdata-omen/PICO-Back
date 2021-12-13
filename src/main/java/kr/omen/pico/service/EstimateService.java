@@ -70,7 +70,7 @@ public class EstimateService {
             Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
             if(photographer == null)
                 continue;
-            if(photographer.getCity().equals(estimate.getCity()) && photographer.getAddress().equals(estimate.getAddress())){
+            if(photographer.getActivityCity().equals(estimate.getCity()) && photographer.getActivityAddress().equals(estimate.getAddress())){
                 plist.add(photographer);
                 iter.remove();
                 i++;
@@ -87,7 +87,7 @@ public class EstimateService {
                 Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
                 if (photographer == null)
                     continue;
-                if (photographer.getCity().equals(estimate.getCity())) {
+                if (photographer.getActivityCity().equals(estimate.getCity())) {
                     plist.add(photographer);
                     iter.remove();
                     i++;

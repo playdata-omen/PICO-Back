@@ -1,5 +1,6 @@
 package kr.omen.pico.service;
 
+import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.dao.UserRepository;
 import kr.omen.pico.domain.User;
@@ -24,11 +25,11 @@ public class UserService {
     TokenProvider tokenProvider;
 
     // naver or google or kakao
-    public UserDTO.Info userLogin(String code, String provider) throws Exception {
+    public UserDTO.LoginInfo userLogin(String code, String provider) throws Exception {
 
         OauthUserInfo oauthUserInfo = null;
         UserDTO.Register userDTO = null;
-        UserDTO.Info result = null;
+        UserDTO.LoginInfo result = null;
 
         try {
             Class social = Class.forName("kr.omen.pico.service.Social");
@@ -47,13 +48,11 @@ public class UserService {
             User user = userRepository.findByUserId(userDTO.getUserId());
 
             if (Objects.isNull(user)) {
-                System.out.println("isnull");
-                System.out.println(userDTO.toString());
                 user = userRepository.save(userDTO.toEntity());
             }
 
-            result = UserDTO.Info.builder()
-                    .userId(user.getUserId())
+            result = UserDTO.LoginInfo.builder()
+                    .userIdx(user.getUserIdx())
                     .name(user.getName())
                     .email(user.getEmail())
                     .phone(user.getPhone())
@@ -62,22 +61,16 @@ public class UserService {
                     .isPhotographer(user.isPhotographer())
                     .build();
 
-            System.out.println(1);
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(user.getUserId(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
-
-            System.out.println(2);
+            if (user.isRegister()) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
 
 
-            System.out.println(3);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            System.out.println(4);
-            System.out.println("service ---- "+authentication);
-            String jwt = tokenProvider.createToken(authentication);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwt = tokenProvider.createToken(authentication);
+                result.setAccessToken(jwt);
+            }
 
-            System.out.println(5);
-            System.out.println(jwt);
-            System.out.println(6);
 
         } catch (Exception e) {
 
@@ -87,9 +80,50 @@ public class UserService {
 
     }
 
-    public void getUser(String userId) {
-        User user = userRepository.findByUserId(userId);
-        System.out.println(user);
+    public User getUser() {
+        System.out.println("Security util ----------- " + SecurityUtil.getCurrentUserIdx());
+        User user = userRepository.findByUserId(SecurityUtil.getCurrentUserIdx());
+        return user;
+    }
+
+    // 유저 일반 회원가입(isRegister가 false일때)
+    public UserDTO.LoginInfo userRegister(UserDTO.UserInfo data) {
+        System.out.println("UserService--------- " + data.toString());
+        User user = userRepository.findById(data.getUserIdx()).get();
+        System.out.println("user ----------- " + user.toString());
+        UserDTO.LoginInfo result = null;
+
+        if (user != null) {
+            user.setEmail(data.getEmail());
+            user.setName(data.getName());
+            user.setNickName(data.getNickName());
+            user.setPhone(data.getPhone());
+            user.setPhotographer(data.isPhotographer());
+            user.setRegister(true);
+
+            user = userRepository.save(user);
+
+            if (!user.isPhotographer()) {
+                result = UserDTO.LoginInfo.builder()
+                        .userIdx(user.getUserIdx())
+                        .name(user.getName())
+                        .email(user.getEmail())
+                        .phone(user.getPhone())
+                        .nickName(user.getNickName())
+                        .isRegister(user.isRegister())
+                        .isPhotographer(user.isPhotographer())
+                        .build();
+
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
+
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                String jwt = tokenProvider.createToken(authentication);
+                result.setAccessToken(jwt);
+            }
+        }
+        return result;
     }
 }
 
