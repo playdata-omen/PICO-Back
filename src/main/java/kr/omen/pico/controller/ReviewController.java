@@ -60,6 +60,6 @@ public class ReviewController {
 //    }
     @PostMapping("/review/enroll/{pID}")
     public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
-        reviewService.saveReview(dto, pID);
+        Review saveReview = reviewService.saveReview(dto, pID);
     }
 }

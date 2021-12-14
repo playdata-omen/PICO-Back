@@ -49,6 +49,10 @@ public class ReviewService {
 
         Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
         Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
-        User user = u
+        User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
+
+        if(isNotYetReview(user, photographer)){
+            Review review = dto.toEntity(user, photographer);
+        }
     }
 }
