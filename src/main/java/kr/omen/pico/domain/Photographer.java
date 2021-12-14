@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 //@RequiredArgsConstructor
 public class Photographer {
 

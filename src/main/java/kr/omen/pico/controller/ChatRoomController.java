@@ -1,13 +1,15 @@
 package kr.omen.pico.controller;
 
+import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.model.ChatRoom;
 import kr.omen.pico.model.LoginInfo;
 import kr.omen.pico.dao.chatdao.ChatRoomRepo;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import kr.omen.pico.dao.chatdao.LoginInfoRepository;
-import kr.omen.pico.service.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ import java.util.List;
 public class ChatRoomController {
 
     private final ChatRoomRepository chatRoomRepository;
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider jwtTokenProvider;
     private final LoginInfoRepository loginInfoRepository;
     private final ChatRoomRepo chatRoomRepo;
 
@@ -63,7 +65,10 @@ public class ChatRoomController {
     public LoginInfo getUserInfo() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        loginInfoRepository.save(LoginInfo.builder().name(name).token(jwtTokenProvider.generateToken(name)).build());
-        return LoginInfo.builder().name(name).token(jwtTokenProvider.generateToken(name)).build();
+
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(1, null, AuthorityUtils.createAuthorityList("ROLE_USER"));
+//        loginInfoRepository.save(LoginInfo.builder().name(name).token(jwtTokenProvider.createToken(authentication)).build());
+        return LoginInfo.builder().name(name).token(jwtTokenProvider.createToken(authentication)).build();
     }
 }

@@ -25,6 +25,7 @@ public class EstimateController {
     //글로벌 견적요청
     @PostMapping(value = "/estimate/addGE")
     public EstimateDTO.Create insertGlobalEstimate(@RequestBody EstimateDTO.Create dto){
+        System.out.println("----여기?");
         dto.setStatus("1");
         return estimateService.createGlobalEstimate(dto);
     }
