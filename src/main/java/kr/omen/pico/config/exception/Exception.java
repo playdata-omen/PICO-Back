@@ -1,6 +1,9 @@
 package kr.omen.pico.config.exception;
 
-public class Exception {
+public class Exception extends Throwable {
+    public Exception(String s) {
+    }
+
     public static class NotFoundException extends Throwable {
         public NotFoundException(String s) {
 

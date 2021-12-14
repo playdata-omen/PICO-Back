@@ -7,9 +7,10 @@ import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 //@RequiredArgsConstructor
 public class Photographer {
 
@@ -18,7 +19,7 @@ public class Photographer {
     @Column(name="photographer_idx")
     private Long photographerIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
@@ -30,14 +31,18 @@ public class Photographer {
     private float grade;
 
     @Column(length = 100)
-    private String city;
+    private String activityCity;
 
     @Column(length = 100)
-    private String address;
+    private String activityAddress;
+
+    @Column(length= 100)
+    private String studioCity;
 
     @Column(length= 100)
     private String studioAddress;
 
+    // 활동영역 타지역 협의가능 여부
     @Column(length = 100)
     private boolean otherArea;
 
@@ -57,14 +62,4 @@ public class Photographer {
 //    @JsonBackReference
 //    private List<PCategory> pCategoryList = new ArrayList<>();
 
-    @Builder
-    public Photographer(User user, boolean isStudio, float grade, String city, String address, String studioAddress, boolean otherArea){
-        this.user=user;
-        this.isStudio=isStudio;
-        this.grade=grade;
-        this.city=city;
-        this.address=address;
-        this.studioAddress=studioAddress;
-        this.otherArea=otherArea;
-    }
 }

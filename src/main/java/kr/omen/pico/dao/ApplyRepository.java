@@ -12,4 +12,5 @@ public interface ApplyRepository extends JpaRepository<Apply,Long> {
     List<Apply> findAllByPhotographer(Photographer photographer);
     Apply findByPhotographerAndEstimate(Photographer photographer,Estimate estimate);
     Apply findByEstimateAndStatus(Estimate estimate,String status);
+    Apply findByApplyIdx(Long applyIdx);
 }

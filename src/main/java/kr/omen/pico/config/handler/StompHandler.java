@@ -1,9 +1,11 @@
 package kr.omen.pico.config.handler;
 
+import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.model.ChatMessage;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import kr.omen.pico.service.ChatRoomService;
-import kr.omen.pico.service.JwtTokenProvider;
+import kr.omen.pico.service.ChatService;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.Message;
@@ -21,7 +23,7 @@ import java.util.Optional;
 @Component
 public class StompHandler implements ChannelInterceptor {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final TokenProvider jwtTokenProvider;
     private final ChatRoomRepository chatRoomRepository;
     private final ChatRoomService chatService;
 
