@@ -10,8 +10,8 @@ public class IndexController {
         return "redirect:/chat/room";
     }
 
-    @GetMapping({"test"})
-    public String index2(){
-        return "index";
-    }
+//    @GetMapping({"test"})
+//    public String index2(){
+//        return "index";
+//    }
 }
