@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class UserDTO {
+
     @Getter
     public static class Login {
         String code;

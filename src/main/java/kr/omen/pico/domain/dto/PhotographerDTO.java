@@ -1,27 +1,43 @@
 package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.Photographer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import kr.omen.pico.domain.User;
 import lombok.*;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class PhotographerDTO {
 
-    private long user;
-    private boolean isStudio;
-    private float grade;
+    private Long idx;
+    private Long user;
+    private Boolean isStudio;
+    private Float grade;
     private String activityCity;
     private String activityAddress;
     private String studioCity;
     private String studioAddress;
-    private boolean otherArea;
+    private Boolean otherArea;
+
+    public PhotographerDTO(Photographer entity){
+        this.idx=entity.getPhotographerIdx();
+        this.user=entity.getUser().getUserIdx();
+        this.isStudio=entity.isStudio();
+        this.grade=entity.getGrade();
+        this.city=entity.getCity();
+        this.address=entity.getAddress();
+        this.studioAddress=entity.getStudioAddress();
+        this.otherArea=entity.isOtherArea();
+    }
 
     @Getter
     @Setter
     public static class PhotographerRegister {
-        long userIdx;
-        long photographerIdx;
+        Long userIdx;
+        Long photographerIdx;
         Boolean isStudio;
         String activityCity;
         String activityAddress;
