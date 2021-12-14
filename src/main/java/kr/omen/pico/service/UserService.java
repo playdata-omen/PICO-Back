@@ -27,7 +27,7 @@ public class UserService {
     private final TokenProvider tokenProvider;
     
     // naver or google or kakao
-    public UserDTO.Register userLogin(String code, String provider) throws Exception {
+    public UserDTO.LoginInfo userLogin(String code, String provider) throws Exception {
 
         OauthUserInfo oauthUserInfo = null;
         UserDTO.Register userDTO = null;
@@ -83,7 +83,6 @@ public class UserService {
     }
 
     public User getUser() {
-
         User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
         System.out.println(user);
         return user;

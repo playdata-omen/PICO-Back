@@ -27,8 +27,9 @@ public class PhotographerDTO {
         this.user=entity.getUser().getUserIdx();
         this.isStudio=entity.isStudio();
         this.grade=entity.getGrade();
-        this.city=entity.getCity();
-        this.address=entity.getAddress();
+        this.activityCity=entity.getActivityCity();
+        this.activityAddress=entity.getActivityAddress();
+        this.studioCity=entity.getStudioCity();
         this.studioAddress=entity.getStudioAddress();
         this.otherArea=entity.isOtherArea();
     }

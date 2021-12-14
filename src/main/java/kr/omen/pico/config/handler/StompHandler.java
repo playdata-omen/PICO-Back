@@ -4,7 +4,6 @@ import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.model.ChatMessage;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
 import kr.omen.pico.service.ChatRoomService;
-import kr.omen.pico.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

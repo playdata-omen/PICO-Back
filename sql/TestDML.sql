@@ -14,13 +14,13 @@ insert into category values(2,'스냅');
 insert into category values(3,'화보');
 
 -- photographer
-insert into photographer values(1,'기흥구','용인시',4.3,true,true,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',1);
-insert into photographer values(2,'팔달구','수원시',4.3,true,true,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',2);
-insert into photographer values(3,'서초구','서울특별시',4.3,true,false,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',3);
-insert into photographer values(4,'동대문구','서울특별시',4.3,true,true,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',4);
-insert into photographer values(5,'처인구','용인시',4.3,true,false,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',5);
-insert into photographer values(6,'기흥구','용인시',4.3,true,false,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',6);
-insert into photographer values(7,'동대문구','서울특별시',4.3,true,true,'경기도 용인시 기흥구 동백 3로 11번길 21 더드림오피스텔 211호',7);
+insert into photographer values(1,'기흥구','용인시',4.3,true,true,'기흥구','용인시',1);
+insert into photographer values(2,'팔달구','수원시',4.3,true,true,'기흥구','용인시',2);
+insert into photographer values(3,'서초구','서울특별시',4.3,true,false,'기흥구','용인시',3);
+insert into photographer values(4,'동대문구','서울특별시',4.3,true,true,'기흥구','용인시',4);
+insert into photographer values(5,'처인구','용인시',4.3,true,false,'기흥구','용인시',5);
+insert into photographer values(6,'기흥구','용인시',4.3,true,false,'기흥구','용인시',6);
+insert into photographer values(7,'동대문구','서울특별시',4.3,true,true,'기흥구','용인시',7);
 
 -- estimate
 insert into estimate values(1,'기흥구','용인시','찍어주세요.',now(),DATE_ADD(NOW(), INTERVAL 100 SECOND),now(),'1',1,1);

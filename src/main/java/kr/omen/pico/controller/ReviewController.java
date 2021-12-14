@@ -1,27 +1,11 @@
 package kr.omen.pico.controller;
 
-import javassist.NotFoundException;
-import kr.omen.pico.config.exception.Exception;
-import kr.omen.pico.dao.ReviewRepository;
-import kr.omen.pico.dao.chatdao.ChatRoomRepository;
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.User;
-import kr.omen.pico.domain.dto.ResponseDTO;
-import kr.omen.pico.domain.dto.ResponseDTO.Create;
-import kr.omen.pico.domain.dto.ReviewDTO;
 import kr.omen.pico.service.ApplyService;
 import kr.omen.pico.service.PhotographerService;
 import kr.omen.pico.service.ReviewService;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Timestamp;
 
 @RestController
 @RequiredArgsConstructor
@@ -58,8 +42,9 @@ public class ReviewController {
 //        }
 //        return new ResponseDTO.Create(saveId, result);
 //    }
-    @PostMapping("/review/enroll/{pID}")
-    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
-        Review saveReview = reviewService.saveReview(dto, pID);
-    }
+//    @PostMapping("/review/enroll/{pID}")
+//    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
+//        Review saveReview = reviewService.saveReview(dto, pID);
+//
+//    }
 }
