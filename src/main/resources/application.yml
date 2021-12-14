@@ -2,18 +2,16 @@ server:
   port: 8089
 
 spring:
-  datasource :
-    driver-class-name : com.mysql.cj.jdbc.Driver
-    url : jdbc:mysql://localhost:3306/pico_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    username : root
-    password : TIGER
-  jwt:
-    secret: govlepel@$&
+#  datasource :
+#    driver-class-name : com.mysql.cj.jdbc.Driver
+#    url : jdbc:mysql://localhost:3306/pico_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+#    username : root
+#    password : TIGER
   jpa :
     show-sql : true
     hibernate :
       ddl-auto : update
-#      ddl-auto : create
+#      ddl-auto : createe
     properties :
       hibernate :
         format_sql : true
@@ -41,6 +39,7 @@ spring:
 jwt:
   header: Autorization
   secret: UGxheURhdGEgRmluYWxQcm9qZWN0IFBJQ08gSldULVNlY3JldEtleQ0K7ZSM66CI7J20642w7J207YSwIOy1nOyihe2UhOuhnOygne2KuC0g7ZS87L2U
+  secret2: govlepel@$&
   token-validity-in-seconds: 86400
   #spring.profiles.include=oauth
 #spring:
