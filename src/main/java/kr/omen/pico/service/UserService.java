@@ -1,12 +1,15 @@
 package kr.omen.pico.service;
 
+import javassist.NotFoundException;
 import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.dao.UserRepository;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.UserDTO;
 import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,16 +18,16 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Method;
 import java.util.Objects;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    TokenProvider tokenProvider;
-
-    public UserDTO.LoginInfo userLogin(String code, String provider) throws Exception {
+    private final UserRepository userRepository;
+    
+    private final TokenProvider tokenProvider;
+    
+    // naver or google or kakao
+    public UserDTO.Register userLogin(String code, String provider) throws Exception {
 
         OauthUserInfo oauthUserInfo = null;
         UserDTO.Register userDTO = null;
@@ -122,6 +125,10 @@ public class UserService {
         }
         return result;
     }
-}
 
+    public User findOne(Long userIdx) throws NotFoundException{
+        User user = userRepository.findByUserIdx(userIdx);
+        return user;
+    }
+}
 

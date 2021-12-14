@@ -1,6 +1,7 @@
 package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -60,6 +61,23 @@ public class ResponseDTO {
             this.endDate=entity.getEndDate();
             this.status=entity.getStatus();
             this.applyList=applies;
+        }
+    }
+
+    /**
+     * 통합용 create ResponseDTO
+     */
+    @Data
+    @AllArgsConstructor
+    public static class BaseResponse{
+        boolean success;
+    }
+
+    public static class Create extends BaseResponse {
+        Long id;
+        public Create(Long id, Boolean success) {
+            super(success);
+            this.id = id;
         }
     }
 }

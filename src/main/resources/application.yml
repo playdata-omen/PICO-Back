@@ -2,6 +2,8 @@ server:
   port: 8089
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
 #  datasource :
 #    driver-class-name : com.mysql.cj.jdbc.Driver
 #    url : jdbc:mysql://localhost:3306/pico_db?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
@@ -26,8 +28,7 @@ spring:
       restart:
         enabled: false
       add-properties: false
-  main:
-    allow-bean-definition-overriding: true
+
   freemarker:
     cache: false
 #  thymeleaf :
@@ -41,6 +42,7 @@ jwt:
   secret: UGxheURhdGEgRmluYWxQcm9qZWN0IFBJQ08gSldULVNlY3JldEtleQ0K7ZSM66CI7J20642w7J207YSwIOy1nOyihe2UhOuhnOygne2KuC0g7ZS87L2U
 #  secret2: govlepel@$&
   token-validity-in-seconds: 86400
+
   #spring.profiles.include=oauth
 #spring:
 #
