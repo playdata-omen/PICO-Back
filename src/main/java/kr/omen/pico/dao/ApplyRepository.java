@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ApplyRepository extends JpaRepository<Apply,Long> {
     List<Apply> findAllByEstimate(Estimate estimate);
+    Apply findByApplyIdx(Long applyIdx);
 }

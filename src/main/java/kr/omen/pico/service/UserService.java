@@ -1,17 +1,24 @@
 package kr.omen.pico.service;
 
+import javassist.NotFoundException;
+import kr.omen.pico.dao.UserRepository;
+import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.UserDTO;
 import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
+import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
 //    @Autowired
 //    Social social;
 
+    private final UserRepository userRepository;
     // naver or google or kakao
     public UserDTO.Register userLogin(String code, String provider) throws Exception {
 
@@ -23,7 +30,7 @@ public class UserService {
             oauthUserInfo = (OauthUserInfo) method.invoke(null, code);
 
             test = UserDTO.Register.builder()
-                .id(oauthUserInfo.getProviderId() + "@" + oauthUserInfo.getProvider() + ".social")
+                    .id(oauthUserInfo.getProviderId() + "@" + oauthUserInfo.getProvider() + ".social")
                     .name(oauthUserInfo.getName())
                     .phone(oauthUserInfo.getPhone())
                     .email(oauthUserInfo.getEmail())
@@ -38,6 +45,15 @@ public class UserService {
         return test;
 
     }
+
+    public User findOne(Long userIdx) throws NotFoundException{
+        User user = userRepository.findByUserIdx(userIdx);
+        return user;
+    }
 }
+
+
+
+
 
 
