@@ -36,6 +36,8 @@ public class Apply {
     @CreationTimestamp
     private Timestamp created;
 
+    private Boolean isApplied;
+
     @Builder
     public Apply(Estimate estimate, Photographer photographer,String status,Timestamp created){
         this.estimate=estimate;

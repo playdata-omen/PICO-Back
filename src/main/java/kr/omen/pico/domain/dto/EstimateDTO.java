@@ -3,18 +3,23 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Category;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.User;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class EstimateDTO {
 
-    @Data
+
+    @Getter
+    @Setter
+    @RequiredArgsConstructor
     public static class Create{
-        private long idx;
-        private long user;
-        private long category;
+        private Long idx;
+        private Long user;
+        private Long category;
         private Timestamp created;
         private String content;
         private String city;
@@ -22,6 +27,21 @@ public class EstimateDTO {
         private LocalDate startDate;
         private LocalDate endDate;
         private String status;
+        private Long pidx;
+
+        public Create(Estimate entity,Long photographer){
+            idx = entity.getEstimateIdx();
+            user = entity.getUser().getUserIdx();
+            category=entity.getCategory().getCategoryIdx();
+            created=entity.getCreated();
+            content=entity.getContent();
+            city=entity.getCity();
+            address=entity.getAddress();
+            startDate=entity.getStartDate();
+            endDate=entity.getEndDate();
+            status=entity.getStatus();
+            pidx=photographer;
+        }
 
         public Estimate toEntity(User user,Category category){
             return Estimate.builder()
@@ -36,7 +56,6 @@ public class EstimateDTO {
                     .status(status)
                     .build();
         }
-
     }
 
 }

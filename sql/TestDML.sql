@@ -45,4 +45,6 @@ insert into photo values(1,'1024*1024','pico/src/images/image.jpg','웨딩사진
 insert into review values(1,'최고에용',now(),4.2,1,2);
 
 -- apply
-insert into apply values(1,NOW(),'1',1,1);
+insert into apply values(1,NOW(),true,'1',1,1);
+insert into apply values(2,NOW(),true,'1',1,2);
+insert into apply values(3,NOW(),false,'1',1,3);

@@ -105,6 +105,7 @@ public class EstimateService {
             apply.setEstimate(estimate);
             apply.setStatus("1");
             apply.setPhotographer(photographer);
+            apply.setIsApplied(false);
             applyRepository.save(apply);
         }
 
@@ -112,9 +113,9 @@ public class EstimateService {
     }
 
     //작가 지정 견적요청 API
-    public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO,long photographerIdx){
+    public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO){
 
-        Photographer photographer = photographerRepository.findById(photographerIdx).get();
+        Photographer photographer = photographerRepository.findById(estimateDTO.getPidx()).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
         User user = userRepository.findById(estimateDTO.getUser()).get();
 
@@ -125,6 +126,7 @@ public class EstimateService {
         apply.setStatus("2");
         apply.setEstimate(estimate);
         apply.setPhotographer(photographer);
+        apply.setIsApplied(false);
         applyRepository.save(apply);
 
         return responsedto;
@@ -153,20 +155,28 @@ public class EstimateService {
         //작가지정 견적서인 경우
         if(estimate.getStatus().equals("2")){
             for(Apply apply : applies){
-                if(apply.getStatus().equals("2")) {
+                if(apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
                     List<PCategory> pCategories = pCategoryRepository.findByPhotographer(photographer);
-                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,pCategories));
+                    List<Long> nums = new ArrayList<>();
+                    for(int i=0;i<pCategories.size();i++){
+                        nums.add(pCategories.get(i).getCategory().getCategoryIdx());
+                    }
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply,nums));
                 }
             }
         }
         //글로벌 견적서인 경우
         else if(estimate.getStatus().equals("1")){
             for (Apply apply : applies) {
-                if (apply.getStatus().equals("1")) {
+                if (apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
                     List<PCategory> pCategories = pCategoryRepository.findByPhotographer(photographer);
-                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,pCategories));
+                    List<Long> nums = new ArrayList<>();
+                    for(int i=0;i<pCategories.size();i++){
+                        nums.add(pCategories.get(i).getCategory().getCategoryIdx());
+                    }
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply,nums));
                 }
             }
         }

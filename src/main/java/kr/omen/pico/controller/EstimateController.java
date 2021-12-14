@@ -22,18 +22,20 @@ public class EstimateController {
     //3. 대충 이런방식으로 생성된 estimate를 기준으로 활동 시/구 가 일치하는 작가들(임시)에게 해당 견적서 정보 발송하는 방식으로 구축하면
     //될 것으로 생각됨.
 
-    //글로벌 견적요청
-    @PostMapping(value = "/estimate/addGE")
-    public ResponseDTO.EstimateResponse insertGlobalEstimate(@RequestBody EstimateDTO.Create dto){
-        dto.setStatus("1");
-        return estimateService.createGlobalEstimate(dto);
-    }
-
-    //작가지정 견적요청
-    @PostMapping("/estimate/addPE/{pId}")
-    public ResponseDTO.EstimateResponse insertPickedEstimate(@RequestBody EstimateDTO.Create dto, @PathVariable Long pId){
-        dto.setStatus("2");
-        return estimateService.createPickedEstimate(dto,pId);
+    //견적요청
+    @PostMapping(value = "/estimate/add")
+    public ResponseDTO.EstimateResponse insertGlobalEstimate(@RequestBody EstimateDTO.Create pdto){
+        //글로벌 견적일 경우
+        if(pdto.getPidx()==null){
+            pdto.setStatus("1");
+            return estimateService.createGlobalEstimate(pdto);
+        }
+        //작가지정일 경우
+        else if(pdto.getPidx()!=null){
+            pdto.setStatus("2");
+            return estimateService.createPickedEstimate(pdto);
+        }
+        return null;
     }
 
     //유저가 요청한 견적서 목록 출력
@@ -42,7 +44,7 @@ public class EstimateController {
         return estimateService.getUserAllEstimate(userId);
     }
 
-    //견적서 목록중 하나 클릭시 해당 견적서 상세 내용 및 할당된 작가 목록(이름만) 출력
+    //견적서 목록중 하나 클릭시 해당 견적서 상세 내용 및 지원한 작가목록(is_applied가 true인)출력
     @GetMapping("/estimate/getUserOne/{estimateId}")
     public ResponseDTO.DetailResponse getUserOneEstimate(@PathVariable Long estimateId){
         return estimateService.getUserOneEstimate(estimateId);
