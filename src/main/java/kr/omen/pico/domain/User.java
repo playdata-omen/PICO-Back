@@ -53,18 +53,15 @@ public class User {
     @Column(name="is_photographer")
     private boolean isPhotographer;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    List<Estimate> estimateList = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "user")
     @OneToOne(mappedBy = "user")
     @JsonBackReference
-//    List<Photographer> photographerList = new ArrayList<>();
     private Photographer photographer;
 
-    @OneToMany(mappedBy = "user")
-    @JsonBackReference
-    List<Review> reviewList = new ArrayList<>();
+//    @OneToMany(mappedBy = "user")
+//    @JsonBackReference
+//    private List<Estimate> estimateList = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "user")
+//    @JsonBackReference
+//    private List<Review> reviewList = new ArrayList<>();
 }

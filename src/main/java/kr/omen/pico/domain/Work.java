@@ -1,20 +1,17 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@AllArgsConstructor
 //@RequiredArgsConstructor
 public class Work {
 
@@ -23,12 +20,12 @@ public class Work {
     @Column(name="work_idx")
     private Long workIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_idx")
     @JsonManagedReference
     private Category category;
@@ -45,9 +42,18 @@ public class Work {
     @Column(length = 100)
     private String thumbnail;
 
-    @OneToMany(mappedBy = "work")
-    @JsonBackReference
-    List<Photo> photoList = new ArrayList<>();
+//    @OneToMany(mappedBy = "work" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<Photo> photoList = new ArrayList<>();
 
+    @Builder
+    public Work(Photographer photographer,Category category, String title, String content, Timestamp created,String thumbnail){
+        this.photographer=photographer;
+        this.category=category;
+        this.title=title;
+        this.content=content;
+        this.created=created;
+        this.thumbnail=thumbnail;
+    }
 
 }

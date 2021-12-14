@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
+//@AllArgsConstructor
 //@RequiredArgsConstructor
 public class Apply {
 
@@ -20,12 +20,12 @@ public class Apply {
     @Column(name="apply_idx")
     private Long applyIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="estimate_idx")
     @JsonManagedReference
     private Estimate estimate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;
@@ -35,4 +35,12 @@ public class Apply {
 
     @CreationTimestamp
     private Timestamp created;
+
+    @Builder
+    public Apply(Estimate estimate, Photographer photographer,String status,Timestamp created){
+        this.estimate=estimate;
+        this.photographer=photographer;
+        this.status=status;
+        this.created=created;
+    }
 }

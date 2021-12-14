@@ -32,14 +32,73 @@ spring:
     allow-bean-definition-overriding: true
   freemarker:
     cache: false
-  thymeleaf :
-    cache : false
-    enabled : true
-    prefix : classpath:/templates/
-    suffix : .html
+#  thymeleaf :
+#    cache : false
+#    enabled : true
+#    prefix : classpath:/templates/
+#    suffix : .html
 
 jwt:
   header: Autorization
   secret: UGxheURhdGEgRmluYWxQcm9qZWN0IFBJQ08gSldULVNlY3JldEtleQ0K7ZSM66CI7J20642w7J207YSwIOy1nOyihe2UhOuhnOygne2KuC0g7ZS87L2U
   token-validity-in-seconds: 86400
   #spring.profiles.include=oauth
+#spring:
+#
+#  profiles:
+#    active: local
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: false
+#    add-properties: false
+#
+#  freemarker:
+#    cache: false
+#
+#  jwt:
+#    secret: govlepel@$&
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        #      show_sql: true
+#        format_sql: true
+##        이슈 작성할 것 - 이미 정의된 Bean Overriding이 먹히지 않을때 사용
+#  main:
+#    allow-bean-definition-overriding: true
+#server:
+#  port: 80
+
+#spring:
+#
+#  profiles:
+#    active: local
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: false
+#    add-properties: false
+#
+#  freemarker:
+#    cache: false
+#
+#  jwt:
+#    secret: govlepel@$&
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        #      show_sql: true
+#        format_sql: true
+#  #        이슈 작성할 것 - 이미 정의된 Bean Overriding이 먹히지 않을때 사용
+#  main:
+#    allow-bean-definition-overriding: true
+#server:
+#  port: 80

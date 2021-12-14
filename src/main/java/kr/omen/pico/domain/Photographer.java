@@ -1,19 +1,14 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Builder
 @Entity
-@ToString
-@NoArgsConstructor
 @AllArgsConstructor
 //@RequiredArgsConstructor
 public class Photographer {
@@ -23,7 +18,6 @@ public class Photographer {
     @Column(name="photographer_idx")
     private Long photographerIdx;
 
-//    @ManyToOne
     @OneToOne
     @JoinColumn(name="user_idx")
     @JsonManagedReference
@@ -51,19 +45,20 @@ public class Photographer {
     @Column(length = 100)
     private boolean otherArea;
 
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Apply> applyList = new ArrayList<>();
+//    @OneToMany(mappedBy = "photographer" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<Apply> applyList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "photographer" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<Work> workList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "photographer" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<Review> reviewList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "photographer" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private List<PCategory> pCategoryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Work> workList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Review> reviewList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<PCategory> pCategoryList = new ArrayList<>();
 }
