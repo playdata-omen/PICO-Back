@@ -3,6 +3,8 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.sql.Timestamp;
@@ -103,6 +105,20 @@ public class ResponseDTO {
             this.aidx=apply.getApplyIdx();
             this.name=entity.getUser().getName();
             this.pCategoryList=pCategories;
+    /**
+     * 통합용 create ResponseDTO
+     */
+    @Data
+    @AllArgsConstructor
+    public static class BaseResponse{
+        boolean success;
+    }
+
+    public static class Create extends BaseResponse {
+        Long id;
+        public Create(Long id, Boolean success) {
+            super(success);
+            this.id = id;
         }
     }
 }
