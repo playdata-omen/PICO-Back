@@ -217,19 +217,5 @@ public class EstimateService {
         }
         return cancel;
     }
-
-    public boolean ignoreEstimate(Long estimateId){
-        Estimate estimate=estimateRepository.findById(estimateId).get();
-        Apply apply = applyRepository.findByEstimateAndStatus(estimate,"2");
-        boolean cancel = false;
-        try{
-            estimate.setStatus("5");
-            estimateRepository.save(estimate);
-            applyRepository.delete(apply);
-            cancel = true;
-        }catch (Exception e){
-
-        }
-        return cancel;
-    }
+    
 }

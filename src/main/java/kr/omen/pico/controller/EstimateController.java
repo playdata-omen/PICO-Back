@@ -67,17 +67,6 @@ public class EstimateController {
         }
     }
 
-    //지정견적 요청한 작가가 요청서를 받아들이지 않음(apply 삭제, estimate 상태 5로 변경)
-    @DeleteMapping("/estimate/ignoreEstimate/{estimateId}")
-    public String ignoreEstimate(@PathVariable Long estimateId){
-        boolean cancel = estimateService.ignoreEstimate(estimateId);
-        if(cancel){
-            return "견적서 지원하지않음 처리 성공";
-        }else{
-            return "견적서 지원하지않음 처리 실패";
-        }
-    }
-
     @CrossOrigin
     @GetMapping("/test")
     public String teetResponse() {
