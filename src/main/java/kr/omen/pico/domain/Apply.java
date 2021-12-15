@@ -1,18 +1,17 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
-@Setter
 @Entity
-@NoArgsConstructor
-//@AllArgsConstructor
-//@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Apply {
 
     @Id
@@ -22,15 +21,13 @@ public class Apply {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="estimate_idx")
-    @JsonManagedReference
     private Estimate estimate;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
-    @JsonManagedReference
     private Photographer photographer;
 
-    @Column(columnDefinition = "varchar(255) default '1'")
+    @Column(length = 1)
     private String status;
 
     @CreationTimestamp
@@ -39,10 +36,16 @@ public class Apply {
     private Boolean isApplied;
 
     @Builder
-    public Apply(Estimate estimate, Photographer photographer,String status,Timestamp created){
-        this.estimate=estimate;
-        this.photographer=photographer;
-        this.status=status;
-        this.created=created;
+    public Apply(Estimate estimate, Photographer photographer, String status, Timestamp created, Boolean isApplied) {
+        this.estimate = estimate;
+        this.photographer = photographer;
+        this.status = status;
+        this.created = created;
+        this.isApplied = isApplied;
+    }
+
+    public Apply update(String status) {
+        this.status = status;
+        return this;
     }
 }

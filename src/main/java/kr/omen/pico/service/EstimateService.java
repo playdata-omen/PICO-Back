@@ -4,7 +4,7 @@ import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,25 +12,20 @@ import java.util.Iterator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EstimateService {
 
-    @Autowired
-    private EstimateRepository estimateRepository;
+    private final EstimateRepository estimateRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-    @Autowired
-    private PhotographerRepository photographerRepository;
+    private final PhotographerRepository photographerRepository;
 
-    @Autowired
-    private ApplyRepository applyRepository;
+    private final ApplyRepository applyRepository;
 
-    @Autowired
-    private PCategoryRepository pCategoryRepository;
+    private final PCategoryRepository pCategoryRepository;
 
     //글로벌 견적요청 API
     //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
@@ -92,7 +87,7 @@ public class EstimateService {
                 Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
                 if (photographer == null)
                     continue;
-                if (photographer.isOtherArea()) {
+                if (photographer.getHasStudio()) {
                     plist.add(photographer);
                     iter.remove();
                     i++;
@@ -101,12 +96,12 @@ public class EstimateService {
             }
 
         for(Photographer photographer : plist){
-            Apply apply = new Apply();
-            apply.setEstimate(estimate);
-            apply.setStatus("1");
-            apply.setPhotographer(photographer);
-            apply.setIsApplied(false);
-            applyRepository.save(apply);
+            applyRepository.save(Apply.builder()
+                    .estimate(estimate)
+                    .status("1")
+                    .photographer(photographer)
+                    .isApplied(false)
+                    .build());
         }
 
         return responsedto;
@@ -115,21 +110,21 @@ public class EstimateService {
     //작가 지정 견적요청 API
     public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO){
 
-        Photographer photographer = photographerRepository.findById(estimateDTO.getPidx()).get();
+        Photographer photographer = photographerRepository.findById(estimateDTO.getPhotographerIdx()).get();
         Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
         User user = userRepository.findById(estimateDTO.getUser()).get();
 
         Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
-        ResponseDTO.EstimateResponse responsedto = new ResponseDTO.EstimateResponse(estimate);
+        ResponseDTO.EstimateResponse responseDTO = new ResponseDTO.EstimateResponse(estimate);
 
-        Apply apply = new Apply();
-        apply.setStatus("2");
-        apply.setEstimate(estimate);
-        apply.setPhotographer(photographer);
-        apply.setIsApplied(false);
-        applyRepository.save(apply);
+        applyRepository.save(Apply.builder()
+                .status("2")
+                .estimate(estimate)
+                .photographer(photographer)
+                .isApplied(false)
+                .build());
 
-        return responsedto;
+        return responseDTO;
     }
 
     //유저가 요청한 견적 요청 list조회
@@ -148,7 +143,7 @@ public class EstimateService {
 
     //견적요청 상세 list 조회
     //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
-    public ResponseDTO.DetailResponse getUserOneEstimate(Long estimateId){
+    public ResponseDTO.EstimateDetailResponse getUserOneEstimate(Long estimateId){
         Estimate estimate = estimateRepository.findById(estimateId).get();
         List<Apply> applies = applyRepository.findAllByEstimate(estimate);
         List<ResponseDTO.SimplePhotographerCard> names = new ArrayList<>();
@@ -181,7 +176,7 @@ public class EstimateService {
             }
         }
 
-        return  new ResponseDTO.DetailResponse(estimate,names);
+        return  new ResponseDTO.EstimateDetailResponse(estimate,names);
     }
 
 
@@ -207,7 +202,7 @@ public class EstimateService {
         boolean cancel = false;
         try {
             for(Apply apply : list){
-                apply.setStatus("6");
+                apply.update("6");
                 applyRepository.save(apply);
             }
             estimateRepository.delete(estimate);

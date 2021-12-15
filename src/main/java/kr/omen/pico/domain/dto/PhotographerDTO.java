@@ -1,61 +1,37 @@
 package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.Photographer;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import kr.omen.pico.domain.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class PhotographerDTO {
-
-    private Long idx;
-    private Long user;
-    private Boolean isStudio;
-    private Float grade;
-    private String activityCity;
-    private String activityAddress;
-    private String studioCity;
-    private String studioAddress;
-    private Boolean otherArea;
-
-    public PhotographerDTO(Photographer entity){
-        this.idx=entity.getPhotographerIdx();
-        this.user=entity.getUser().getUserIdx();
-        this.isStudio=entity.isStudio();
-        this.grade=entity.getGrade();
-        this.activityCity=entity.getActivityCity();
-        this.activityAddress=entity.getActivityAddress();
-        this.studioCity=entity.getStudioCity();
-        this.studioAddress=entity.getStudioAddress();
-        this.otherArea=entity.isOtherArea();
-    }
 
     @Getter
     @Setter
     public static class PhotographerRegister {
         Long userIdx;
         Long photographerIdx;
-        Boolean isStudio;
+        Boolean hasStudio;
         String activityCity;
         String activityAddress;
         String studioCity;
         String studioAddress;
-        Boolean otherArea;
+        Boolean isOtherArea;
 
         public Photographer toEntity(User user) {
             return Photographer.builder()
                     .user(user)
                     .photographerIdx(photographerIdx)
-                    .isStudio(isStudio)
+                    .hasStudio(hasStudio)
                     .activityCity(activityCity)
                     .activityAddress(activityAddress)
                     .studioCity(studioCity)
                     .studioAddress(studioAddress)
-                    .otherArea(otherArea)
+                    .isOtherArea(isOtherArea)
                     .build();
         }
     }
@@ -65,11 +41,11 @@ public class PhotographerDTO {
     public static class PhotographerInfo {
         Long photographerIdx;
         Float grade;
-        Boolean isStudio;
+        Boolean hasStudio;
         String activityCity;
         String activityAddress;
         String studioCity;
         String studioAddress;
-        Boolean otherArea;
+        Boolean isOtherArea;
     }
 }

@@ -1,16 +1,12 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
-//@RequiredArgsConstructor
 public class Photo {
 
     @Id
@@ -20,7 +16,6 @@ public class Photo {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="work_idx")
-    @JsonManagedReference
     private Work work;
 
     @Column(length = 100)
@@ -33,7 +28,7 @@ public class Photo {
     private String fileSize;
 
     @Builder
-    public Photo(Work work, String title, String storedFilePath,String fileSize){
+    public Photo(Work work, String title, String storedFilePath, String fileSize) {
         this.work=work;
         this.title=title;
         this.storedFilePath=storedFilePath;

@@ -44,7 +44,7 @@ public class ResponseDTO {
 
     //유저가 견적서 클릭 시 보여줄 상세페이지와 지원한 작가목록 DTO
     @Data
-    public static class DetailResponse {
+    public static class EstimateDetailResponse {
         private Long id;
         private Long user;
         private Long category;
@@ -57,7 +57,7 @@ public class ResponseDTO {
         private String status;
         private List<SimplePhotographerCard> applyList;
 
-        public DetailResponse(Estimate entity, List<SimplePhotographerCard> applies) {
+        public EstimateDetailResponse(Estimate entity, List<SimplePhotographerCard> applies) {
             this.id = entity.getEstimateIdx();
             this.user = entity.getUser().getUserIdx();
             this.category = entity.getCategory().getCategoryIdx();
