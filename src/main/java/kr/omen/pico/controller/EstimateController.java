@@ -50,15 +50,15 @@ public class EstimateController {
     }
 
     //작가가 받은(할당된) 견적서 목록 출력
-    @GetMapping("/estimate/getPhotographerAll/{pId}")
-    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(@PathVariable Long pId){
-        return estimateService.getPhotographerAllEstimate(pId);
+    @GetMapping("/estimate/getPhotographerAll/{photographerId}")
+    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(@PathVariable Long photographerId){
+        return estimateService.getPhotographerAllEstimate(photographerId);
     }
 
     //사용자가 요청한 견적서 취소(삭제)(연결되어있는 Apply리스트들은 status의 상태를 7로 변경)
     @DeleteMapping("/estimate/cancelEstimate/{estimateId}")
     public String deleteMyEstimate(@PathVariable Long estimateId){
-        boolean cancel = estimateService.deleteMyEstimate(estimateId);
+        Boolean cancel = estimateService.deleteMyEstimate(estimateId);
         if(cancel){
             return "삭제성공";
         }else{
@@ -66,10 +66,15 @@ public class EstimateController {
         }
     }
 
-    @CrossOrigin
-    @GetMapping("/test")
-    public String teetResponse() {
-        System.out.println("요청");
-        return "호출 성공";
+    //의뢰확정(해당 견적서 상태 3번/선택된 작가 지원상태3번/견적서에 지원했지만, 선택되지 못한 작가들 상태 4번 으로 번경)
+    @PutMapping("/estimate/confirmOrder/{estimateId}/{photographerId}")
+    public String confirmOrder(@PathVariable Long estimateId,@PathVariable Long photographerId){
+        Boolean flag = estimateService.confirmOrder(estimateId,photographerId);
+        if(flag){
+            return "의뢰확정 성공";
+        }else{
+            return "의뢰확정 실패";
+        }
     }
+
 }

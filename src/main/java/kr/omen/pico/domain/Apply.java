@@ -48,4 +48,9 @@ public class Apply {
         this.status = status;
         return this;
     }
+
+    public Apply updateApplied(Boolean isApplied){
+        this.isApplied=isApplied;
+        return this;
+    }
 }
