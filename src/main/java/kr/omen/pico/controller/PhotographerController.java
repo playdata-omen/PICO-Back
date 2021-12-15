@@ -20,8 +20,8 @@ public class PhotographerController {
         return photographerService.photographerRegister(data);
     }
   
-    @GetMapping("photographer/getInfo/{uidx}")
-    public PhotographerDTO getPhotographerInfo(@PathVariable Long uidx){
-        return photographerService.getPhotographerInfo(uidx);
+    @GetMapping("photographer/getInfo/{userIdx}")
+    public PhotographerDTO.PhotographerInfo getPhotographerInfo(@PathVariable Long userIdx){
+        return photographerService.getPhotographerInfo(userIdx);
     }
 }
