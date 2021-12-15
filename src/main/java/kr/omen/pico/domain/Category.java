@@ -8,8 +8,6 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
-//@RequiredArgsConstructor
 public class Category {
 
     @Id

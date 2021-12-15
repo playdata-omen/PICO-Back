@@ -8,11 +8,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
-//@RequiredArgsConstructor
 public class Review {
 
     @Id
@@ -37,10 +34,10 @@ public class Review {
     private String content;
 
     @Column
-    private float grade;
+    private Float grade;
 
     @Builder
-    public Review(User user, Photographer photographer,Timestamp created, String content, float grade){
+    public Review(User user, Photographer photographer,Timestamp created, String content, Float grade) {
         this.user=user;
         this.photographer=photographer;
         this.created=created;

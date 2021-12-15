@@ -59,11 +59,11 @@ public class UserService {
                     .email(user.getEmail())
                     .phone(user.getPhone())
                     .nickName(user.getNickName())
-                    .isRegister(user.isRegister())
-                    .isPhotographer(user.isPhotographer())
+                    .isRegister(user.getIsRegister())
+                    .isPhotographer(user.getIsPhotographer())
                     .build();
 
-            if (user.isRegister()) {
+            if (user.getIsRegister()) {
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
 
@@ -88,18 +88,13 @@ public class UserService {
         return user;
     }
 
-    // 유저 일반 회원가입(isRegister가 false일때)
+    // 유저 일반 회원가입(isRegister가 false일때) 및 회원정보 수정
     public UserDTO.LoginInfo userRegister(UserDTO.UserInfo data) {
         User user = userRepository.findById(data.getUserIdx()).get();
         UserDTO.LoginInfo result = null;
 
         if (user != null) {
-            user.setEmail(data.getEmail());
-            user.setName(data.getName());
-            user.setNickName(data.getNickName());
-            user.setPhone(data.getPhone());
-            user.setPhotographer(data.getIsPhotographer());
-            user.setRegister(true);
+            user.update(data);
 
             user = userRepository.save(user);
 
@@ -109,8 +104,8 @@ public class UserService {
                     .email(user.getEmail())
                     .phone(user.getPhone())
                     .nickName(user.getNickName())
-                    .isRegister(user.isRegister())
-                    .isPhotographer(user.isPhotographer())
+                    .isRegister(user.getIsRegister())
+                    .isPhotographer(user.getIsPhotographer())
                     .build();
 
             UsernamePasswordAuthenticationToken authentication =

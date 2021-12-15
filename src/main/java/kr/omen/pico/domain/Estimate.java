@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-//@AllArgsConstructor
-//@RequiredArgsConstructor
 public class Estimate {
 
     @Id

@@ -3,17 +3,16 @@ package kr.omen.pico.controller;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.EstimateService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class EstimateController {
 
-    @Autowired
-    private EstimateService estimateService;
+    private final EstimateService estimateService;
 
     //Oauth 토큰 및 세션 등에 User 객체가 저장되지 않은상태로 수동으로 사용자 idx/ 카테고리 idx 입력받는 방식으로
     //진행한 test 코드. 추후에 메소드가 완성되려면
@@ -26,12 +25,12 @@ public class EstimateController {
     @PostMapping(value = "/estimate/add")
     public ResponseDTO.EstimateResponse insertGlobalEstimate(@RequestBody EstimateDTO.Create pdto){
         //글로벌 견적일 경우
-        if(pdto.getPidx()==null){
+        if(pdto.getPhotographerIdx()==null){
             pdto.setStatus("1");
             return estimateService.createGlobalEstimate(pdto);
         }
         //작가지정일 경우
-        else if(pdto.getPidx()!=null){
+        else if(pdto.getPhotographerIdx()!=null){
             pdto.setStatus("2");
             return estimateService.createPickedEstimate(pdto);
         }
@@ -46,7 +45,7 @@ public class EstimateController {
 
     //견적서 목록중 하나 클릭시 해당 견적서 상세 내용 및 지원한 작가목록(is_applied가 true인)출력
     @GetMapping("/estimate/getUserOne/{estimateId}")
-    public ResponseDTO.DetailResponse getUserOneEstimate(@PathVariable Long estimateId){
+    public ResponseDTO.EstimateDetailResponse getUserOneEstimate(@PathVariable Long estimateId){
         return estimateService.getUserOneEstimate(estimateId);
     }
 

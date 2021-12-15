@@ -16,7 +16,7 @@ public class EstimateDTO {
     @Getter
     @Setter
     @RequiredArgsConstructor
-    public static class Create{
+    public static class Create {
         private Long idx;
         private Long user;
         private Long category;
@@ -27,9 +27,9 @@ public class EstimateDTO {
         private LocalDate startDate;
         private LocalDate endDate;
         private String status;
-        private Long pidx;
+        private Long photographerIdx;
 
-        public Create(Estimate entity,Long photographer){
+        public Create(Estimate entity,Long photographer) {
             idx = entity.getEstimateIdx();
             user = entity.getUser().getUserIdx();
             category=entity.getCategory().getCategoryIdx();
@@ -40,7 +40,7 @@ public class EstimateDTO {
             startDate=entity.getStartDate();
             endDate=entity.getEndDate();
             status=entity.getStatus();
-            pidx=photographer;
+            photographerIdx=photographer;
         }
 
         public Estimate toEntity(User user,Category category){
