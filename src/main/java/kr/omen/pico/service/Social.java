@@ -14,8 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 public class Social {
 
-//    private static RestTemplate restTemplate = new RestTemplate();
-
     public static OauthUserInfo kakao (String code) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -24,6 +22,7 @@ public class Social {
         data.add("grant_type", "authorization_code");
         data.add("client_id", "6e429db2f6dd73b43889d2bdb5b47ad7");
         data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
+//        data.add("redirect_uri", "http://localhost:3000/oauth/callback/kakao");
         data.add("code", code);
         data.add("client_secret", "LBBCcs9hdryi9wZrOm8z1fvV6POuST2E");
 
@@ -63,6 +62,7 @@ public class Social {
         data.add("grant_type", "authorization_code");
         data.add("client_id", "DfreIVmVCHEh9U5dI5zU");
         data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
+//        data.add("redirect_uri", "http://localhost:3000/oauth/callback/naver");
         data.add("code", code);
         data.add("client_secret", "ULP15nQ8nr");
 
