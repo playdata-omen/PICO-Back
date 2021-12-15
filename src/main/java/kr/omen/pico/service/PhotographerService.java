@@ -52,6 +52,7 @@ public class PhotographerService {
 
         }
         photographer = photographerRepository.save(data.toEntity(user));
+        // 작가 카테고리 추가 작업 필요
         PhotographerDTO.PhotographerInfo result = PhotographerDTO.PhotographerInfo.builder()
                 .photographerIdx(photographer.getPhotographerIdx())
                 .grade(photographer.getGrade())
