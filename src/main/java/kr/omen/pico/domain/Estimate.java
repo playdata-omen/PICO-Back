@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Estimate {
@@ -68,4 +67,8 @@ public class Estimate {
         this.status=status;
     }
 
+    public Estimate updateStatus(String status){
+        this.status=status;
+        return this;
+    }
 }
