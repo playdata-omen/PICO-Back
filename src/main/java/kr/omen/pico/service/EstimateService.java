@@ -207,7 +207,7 @@ public class EstimateService {
         boolean cancel = false;
         try {
             for(Apply apply : list){
-                apply.setStatus("7");
+                apply.setStatus("6");
                 applyRepository.save(apply);
             }
             estimateRepository.delete(estimate);
