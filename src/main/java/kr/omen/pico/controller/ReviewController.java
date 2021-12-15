@@ -1,10 +1,16 @@
 package kr.omen.pico.controller;
 
+import kr.omen.pico.domain.Review;
+import kr.omen.pico.domain.dto.ResponseDTO;
+import kr.omen.pico.domain.dto.ReviewDTO;
 import kr.omen.pico.service.ApplyService;
 import kr.omen.pico.service.PhotographerService;
 import kr.omen.pico.service.ReviewService;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,9 +48,9 @@ public class ReviewController {
 //        }
 //        return new ResponseDTO.Create(saveId, result);
 //    }
-//    @PostMapping("/review/enroll/{pID}")
-//    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
-//        Review saveReview = reviewService.saveReview(dto, pID);
-//
-//    }
+    @PostMapping("/review/enroll/{pID}")
+    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
+        Review saveReview = reviewService.saveReview(dto, pID);
+        return new ResponseDTO.Create(saveReview.getReviewIdx(), true);
+    }
 }

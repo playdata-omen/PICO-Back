@@ -109,19 +109,22 @@ public class ResponseDTO {
         /**
          * 통합용 create ResponseDTO
          */
-        @Data
-        @AllArgsConstructor
-        public static class BaseResponse {
-            boolean success;
-        }
 
-        public static class Create extends BaseResponse {
-            Long id;
+    }
+    @Data
+    @AllArgsConstructor
+    public static class BaseResponse {
+        boolean success;
+    }
 
-            public Create(Long id, Boolean success) {
-                super(success);
-                this.id = id;
-            }
+    public static class Create extends BaseResponse {
+        Long id;
+
+        public Create(Long id, Boolean success) {
+            super(success);
+            this.id = id;
         }
     }
+
+
 }

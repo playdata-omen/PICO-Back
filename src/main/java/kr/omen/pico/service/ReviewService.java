@@ -11,7 +11,6 @@ import kr.omen.pico.domain.Review;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -27,15 +26,15 @@ public class ReviewService {
     private final ApplyRepository applyRepository;
     private final PhotographerRepository photographerRepository;
 
-    public Long saveReview(Review review) throws Exception.ArgumentNullException{
-        Review saveReview = null;
-
-        if(review == null){
-            throw new Exception.ArgumentNullException("Review can't be  null");
-        }
-        saveReview = reviewRepository.save(review);
-        return saveReview.getReviewIdx();
-    }
+//    public Long saveReview(Review review) throws Exception.ArgumentNullException{
+//        Review saveReview = null;
+//
+//        if(review == null){
+//            throw new Exception.ArgumentNullException("Review can't be  null");
+//        }
+//        saveReview = reviewRepository.save(review);
+//        return saveReview.getReviewIdx();
+//    }
 
     public boolean isNotYetReview(User user, Photographer photographer){
         boolean flag = false;
@@ -45,14 +44,16 @@ public class ReviewService {
         return flag;
     }
 
-    public void saveReview(ReviewDTO.Create dto, Long pID) {
+    public Review saveReview(ReviewDTO.Create dto, Long pID) {
 
+        Review review = null;
         Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
         Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
         User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
 
         if(isNotYetReview(user, photographer)){
-            Review review = dto.toEntity(user, photographer);
+            review = reviewRepository.save(new Review(user, photographer,dto.getCreated(),dto.getContent(), dto.getGrade()));
         }
+        return review;
     }
 }
