@@ -11,7 +11,6 @@ import kr.omen.pico.domain.Review;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -19,10 +18,6 @@ import org.springframework.stereotype.Service;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-//    private final UserService userService;
-//    private final ApplyService applyService;
-//    private final PhotographerService photographerService;
-
     private final UserRepository userRepository;
     private final ApplyRepository applyRepository;
     private final PhotographerRepository photographerRepository;
