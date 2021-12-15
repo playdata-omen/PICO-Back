@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class UserDTO {
+
     @Getter
     public static class Login {
         String code;
@@ -44,8 +45,8 @@ public class UserDTO {
         String email;
         String phone;
         String nickName;
-        boolean isRegister;
-        boolean isPhotographer;
+        Boolean isRegister;
+        Boolean isPhotographer;
         String accessToken;
         String refreshToken;
     }
@@ -61,7 +62,6 @@ public class UserDTO {
 
         public User toEntity() {
             return User.builder()
-                    .userIdx(userIdx)
                     .name(name)
                     .email(email)
                     .phone(phone)

@@ -8,11 +8,8 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Getter
-@Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-//@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Review {
 
     @Id
@@ -20,12 +17,12 @@ public class Review {
     @Column(name="review_idx")
     private Long reviewIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;
@@ -37,5 +34,14 @@ public class Review {
     private String content;
 
     @Column
-    private float grade;
+    private Float grade;
+
+    @Builder
+    public Review(User user, Photographer photographer,Timestamp created, String content, Float grade) {
+        this.user=user;
+        this.photographer=photographer;
+        this.created=created;
+        this.content=content;
+        this.grade=grade;
+    }
 }

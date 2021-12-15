@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 public class PhotographerController {
@@ -16,5 +18,10 @@ public class PhotographerController {
     @PostMapping("/photographer/register")
     public PhotographerDTO.PhotographerInfo photographerRegister(@RequestBody PhotographerDTO.PhotographerRegister data) {
         return photographerService.photographerRegister(data);
+    }
+  
+    @GetMapping("photographer/getInfo/{userIdx}")
+    public PhotographerDTO.PhotographerInfo getPhotographerInfo(@PathVariable Long userIdx){
+        return photographerService.getPhotographerInfo(userIdx);
     }
 }

@@ -2,43 +2,36 @@ package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 public class PhotographerDTO {
-
-    private long user;
-    private boolean isStudio;
-    private float grade;
-    private String activityCity;
-    private String activityAddress;
-    private String studioCity;
-    private String studioAddress;
-    private boolean otherArea;
 
     @Getter
     @Setter
     public static class PhotographerRegister {
-        long userIdx;
-        long photographerIdx;
-        Boolean isStudio;
+        Long userIdx;
+        Long photographerIdx;
+        Boolean hasStudio;
         String activityCity;
         String activityAddress;
         String studioCity;
         String studioAddress;
-        Boolean otherArea;
+        Boolean isOtherArea;
 
         public Photographer toEntity(User user) {
             return Photographer.builder()
                     .user(user)
                     .photographerIdx(photographerIdx)
-                    .isStudio(isStudio)
+                    .hasStudio(hasStudio)
                     .activityCity(activityCity)
                     .activityAddress(activityAddress)
                     .studioCity(studioCity)
                     .studioAddress(studioAddress)
-                    .otherArea(otherArea)
+                    .isOtherArea(isOtherArea)
                     .build();
         }
     }
@@ -48,11 +41,11 @@ public class PhotographerDTO {
     public static class PhotographerInfo {
         Long photographerIdx;
         Float grade;
-        Boolean isStudio;
+        Boolean hasStudio;
         String activityCity;
         String activityAddress;
         String studioCity;
         String studioAddress;
-        Boolean otherArea;
+        Boolean isOtherArea;
     }
 }

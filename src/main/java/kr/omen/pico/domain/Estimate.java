@@ -1,6 +1,5 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -8,16 +7,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-//@RequiredArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Estimate {
 
     @Id
@@ -25,12 +19,12 @@ public class Estimate {
     @Column(name="estimate_idx")
     private Long estimateIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="category_idx")
     @JsonManagedReference
     private Category category;
@@ -56,8 +50,22 @@ public class Estimate {
     @Column(columnDefinition = "varchar(255) default '1'")
     private String status;
 
-    @OneToMany(mappedBy = "estimate")
-    @JsonBackReference
-    List<Apply> applyList = new ArrayList<>();
+//    @OneToMany(mappedBy = "estimate" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Apply> applyList = new ArrayList<>();
+
+    @Builder
+    public Estimate(User user, Category category, String content, Timestamp created,String city,String address,
+                    LocalDate startDate,LocalDate endDate,String status){
+        this.user=user;
+        this.category=category;
+        this.content=content;
+        this.created=created;
+        this.city=city;
+        this.address=address;
+        this.startDate=startDate;
+        this.endDate=endDate;
+        this.status=status;
+    }
 
 }

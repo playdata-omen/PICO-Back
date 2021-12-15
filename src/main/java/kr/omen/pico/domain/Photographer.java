@@ -1,21 +1,15 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
-@Setter
-@Builder
 @Entity
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
-//@RequiredArgsConstructor
+@NoArgsConstructor (access = AccessLevel.PROTECTED)
 public class Photographer {
 
     @Id
@@ -23,17 +17,15 @@ public class Photographer {
     @Column(name="photographer_idx")
     private Long photographerIdx;
 
-//    @ManyToOne
     @OneToOne
     @JoinColumn(name="user_idx")
-    @JsonManagedReference
     private User user;
 
-    @Column(name="is_studio")//ERD 에는 studio로 되어있지만 bool 타입은 is_로 통일하기로 합의.
-    private boolean isStudio;
+    @Column(name="is_studio")
+    private Boolean hasStudio;
 
     @Column
-    private float grade;
+    private Float grade;
 
     @Column(length = 100)
     private String activityCity;
@@ -49,21 +41,18 @@ public class Photographer {
 
     // 활동영역 타지역 협의가능 여부
     @Column(length = 100)
-    private boolean otherArea;
+    private Boolean isOtherArea;
 
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Apply> applyList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Work> workList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<Review> reviewList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "photographer")
-    @JsonBackReference
-    List<PCategory> pCategoryList = new ArrayList<>();
+    @Builder
+    public Photographer(Long photographerIdx, User user, Boolean hasStudio, Float grade, String activityCity, String activityAddress, String studioCity, String studioAddress, Boolean isOtherArea) {
+        this.photographerIdx = photographerIdx;
+        this.user = user;
+        this.hasStudio = hasStudio;
+        this.grade = grade;
+        this.activityCity = activityCity;
+        this.activityAddress = activityAddress;
+        this.studioCity = studioCity;
+        this.studioAddress = studioAddress;
+        this.isOtherArea = isOtherArea;
+    }
 }

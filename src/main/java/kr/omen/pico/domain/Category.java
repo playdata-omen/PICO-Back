@@ -1,21 +1,13 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-//@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category {
 
     @Id
@@ -26,15 +18,20 @@ public class Category {
     @Column(length = 100)
     private String kind;
 
-    @OneToMany(mappedBy = "category")
-    @JsonBackReference
-    List<Estimate> estimateList = new ArrayList<>();
+//    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Estimate> estimateList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<Work> workList = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "category" , cascade = CascadeType.ALL)
+//    @JsonBackReference
+//    private final List<PCategory> pCategoryList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category")
-    @JsonBackReference
-    List<Work> workList = new ArrayList<>();
-
-    @OneToMany(mappedBy = "category")
-    @JsonBackReference
-    List<PCategory> pCategoryList = new ArrayList<>();
+    @Builder
+    public Category(String kind){
+        this.kind=kind;
+    }
 }
