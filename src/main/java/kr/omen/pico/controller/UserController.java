@@ -30,6 +30,7 @@ public class UserController {
         User result = userService.getUser();
 
         return result;
+
     }
 
 }

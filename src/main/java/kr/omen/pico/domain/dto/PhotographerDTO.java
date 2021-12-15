@@ -1,10 +1,13 @@
 package kr.omen.pico.domain.dto;
 
+import kr.omen.pico.domain.PCategory;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,6 +24,7 @@ public class PhotographerDTO {
         String studioCity;
         String studioAddress;
         Boolean isOtherArea;
+        List<Long> category;
 
         public Photographer toEntity(User user) {
             return Photographer.builder()
@@ -47,5 +51,6 @@ public class PhotographerDTO {
         String studioCity;
         String studioAddress;
         Boolean isOtherArea;
+        PCategory pCategory;
     }
 }
