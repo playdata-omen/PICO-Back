@@ -32,7 +32,8 @@ public class Photographer {
 
     @Column(length = 100)
     private String activityAddress;
-
+    
+    // 변수명 변경 가능성 있음
     @Column(length= 100)
     private String studioCity;
 
