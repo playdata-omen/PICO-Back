@@ -8,10 +8,7 @@ import kr.omen.pico.service.PhotographerService;
 import kr.omen.pico.service.ReviewService;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -53,4 +50,23 @@ public class ReviewController {
         Review saveReview = reviewService.saveReview(dto, pID);
         return new ResponseDTO.Create(saveReview.getReviewIdx(), true);
     }
+
+    @DeleteMapping("/review/delete/{reviewIdx}/photographer/{photographerIdx}")
+    public ResponseDTO.Delete deleteReview(@PathVariable Long reviewIdx, @PathVariable Long photographerIdx){
+        boolean result = reviewService.deleteReview(reviewIdx, photographerIdx);
+        return new ResponseDTO.Delete(result);
+    }
+
+    @PutMapping("/review/update/{reviewIdx}/photographer/{photographerIdx}")
+    public ResponseDTO.Update deleteReview(@RequestBody ReviewDTO.Update dto, @PathVariable Long reviewIdx, @PathVariable Long photographerIdx){
+        boolean result = reviewService.updateReview(dto, reviewIdx, photographerIdx);
+        return new ResponseDTO.Update(result);
+    }
+
+    @GetMapping("/review/average/{photographerIdx}")
+    public ResponseDTO.gradeAverage gradeAverage(@PathVariable Long photographerIdx){
+        Float gradeAverage = reviewService.gradeAverage(photographerIdx);
+        return new ResponseDTO.gradeAverage(gradeAverage);
+    }
+
 }

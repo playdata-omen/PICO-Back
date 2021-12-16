@@ -44,4 +44,10 @@ public class Review {
         this.content=content;
         this.grade=grade;
     }
+
+    public Review update(String content, Float grade){
+        this.content = content;
+        this.grade = grade;
+        return this;
+    }
 }

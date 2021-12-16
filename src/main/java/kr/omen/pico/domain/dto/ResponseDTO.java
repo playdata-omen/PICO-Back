@@ -126,5 +126,22 @@ public class ResponseDTO {
         }
     }
 
+    public static class Delete extends BaseResponse {
+        public Delete(Boolean success){
+            super(success);
+        }
+    }
+
+    public static class Update extends BaseResponse {
+        public Update(Boolean success) {
+            super(success);
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class gradeAverage {
+        Float grade;
+    }
 
 }
