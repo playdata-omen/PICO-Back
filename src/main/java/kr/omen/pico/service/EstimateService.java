@@ -240,4 +240,28 @@ public class EstimateService {
         return flag;
     }
 
+    public Boolean confirmEstimate(Long estimateId,Long photographerId){
+        Estimate estimate = estimateRepository.findById(estimateId).get();
+        Photographer photographer = photographerRepository.findById(photographerId).get();
+        Boolean flag = false;
+
+        Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
+        try {
+            if(apply.getStatus().equals("3") && estimate.getStatus().equals("3")) {
+                apply.update("5");
+                applyRepository.save(apply);
+                estimate.updateStatus("4");
+                estimateRepository.save(estimate);
+                flag = true;
+            }else{
+                return flag;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
+    }
+
 }

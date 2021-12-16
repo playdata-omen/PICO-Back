@@ -22,4 +22,17 @@ public class ApplyController {
             return "지원 실패";
         }
     }
+
+    //할당된 작가지정 견적 요청에 지원하지않음(거절함)
+    @PutMapping("apply/reject/{estimateId}/{photographerId}")
+    public String rejectEstimate(@PathVariable Long estimateId,@PathVariable Long photographerId){
+        Boolean flag = applyService.rejectEstimate(estimateId,photographerId);
+        if(flag){
+            return "거절 완료";
+        }else{
+            return "거절 실패";
+        }
+    }
+
+
 }

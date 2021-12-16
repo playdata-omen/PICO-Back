@@ -77,4 +77,15 @@ public class EstimateController {
         }
     }
 
+    //거래완료(해당 견적서 상태 4번/선택된 작가 지원상태 5번으로 변경)
+    @PutMapping("/estimate/confirmEstimate/{estimateId}/{photographerId}")
+    public String confirmEstimate(@PathVariable Long estimateId,@PathVariable Long photographerId){
+        Boolean flag = estimateService.confirmEstimate(estimateId,photographerId);
+        if(flag){
+            return "거래확정 성공";
+        }else{
+            return "거래확정 실패";
+        }
+    }
+
 }
