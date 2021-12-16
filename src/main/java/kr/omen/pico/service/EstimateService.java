@@ -230,6 +230,10 @@ public class EstimateService {
                     apply.update("3");
                     applyRepository.save(apply);
                 }
+                if(!apply.getIsApplied()){
+                    apply.update("4");
+                    applyRepository.save(apply);
+                }
             }
             flag = true;
 

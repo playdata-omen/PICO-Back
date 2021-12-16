@@ -16,11 +16,11 @@ public class Work {
     @Column(name="work_idx")
     private Long workIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="photographer_idx")
     private Photographer photographer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_idx")
     private Category category;
 
