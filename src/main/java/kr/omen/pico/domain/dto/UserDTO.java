@@ -32,6 +32,8 @@ public class UserDTO {
                     .email(email)
                     .phone(phone)
                     .role(Role.ROLE_USER)
+                    .isRegister(false)
+                    .isPhotographer(false)
                     .build();
         }
     }
