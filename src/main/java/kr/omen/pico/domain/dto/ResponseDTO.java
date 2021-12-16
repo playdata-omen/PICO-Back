@@ -3,6 +3,7 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.Review;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -142,6 +143,15 @@ public class ResponseDTO {
     @AllArgsConstructor
     public static class gradeAverage {
         Float grade;
+    }
+
+    @Data
+    public static class reviewListResponse{
+        private List<Review> reviewList;
+
+        public reviewListResponse(List<Review> reviewList) {
+            this.reviewList = reviewList;
+        }
     }
 
 }

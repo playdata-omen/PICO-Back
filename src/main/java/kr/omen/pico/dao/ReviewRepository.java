@@ -10,6 +10,5 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     Review findByUserAndPhotographer(User user, Photographer photographer);
-//    Review findByApplyAndPhotographer(Apply apply, Photographer photographer);
     List<Review> findAllByPhotographer(Photographer photographer);
 }

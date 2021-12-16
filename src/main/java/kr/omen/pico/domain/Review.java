@@ -17,12 +17,12 @@ public class Review {
     @Column(name="review_idx")
     private Long reviewIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="photographer_idx")
     @JsonManagedReference
     private Photographer photographer;

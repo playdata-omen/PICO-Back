@@ -1,6 +1,5 @@
 package kr.omen.pico.service;
 
-import kr.omen.pico.config.exception.Exception;
 import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.ReviewRepository;
@@ -14,25 +13,23 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.constraints.Null;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-//    private final UserService userService;
-//    private final ApplyService applyService;
-//    private final PhotographerService photographerService;
-
     private final UserRepository userRepository;
     private final ApplyRepository applyRepository;
     private final PhotographerRepository photographerRepository;
 
-
-
     public boolean isNotYetReview(User user, Photographer photographer){
+
         boolean flag = false;
+
         Review review = reviewRepository.findByUserAndPhotographer(user, photographer);
         if(review == null){
             flag = true;
@@ -53,20 +50,20 @@ public class ReviewService {
         Photographer photographer = photographerRepository.findById(pID).get();
         User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
 
-//        if(isNotYetReview(user, photographer) && apply.getStatus().equals("6")){
-        System.out.println(apply.getStatus());
 //        apply 상태가 5일때만 댓글 달 수 있는 상태 = 5번일때만 리뷰작성 가능
 //        리뷰가 작성되면 5-> 6 , 6은 매칭됐지만 댓글이 달리지 않은 상태
-        if(apply.getStatus().equals("5")){
-            apply.update("6");
-            review = reviewRepository.save(new Review(user, photographer,dto.getCreated(),dto.getContent(), dto.getGrade()));
-
-        }else if(apply.getStatus().equals("6")){
-            System.out.println("이미 리뷰를 작성하였습니다.");
-        }else{
-            System.out.println("체결된 지원만 리뷰를 작성할 수 없습니다..");
-        }
-        return review;
+        try {
+            if (apply.getStatus().equals("5")) {
+                apply.update("6");
+                review = reviewRepository.save(new Review(user, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
+            } else if (apply.getStatus().equals("6")) {
+                System.out.println("이미 리뷰를 작성하였습니다.");
+            } else {
+                System.out.println("체결된 지원만 리뷰를 작성할 수 없습니다..");
+            }
+        }catch(NullPointerException e){
+//            e.printStackTrace();
+        }return review;
     }
 
     /*
@@ -74,25 +71,28 @@ public class ReviewService {
      */
     @Transactional
     public boolean deleteReview(Long reviewIdx, Long photographerIdx){
+
         boolean result = false;
+
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Review> reviewList = reviewRepository.findAllByPhotographer(photographer);
 
-        for(Review review2 : reviewList){
-            System.out.println("dkkkkkkkkkkkkkkkkk" + review2.getReviewIdx());
-            if(reviewIdx.equals(review2.getReviewIdx())){
+        try{
+            for(Review review2 : reviewList) {
+                if (reviewIdx.equals(review2.getReviewIdx())) {
 
-                Review review = reviewRepository.findById(review2.getReviewIdx()).get();
-                User user = userRepository.findById(review.getUser().getUserIdx()).get();
+                    Review review = reviewRepository.findById(review2.getReviewIdx()).get();
+                    User user = userRepository.findById(review.getUser().getUserIdx()).get();
 
-                System.out.println("review2 " + review2.getReviewIdx());
-                System.out.println("review " + review.getReviewIdx());
-                System.out.println("user" + user.getUserIdx());
-                reviewRepository.deleteById(review.getReviewIdx());
-                result = true;
-            }else {
-                System.out.println("자신이 작성한 리뷰만 삭제할 수 있습니다.");
+                    reviewRepository.deleteById(review.getReviewIdx());
+                    result = true;
+                } else {
+                    System.out.println("자신이 작성하지 않았거나  없는 리뷰입니다.");
+                }
             }
+        }catch (Exception e){
+//            e.printStackTrace();
+            System.out.println("해당리뷰가 존재하지 않습니다.");
         }
         return result;
     }
@@ -102,20 +102,17 @@ public class ReviewService {
      */
 
     public boolean updateReview(ReviewDTO.Update dto, Long reviewIdx, Long photographerIdx) {
+
         boolean result = false;
+
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Review> reviewList = reviewRepository.findAllByPhotographer(photographer);
 
         for(Review review2 : reviewList){
-            System.out.println("dkkkkkkkkkkkkkkkkk" + review2.getReviewIdx());
             if(reviewIdx.equals(review2.getReviewIdx())){
-                System.out.println("11111" +review2.getReviewIdx());
                 Review review = reviewRepository.findById(review2.getReviewIdx()).get();
-                System.out.println( "22222" + review.getReviewIdx());
                 review.update(dto.getContent(), dto.getGrade());
                 reviewRepository.save(review);
-                System.out.println("333333");
-//                User user = userRepository.findById(review.getUser().getUserIdx()).get();
                 result = true;
                 break;
             }else {
@@ -128,6 +125,7 @@ public class ReviewService {
     해당 작가의 평균 grade 조회
      */
     public Float gradeAverage(Long photographerIdx) {
+
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Review> reviewList = reviewRepository.findAllByPhotographer(photographer);
 
@@ -136,5 +134,14 @@ public class ReviewService {
             total += review.getGrade();
         }
         return total / reviewList.size();
+    }
+
+    /*
+    작가들의 리뷰 리스트
+     */
+    public List<Review> reviewListByPhotographer(Long photographerIdx){
+
+        Photographer photographer = photographerRepository.findById(photographerIdx).get();
+        return reviewRepository.findAllByPhotographer(photographer);
     }
 }
