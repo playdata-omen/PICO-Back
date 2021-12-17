@@ -14,6 +14,7 @@ import kr.omen.pico.domain.dto.PhotographerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,8 +28,16 @@ public class PhotographerService {
     private final PCategoryRepository pCategoryRepository;
 
     public PhotographerDTO.PhotographerInfo getPhotographerInfo(Long userIdx){
+        List<Long> category = new ArrayList<>();
+
         User user = userRepository.findById(userIdx).get();
+
         Photographer photographer = photographerRepository.findByUser(user);
+
+        for (PCategory pcategory : pCategoryRepository.findByPhotographer(photographer)) {
+             category.add(pcategory.getCategory().getCategoryIdx());
+        }
+
         PhotographerDTO.PhotographerInfo photographerInfo = PhotographerDTO.PhotographerInfo.builder()
                 .photographerIdx(photographer.getPhotographerIdx())
                 .grade(photographer.getGrade())
@@ -38,10 +47,12 @@ public class PhotographerService {
                 .studioCity(photographer.getStudioCity())
                 .studioAddress(photographer.getStudioAddress())
                 .isOtherArea(photographer.getIsOtherArea())
+                .category(category)
                 .build();
         return photographerInfo;
     }
-  
+
+    // 뭐하는앤지 확인 필요
     public Photographer findOne(Long photographerIdx) throws NotFoundException{
         Photographer photographer = null;
         try {
@@ -88,6 +99,7 @@ public class PhotographerService {
                 .studioCity(photographer.getStudioCity())
                 .studioAddress(photographer.getStudioAddress())
                 .isOtherArea(photographer.getIsOtherArea())
+                .category(data.getCategory())
                 .build();
 
         return result;
