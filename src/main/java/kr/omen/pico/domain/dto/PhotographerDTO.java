@@ -1,6 +1,5 @@
 package kr.omen.pico.domain.dto;
 
-import kr.omen.pico.domain.PCategory;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import lombok.Builder;
@@ -51,6 +50,6 @@ public class PhotographerDTO {
         String studioCity;
         String studioAddress;
         Boolean isOtherArea;
-        PCategory pCategory;
+        List<Long> category;
     }
 }
