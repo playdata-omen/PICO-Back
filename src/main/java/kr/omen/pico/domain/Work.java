@@ -46,4 +46,8 @@ public class Work {
         this.thumbnail=thumbnail;
     }
 
+    public Work updateThumbnail(String thumbnail){
+        this.thumbnail=thumbnail;
+        return this;
+    }
 }

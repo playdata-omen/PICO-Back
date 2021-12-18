@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 public class WorkController {
@@ -18,6 +21,12 @@ public class WorkController {
     public ResponseDTO.WorkResponse insertWork(@RequestBody WorkDTO.Create dto){
         ResponseDTO.WorkResponse response = workService.insertWork(dto);
         return response;
+    }
+
+    @PostMapping("/work/upload")
+    public Map<String, Object> addData(@RequestBody WorkDTO.Create data) throws IOException {
+        Map<String, Object> result = workService.uploadWork(data);
+        return result;
     }
 
 }
