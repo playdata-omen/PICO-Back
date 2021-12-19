@@ -1,5 +1,6 @@
 package kr.omen.pico.service;
 
+import kr.omen.pico.common.S3Uploader;
 import kr.omen.pico.dao.CategoryRepository;
 import kr.omen.pico.dao.PhotoRepository;
 import kr.omen.pico.dao.PhotographerRepository;
@@ -11,11 +12,15 @@ import kr.omen.pico.domain.Work;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.domain.dto.WorkDTO;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -31,6 +36,8 @@ public class WorkService {
     private final CategoryRepository categoryRepository;
 
     private final PhotoRepository photoRepository;
+
+    private final S3Uploader s3Uploader;
 
     public ResponseDTO.WorkResponse insertWork(WorkDTO.Create dto){
         return null;
@@ -91,18 +98,36 @@ public class WorkService {
                 fileOutputStream = new FileOutputStream(file);
                 fileOutputStream.write(decodedBytes);
                 Long bytes = file.length();
+                MultipartFile multipartFile = transfer(file);
+                String url = s3Uploader.upload(multipartFile,"static");
                 photoRepository.save(
                         Photo.builder()
                                 .fileSize(Long.toString(bytes))
-                                .storedFilePath(path + "/" + fileName)
+                                .storedFilePath(url)
                                 .title(work.getTitle())
                                 .work(work)
                                 .build());
                 if(i==0){
                     work.updateThumbnail(path+"/"+fileName);
                 }
+
             }
             fileOutputStream.close();
+            System.gc();
+            System.runFinalization();
+            File deleteFolder = new File(path);
+
+            if(deleteFolder.exists()){
+                File[] deleteFolderList = deleteFolder.listFiles();
+
+                for (int j = 0; j < deleteFolderList.length; j++) {
+                    deleteFolderList[j].delete();
+                }
+
+                if(deleteFolderList.length == 0 && deleteFolder.isDirectory()){
+                    deleteFolder.delete();
+                }
+            }
             result.put("isFileInserted", true);
             result.put("uploadStatus", "AllSuccess");
         } catch(IOException e) {
@@ -110,7 +135,18 @@ public class WorkService {
             result.put("uploadStatus", "FileIsNotUploaded");
             result.put("isTTSInserted", false);
         }
+
         return result;
     }
 
+    //File 객체를 multipartFile 객체로 변환시켜주는 메서드.(우리는 base64 방식이기 때문에 S3 사용을 위해 필요함.)
+    public MultipartFile transfer(File file) throws IOException{
+        FileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length() , file.getParentFile());
+        InputStream input = new FileInputStream(file);
+        OutputStream os = fileItem.getOutputStream();
+        IOUtils.copy(input, os);
+        MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+
+        return multipartFile;
+    }
 }

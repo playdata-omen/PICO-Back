@@ -23,7 +23,7 @@ public class WorkController {
         return response;
     }
 
-    @PostMapping("/work/upload")
+    @PostMapping("/uploadWork")
     public Map<String, Object> addData(@RequestBody WorkDTO.Create data) throws IOException {
         Map<String, Object> result = workService.uploadWork(data);
         return result;
