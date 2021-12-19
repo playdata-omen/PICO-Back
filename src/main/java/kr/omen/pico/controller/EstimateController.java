@@ -65,11 +65,4 @@ public class EstimateController {
             return "삭제실패";
         }
     }
-
-    @CrossOrigin
-    @GetMapping("/test")
-    public String teetResponse() {
-        System.out.println("요청");
-        return "호출 성공";
-    }
 }
