@@ -19,11 +19,11 @@ public class Apply {
     @Column(name="apply_idx")
     private Long applyIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="estimate_idx")
     private Estimate estimate;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="photographer_idx")
     private Photographer photographer;
 
@@ -46,6 +46,11 @@ public class Apply {
 
     public Apply update(String status) {
         this.status = status;
+        return this;
+    }
+
+    public Apply updateApplied(Boolean isApplied){
+        this.isApplied=isApplied;
         return this;
     }
 }

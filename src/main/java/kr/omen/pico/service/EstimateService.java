@@ -180,8 +180,8 @@ public class EstimateService {
     }
 
 
-    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(Long pId){
-        Photographer photographer = photographerRepository.findById(pId).get();
+    public List<ResponseDTO.SimpleCard> getPhotographerAllEstimate(Long photographerId){
+        Photographer photographer = photographerRepository.findById(photographerId).get();
         List<Apply> applies = applyRepository.findAllByPhotographer(photographer);
         List<ResponseDTO.SimpleCard> estimates = new ArrayList<>();
         for(Apply apply : applies){
@@ -196,13 +196,13 @@ public class EstimateService {
         return estimates;
     }
 
-    public boolean deleteMyEstimate(Long estimateId){
+    public Boolean deleteMyEstimate(Long estimateId){
         Estimate estimate = estimateRepository.findById(estimateId).get();
         List<Apply> list = applyRepository.findAllByEstimate(estimate);
-        boolean cancel = false;
+        Boolean cancel = false;
         try {
             for(Apply apply : list){
-                apply.update("6");
+                apply.update("7");
                 applyRepository.save(apply);
             }
             estimateRepository.delete(estimate);
@@ -211,6 +211,61 @@ public class EstimateService {
 
         }
         return cancel;
+    }
+
+    public Boolean confirmOrder(Long estimateId,Long photographerId){
+        Estimate estimate = estimateRepository.findById(estimateId).get();
+        estimate.updateStatus("3");
+        estimateRepository.save(estimate);
+        Photographer photographer = photographerRepository.findById(photographerId).get();
+        List<Apply> list = applyRepository.findAllByEstimate(estimate);
+        Boolean flag = false;
+        try {
+            for (Apply apply : list) {
+                if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() != photographer.getPhotographerIdx()) {
+                    apply.update("4");
+                    applyRepository.save(apply);
+                }
+                if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() == photographer.getPhotographerIdx()) {
+                    apply.update("3");
+                    applyRepository.save(apply);
+                }
+                if(!apply.getIsApplied()){
+                    apply.update("4");
+                    applyRepository.save(apply);
+                }
+            }
+            flag = true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
+    }
+
+    public Boolean confirmEstimate(Long estimateId,Long photographerId){
+        Estimate estimate = estimateRepository.findById(estimateId).get();
+        Photographer photographer = photographerRepository.findById(photographerId).get();
+        Boolean flag = false;
+
+        Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
+        try {
+            if(apply.getStatus().equals("3") && estimate.getStatus().equals("3")) {
+                apply.update("5");
+                applyRepository.save(apply);
+                estimate.updateStatus("4");
+                estimateRepository.save(estimate);
+                flag = true;
+            }else{
+                return flag;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return flag;
     }
 
 }

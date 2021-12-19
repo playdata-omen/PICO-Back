@@ -18,12 +18,12 @@ public class Estimate {
     @Column(name="estimate_idx")
     private Long estimateIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_idx")
     @JsonManagedReference
     private Category category;
@@ -63,4 +63,8 @@ public class Estimate {
         this.status=status;
     }
 
+    public Estimate updateStatus(String status){
+        this.status=status;
+        return this;
+    }
 }
