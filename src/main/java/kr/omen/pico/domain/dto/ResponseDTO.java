@@ -3,6 +3,7 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -124,4 +125,30 @@ public class ResponseDTO {
             }
         }
     }
+
+    /**
+     * Work 관련 ResponseDTO
+     */
+    @Data
+    public static class WorkResponse{
+
+        private Long idx;
+        private Long photographerIdx;
+        private Long categoryIdx;
+        private String title;
+        private String content;
+        private Timestamp created;
+        private String thumbnail;
+
+        public WorkResponse(Work entity){
+            this.idx=entity.getWorkIdx();
+            this.photographerIdx=entity.getPhotographer().getPhotographerIdx();
+            this.categoryIdx=entity.getCategory().getCategoryIdx();
+            this.title=entity.getTitle();
+            this.content=entity.getContent();
+            this.created=entity.getCreated();
+            this.thumbnail=entity.getThumbnail();
+        }
+    }
+
 }

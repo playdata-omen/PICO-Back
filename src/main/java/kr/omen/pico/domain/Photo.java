@@ -14,7 +14,7 @@ public class Photo {
     @Column(name="photo_idx")
     private Long photoIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="work_idx")
     private Work work;
 
