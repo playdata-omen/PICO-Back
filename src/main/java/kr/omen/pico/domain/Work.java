@@ -24,16 +24,15 @@ public class Work {
     @JoinColumn(name="category_idx")
     private Category category;
 
-    @Column(length = 100 , nullable = false)
+    @Column(nullable = false)
     private String title;
 
-    @Column(length = 100 , nullable = false)
+    @Column(nullable = false)
     private String content;
 
     @CreationTimestamp
     private Timestamp created;
 
-    @Column(length = 100)
     private String thumbnail;
 
     @Builder

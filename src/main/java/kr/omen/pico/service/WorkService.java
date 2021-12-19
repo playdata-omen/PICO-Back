@@ -108,7 +108,7 @@ public class WorkService {
                                 .work(work)
                                 .build());
                 if(i==0){
-                    work.updateThumbnail(path+"/"+fileName);
+                    work.updateThumbnail(url);
                 }
 
             }
