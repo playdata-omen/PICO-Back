@@ -39,9 +39,3 @@ public class EmbeddedRedisConfig {
         }
     }
 }
-//redisServer = RedisServer.builder()
-//                .port(redisPort)
-//                //.redisExecProvider(customRedisExec) //com.github.kstyrc (not com.orange.redis-embedded)
-//                .setting("maxmemory 128M") //maxheap 128M
-//                .build();
-//        redisServer.start();
