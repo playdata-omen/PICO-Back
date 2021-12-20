@@ -1,9 +1,6 @@
 package kr.omen.pico.domain.dto;
 
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Estimate;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Work;
+import kr.omen.pico.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -46,29 +43,27 @@ public class ResponseDTO {
     //유저가 견적서 클릭 시 보여줄 상세페이지와 지원한 작가목록 DTO
     @Data
     public static class EstimateDetailResponse {
-        private Long id;
-        private Long user;
-        private Long category;
-        private Timestamp created;
+        private Long estimateIdx;
+        private Long userIdx;
+        private Long categoryIdx;
         private String content;
         private String city;
         private String address;
+        private String status;
         private LocalDate startDate;
         private LocalDate endDate;
-        private String status;
         private List<SimplePhotographerCard> applyList;
 
         public EstimateDetailResponse(Estimate entity, List<SimplePhotographerCard> applies) {
-            this.id = entity.getEstimateIdx();
-            this.user = entity.getUser().getUserIdx();
-            this.category = entity.getCategory().getCategoryIdx();
-            this.created = entity.getCreated();
+            this.estimateIdx = entity.getEstimateIdx();
+            this.userIdx = entity.getUser().getUserIdx();
+            this.categoryIdx = entity.getCategory().getCategoryIdx();
             this.content = entity.getContent();
             this.city = entity.getCity();
             this.address = entity.getAddress();
+            this.status = entity.getStatus();
             this.startDate = entity.getStartDate();
             this.endDate = entity.getEndDate();
-            this.status = entity.getStatus();
             this.applyList = applies;
         }
     }
@@ -76,13 +71,13 @@ public class ResponseDTO {
     //목록 출력 시 최소한의 정보만을 뿌려줄 DTO
     @Data
     public static class SimpleCard {
-        private Long category;
-        private String cname;
+        private Long estimateIdx;
+        private String status;
         private Timestamp created;
 
         public SimpleCard(Estimate entity) {
-            this.category = entity.getCategory().getCategoryIdx();
-            this.cname = entity.getCategory().getKind();
+            this.estimateIdx = entity.getEstimateIdx();
+            this.status = entity.getStatus();
             this.created = entity.getCreated();
         }
     }
@@ -94,17 +89,17 @@ public class ResponseDTO {
     //해당하는 견적서에 지원한 작가들 목록 출력시 최소한의 정보만 뿌려줄 DTO
     @Data
     public static class SimplePhotographerCard {
-        //작가 idx/ 지원 idx가 들어가야함.
-        private Long puidx;
-        private Long aidx;
-        private String name;
-        private List<Long> pCategoryList;
 
-        public SimplePhotographerCard(Photographer entity, Apply apply, List<Long> pCategories) {
-            this.puidx = entity.getUser().getUserIdx();
-            this.aidx = apply.getApplyIdx();
-            this.name = entity.getUser().getName();
-            this.pCategoryList = pCategories;
+        private Long applyIdx;
+        private String status;
+        private UserDTO.SimpleUser user;
+        private PhotographerDTO.SimplePhotographer photographer;
+
+        public SimplePhotographerCard(Photographer entity, Apply apply) {
+            this.applyIdx = apply.getApplyIdx();
+            this.status = apply.getStatus();
+            this.user=new UserDTO.SimpleUser(entity.getUser());
+            this.photographer=new PhotographerDTO.SimplePhotographer(entity);
         }
 
         /**
