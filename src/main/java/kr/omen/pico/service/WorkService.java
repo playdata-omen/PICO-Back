@@ -1,15 +1,8 @@
 package kr.omen.pico.service;
 
 import kr.omen.pico.common.S3Uploader;
-import kr.omen.pico.dao.CategoryRepository;
-import kr.omen.pico.dao.PhotoRepository;
-import kr.omen.pico.dao.PhotographerRepository;
-import kr.omen.pico.dao.WorkRepository;
-import kr.omen.pico.domain.Category;
-import kr.omen.pico.domain.Photo;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Work;
-import kr.omen.pico.domain.dto.ResponseDTO;
+import kr.omen.pico.dao.*;
+import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.WorkDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.fileupload.FileItem;
@@ -39,9 +32,7 @@ public class WorkService {
 
     private final S3Uploader s3Uploader;
 
-    public ResponseDTO.WorkResponse insertWork(WorkDTO.Create dto){
-        return null;
-    }
+    private final UserRepository userRepository;
 
     public Map<String, Object> uploadWork(WorkDTO.Create data) throws IOException{
         System.out.println(data.toString());
@@ -61,6 +52,7 @@ public class WorkService {
 
         // 파일이 업로드되지 않았거나 사이즈가 큰 경우를 체크합니다.
         // 사이즈는 일반 바이트에서 1.33을 곱하면 BASE64 사이즈가 대략 나옵니다.
+        // 여기다가 기본썸네일 지정해주기.
         if(fileBase64 == null || fileBase64.equals("")) {
             result.put("isFileInserted", false);
             result.put("uploadStatus", "FileIsNull");
@@ -151,5 +143,30 @@ public class WorkService {
         MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
 
         return multipartFile;
+    }
+
+    public WorkDTO.GetWork getWorkDetail(Long workIdx){
+        Work work = workRepository.findById(workIdx).get();
+        List<Photo> list = photoRepository.findByWork(work);
+        if (work.equals(null)){
+            return null;
+        }
+        List<String> photos = new ArrayList<>();
+        for(Photo photo : list){
+            photos.add(photo.getStoredFilePath());
+        }
+        WorkDTO.GetWork dto = new WorkDTO.GetWork(work,photos);
+        return dto;
+    }
+
+    public List<WorkDTO.WorkCard> getWorkList(Long userIdx){
+        User user = userRepository.findById(userIdx).get();
+        Photographer photographer = photographerRepository.findByUser(user);
+        List<Work> list = workRepository.findByPhotographer(photographer);
+        List<WorkDTO.WorkCard> cards = new ArrayList<>();
+        for(Work work : list){
+            cards.add(new WorkDTO.WorkCard(work));
+        }
+        return cards;
     }
 }

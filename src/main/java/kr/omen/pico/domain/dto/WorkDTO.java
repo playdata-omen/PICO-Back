@@ -48,4 +48,38 @@ public class WorkDTO {
                     .build();
         }
     }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class GetWork{
+        private Long workIdx;
+        private Long photographerIdx;
+        private String title;
+        private String content;
+        private Long categoryIdx;
+        List<String> photos;
+
+        public GetWork(Work entity,List<String> photos){
+            this.workIdx=entity.getWorkIdx();
+            this.photographerIdx=entity.getPhotographer().getPhotographerIdx();
+            this.title=entity.getTitle();
+            this.content=entity.getContent();
+            this.categoryIdx=entity.getCategory().getCategoryIdx();
+            this.photos=photos;
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class WorkCard{
+        Long workIdx;
+        String thumbnail;
+        String title;
+
+        public WorkCard(Work entity){
+            this.workIdx=entity.getWorkIdx();
+            this.thumbnail=entity.getThumbnail();
+            this.title=entity.getTitle();
+        }
+    }
 }

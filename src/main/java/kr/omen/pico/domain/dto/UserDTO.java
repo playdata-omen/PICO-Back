@@ -1,9 +1,7 @@
 package kr.omen.pico.domain.dto;
 
 import kr.omen.pico.domain.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 public class UserDTO {
 
@@ -75,4 +73,27 @@ public class UserDTO {
         }
     }
 
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class SimpleUser{
+        private Long userIdx;
+        private String name;
+
+        public SimpleUser(User entity){
+            userIdx=entity.getUserIdx();
+            name=entity.getName();
+        }
+    }
+
+    @Data
+    public static class Review {
+        private Long userIdx;
+        private String name;
+
+        public Review(User entity){
+            userIdx= entity.getUserIdx();
+            name= entity.getName();
+        }
+    }
 }

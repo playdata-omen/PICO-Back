@@ -58,4 +58,15 @@ public class EstimateDTO {
         }
     }
 
+    @Getter
+    @RequiredArgsConstructor
+    public static class SimpleEstimate{
+        private Long estimateIdx;
+        private String status;
+
+        public SimpleEstimate(Estimate entity){
+            this.estimateIdx=entity.getEstimateIdx();
+            this.status=entity.getStatus();
+        }
+    }
 }
