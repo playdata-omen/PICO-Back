@@ -4,11 +4,17 @@ import javassist.NotFoundException;
 import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.EstimateRepository;
 import kr.omen.pico.dao.PhotographerRepository;
+import kr.omen.pico.dao.UserRepository;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.ApplyDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +25,8 @@ public class ApplyService {
     private final PhotographerRepository photographerRepository;
 
     private final ApplyRepository applyRepository;
+
+    private final UserRepository userRepository;
 
     public Apply findOne(Long applyIdx) throws NotFoundException{
         Apply apply = null;
@@ -58,5 +66,22 @@ public class ApplyService {
         }
 
         return flag;
+    }
+
+    public ApplyDTO.Get getApply(Long applyIdx){
+        Apply apply = applyRepository.findById(applyIdx).get();
+        ApplyDTO.Get dto = new ApplyDTO.Get(apply);
+        return dto;
+    }
+
+    public List<ApplyDTO.Card> getApplies(Long userIdx){
+        User user = userRepository.findById(userIdx).get();
+        Photographer photographer=photographerRepository.findByUser(user);
+        List<Apply> applies = applyRepository.findAllByPhotographer(photographer);
+        List<ApplyDTO.Card> list = new ArrayList<>();
+        for(Apply apply : applies){
+            list.add(new ApplyDTO.Card(apply));
+        }
+        return list;
     }
 }
