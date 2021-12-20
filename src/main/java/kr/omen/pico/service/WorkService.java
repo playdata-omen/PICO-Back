@@ -35,8 +35,6 @@ public class WorkService {
     private final UserRepository userRepository;
 
     public Map<String, Object> uploadWork(WorkDTO.Create data) throws IOException{
-        System.out.println(data.toString());
-
         Map<String,Object> result = new HashMap<>();
         List<String> fileBase64 = data.getImages();
         List<String> type = new ArrayList<>();
@@ -45,7 +43,6 @@ public class WorkService {
             String[] base = file.split(",");
             int a = base[0].indexOf("/")+1;
             int b = base[0].indexOf(";");
-            System.out.println(base[0].substring(a,b));
             type.add(base[0].substring(a,b));
             base64.add(base[1]);
         }
@@ -58,6 +55,7 @@ public class WorkService {
             result.put("uploadStatus", "FileIsNull");
             return result;
         }
+        // 파일 업로드시 최대 길이(크기) 제한이지만 이게 있으면 작동안되는 경우가 많아서 주석처리
 //        } else if(fileBase64.get(0).length() > 400000) {
 //            result.put("isFileInserted", false);
 //            result.put("uploadStatus", "FileIsTooBig");

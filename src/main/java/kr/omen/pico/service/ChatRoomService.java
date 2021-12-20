@@ -53,7 +53,6 @@ public class ChatRoomService {
     @Transactional
     public void updateCount(String roomId, Long count){
         ChatRoom chatRoom = chatRoomRepo.findChatRoomByRoomId(roomId);
-        System.out.println("please helpme" + count);
         chatRoom.setUserCount(count);
     }
 

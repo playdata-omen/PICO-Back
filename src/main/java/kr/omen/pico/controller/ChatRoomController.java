@@ -44,10 +44,7 @@ public class ChatRoomController {
     @ResponseBody
     public List<ChatRoom> room() {
         List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
-        System.out.println("---111---- " + chatRooms.get(0).getIdx() + "  --- " + chatRooms.get(0).getName());
         chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
-
-        System.out.println("---222---- " + chatRooms.get(0).getIdx() + "  --- " + chatRooms.get(0).getName());
 
         return chatRooms;
     }
@@ -89,7 +86,6 @@ public class ChatRoomController {
 //        count에는 클라이언트가 방에 들어올때 +1을 하면서 값을 넣어줌
         ChatRoom chatRoom = chatRoomRepository.findRoomById(roomId);
         long count = (chatRoomRepository.getUserCount(chatRoom.getRoomId()));
-        System.out.println("count: " + count);
         chatService.updateCount(roomId, count);
 //        chatRoomRepo.save(chatRoom);
         model.addAttribute("roomId", roomId);
