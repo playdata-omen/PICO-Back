@@ -71,10 +71,12 @@ public class WorkDTO {
     @RequiredArgsConstructor
     public static class WorkCard{
         Long workIdx;
+        String thumbnail;
         String title;
 
         public WorkCard(Work entity){
             this.workIdx=entity.getWorkIdx();
+            this.thumbnail=entity.getThumbnail();
             this.title=entity.getTitle();
         }
     }
