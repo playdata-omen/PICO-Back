@@ -44,6 +44,8 @@ public class WorkService {
     }
 
     public Map<String, Object> uploadWork(WorkDTO.Create data) throws IOException{
+        System.out.println(data.toString());
+
         Map<String,Object> result = new HashMap<>();
         List<String> fileBase64 = data.getImages();
         List<String> type = new ArrayList<>();
@@ -63,15 +65,16 @@ public class WorkService {
             result.put("isFileInserted", false);
             result.put("uploadStatus", "FileIsNull");
             return result;
-        } else if(fileBase64.get(0).length() > 400000) {
-            result.put("isFileInserted", false);
-            result.put("uploadStatus", "FileIsTooBig");
-            return result;
         }
+//        } else if(fileBase64.get(0).length() > 400000) {
+//            result.put("isFileInserted", false);
+//            result.put("uploadStatus", "FileIsTooBig");
+//            return result;
+//        }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
         // 저장할 파일 경로를 지정합니다.
-        String path = "pico/src/main/resources/static/images/" + current.format(format);
+        String path = "main/resources/static/images/" + current.format(format);
         File file = new File(path);
         if(!file.exists()) {
             file.mkdir();

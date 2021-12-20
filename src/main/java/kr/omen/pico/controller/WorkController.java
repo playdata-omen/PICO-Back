@@ -25,6 +25,9 @@ public class WorkController {
 
     @PostMapping("/uploadWork")
     public Map<String, Object> addData(@RequestBody WorkDTO.Create data) throws IOException {
+        System.out.println("-------------------------------요청 성공");
+        System.out.println(data.toString());
+        System.out.println(data);
         Map<String, Object> result = workService.uploadWork(data);
         return result;
     }
