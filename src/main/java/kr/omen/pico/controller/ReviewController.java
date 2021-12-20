@@ -37,9 +37,8 @@ public class ReviewController {
             reviewIdx = saveReview.getReviewIdx();
             result = true;
         }catch (NullPointerException | NoSuchElementException e){
-//            e.printStackTrace();
+            e.printStackTrace();
         }
-        System.out.println("11111111111111111111111");
         return new ResponseDTO.Create(reviewIdx, result);
     }
 
@@ -66,7 +65,6 @@ public class ReviewController {
     public ResponseDTO.reviewListResponse findAllByPhotographer(@PathVariable Long userIdx) {
 
         List<ReviewDTO.Card> reviewList = reviewService.reviewListByPhotographer(userIdx);
-        System.out.println(reviewList);
         return new ResponseDTO.reviewListResponse(reviewList);
     }
 }

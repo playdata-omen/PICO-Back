@@ -2,17 +2,13 @@ package kr.omen.pico.controller;
 
 
 import javassist.NotFoundException;
-import kr.omen.pico.domain.dto.ChatMessageDTO;
-import kr.omen.pico.model.ChatMessage;
+import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.dao.chatdao.ChatMessageRepository;
 import kr.omen.pico.dao.chatdao.ChatRoomRepository;
+import kr.omen.pico.domain.dto.ChatMessageDTO;
+import kr.omen.pico.model.ChatMessage;
 import kr.omen.pico.service.ChatMessageService;
 import kr.omen.pico.service.ChatRoomService;
-
-import kr.omen.pico.config.jwt.TokenProvider;
-import kr.omen.pico.model.ChatMessage;
-
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.Header;
@@ -48,7 +44,6 @@ public class ChatController {
 
         chatMessageRepository.save(message);
         // Websocket에 발행된 메시지를 redis로 발행(publish)
-        System.out.println("token:" + token);
         chatService.sendChatMessage(message);
     }
 

@@ -59,10 +59,11 @@ public class ReviewService {
             } else {
                 System.out.println("체결된 지원만 리뷰를 작성할 수 없습니다..");
             }
-        }catch(NullPointerException | NoSuchElementException e){
+        } catch (NullPointerException | NoSuchElementException e) {
             System.out.println("체결되지 않은 계약입니다.");
 //            e.printStackTrace();
-        }return review;
+        }
+        return review;
     }
 
     /*
@@ -146,12 +147,10 @@ public class ReviewService {
     public List<ReviewDTO.Card> reviewListByPhotographer(Long userIdx){
 
         List<Review> reviewList = null;
-//        User user = userRepository.findByUserIdx(userIdx);
         User user = userRepository.findById(userIdx).get();
         Photographer photographer = photographerRepository.findByUser(user);
-        System.out.println(photographer.getPhotographerIdx());
+
         reviewList = reviewRepository.findAllByPhotographer(photographer);
-//        List<Review reviewList = reviewRepository.find
         List<ReviewDTO.Card> testReivew = new ArrayList<>();
         for(Review review : reviewList){
             testReivew.add(new ReviewDTO.Card(review, user));

@@ -28,11 +28,10 @@ public class ApplyService {
 
     private final UserRepository userRepository;
 
+    // 뭐하는놈인지 물어보기
     public Apply findOne(Long applyIdx) throws NotFoundException{
         Apply apply = null;
-        System.out.println("서비스전");
             apply = applyRepository.findById(applyIdx).get();
-        System.out.println(apply.getApplyIdx());
         return apply;
     }
 

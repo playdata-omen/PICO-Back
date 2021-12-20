@@ -11,6 +11,7 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	google()
 }
 
 dependencies {
@@ -50,6 +51,9 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	runtimeOnly	'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	// google idToken 해독용
+	compileOnly 'com.google.api-client:google-api-client:1.31.5'
+
 
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'

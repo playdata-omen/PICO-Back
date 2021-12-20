@@ -60,7 +60,6 @@ public class EstimateService {
                 plist.add(photographer);
                 iter.remove();
                 i++;
-                System.out.println("1순위");
             }
         }
         iter=list1.iterator();
@@ -76,7 +75,6 @@ public class EstimateService {
                     plist.add(photographer);
                     iter.remove();
                     i++;
-                    System.out.println("2순위");
                 }
             }
         iter=list1.iterator();
@@ -92,7 +90,6 @@ public class EstimateService {
                     plist.add(photographer);
                     iter.remove();
                     i++;
-                    System.out.println("3순위");
                 }
             }
 
@@ -138,7 +135,6 @@ public class EstimateService {
             list2.add(new ResponseDTO.SimpleCard(estimate));
         }
 
-        System.out.println("--- " + list2);
         return list2;
     }
 
