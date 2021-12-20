@@ -4,6 +4,7 @@ import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -51,5 +52,19 @@ public class PhotographerDTO {
         String studioAddress;
         Boolean isOtherArea;
         List<Long> category;
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class SimplePhotographer{
+        private Long photographerIdx;
+        private String name;
+        private Float grade;
+
+        public SimplePhotographer(Photographer entity){
+            this.photographerIdx=entity.getPhotographerIdx();
+            this.name=entity.getUser().getName();
+            this.grade=entity.getGrade();
+        }
     }
 }
