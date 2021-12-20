@@ -146,12 +146,9 @@ public class ResponseDTO {
     }
 
     @Data
+    @AllArgsConstructor
     public static class reviewListResponse{
         private List<Review> reviewList;
-
-        public reviewListResponse(List<Review> reviewList) {
-            this.reviewList = reviewList;
-        }
     }
 
 }

@@ -1,15 +1,14 @@
 package kr.omen.pico.service;
 
+import javassist.NotFoundException;
 import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.ReviewRepository;
 import kr.omen.pico.dao.UserRepository;
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,13 +45,14 @@ public class ReviewService {
     public Review saveReview(ReviewDTO.Create dto, Long pID) {
 
         Review review = null;
-        Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
-        Photographer photographer = photographerRepository.findById(pID).get();
-        User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
 
 //        apply 상태가 5일때만 댓글 달 수 있는 상태 = 5번일때만 리뷰작성 가능
 //        리뷰가 작성되면 5-> 6 , 6은 매칭됐지만 댓글이 달리지 않은 상태
         try {
+            Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
+            Photographer photographer = photographerRepository.findById(pID).get();
+            User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
+
             if (apply.getStatus().equals("5")) {
                 apply.update("6");
                 review = reviewRepository.save(new Review(user, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
@@ -61,7 +61,8 @@ public class ReviewService {
             } else {
                 System.out.println("체결된 지원만 리뷰를 작성할 수 없습니다..");
             }
-        }catch(NullPointerException e){
+        }catch(NullPointerException | NoSuchElementException e){
+            System.out.println("체결되지 않은 계약입니다.");
 //            e.printStackTrace();
         }return review;
     }
@@ -101,24 +102,29 @@ public class ReviewService {
     리뷰수정
      */
 
-    public boolean updateReview(ReviewDTO.Update dto, Long reviewIdx, Long photographerIdx) {
+    public boolean updateReview(ReviewDTO.Update dto, Long reviewIdx, Long photographerIdx, Long userIdx) {
 
         boolean result = false;
 
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Review> reviewList = reviewRepository.findAllByPhotographer(photographer);
-
-        for(Review review2 : reviewList){
-            if(reviewIdx.equals(review2.getReviewIdx())){
-                Review review = reviewRepository.findById(review2.getReviewIdx()).get();
-                review.update(dto.getContent(), dto.getGrade());
-                reviewRepository.save(review);
-                result = true;
-                break;
-            }else {
-                System.out.println("자신이 작성한 리뷰만 수정할 수 있습니다.");
+        User user = userRepository.findById(userIdx).get();
+        try {
+            for (Review review2 : reviewList) {
+                if (reviewIdx.equals(review2.getReviewIdx()) && review2.getUser().getUserIdx().equals(user.getUserIdx())) {
+                    Review review = reviewRepository.findById(review2.getReviewIdx()).get();
+                    review.update(dto.getContent(), dto.getGrade());
+                    reviewRepository.save(review);
+                    result = true;
+                    break;
+                } else {
+                    System.out.println("자신이 작성한 리뷰만 수정할 수 있습니다.");
+                }
             }
-        }   return result;
+        }catch (NoSuchElementException e){
+//            e.printStackTrace();
+        }
+        return result;
     }
 
     /*
@@ -141,7 +147,11 @@ public class ReviewService {
      */
     public List<Review> reviewListByPhotographer(Long photographerIdx){
 
+        List<Review> reviewList = null;
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
-        return reviewRepository.findAllByPhotographer(photographer);
+        System.out.println(photographer.getPhotographerIdx());
+        reviewList = photographer.getReviewList();
+//        List<Review reviewList = reviewRepository.find
+        return reviewList;
     }
 }

@@ -47,9 +47,9 @@ public class ReviewController {
         return new ResponseDTO.Delete(result);
     }
 
-    @PutMapping("/review/update/{reviewIdx}/photographer/{photographerIdx}")
-    public ResponseDTO.Update deleteReview(@RequestBody ReviewDTO.Update dto, @PathVariable Long reviewIdx, @PathVariable Long photographerIdx){
-        boolean result = reviewService.updateReview(dto, reviewIdx, photographerIdx);
+    @PutMapping("/review/update/{reviewIdx}/photographer/{photographerIdx}/user/{userIdx}")
+    public ResponseDTO.Update deleteReview(@RequestBody ReviewDTO.Update dto, @PathVariable Long reviewIdx, @PathVariable Long photographerIdx, @PathVariable Long userIdx){
+        boolean result = reviewService.updateReview(dto, reviewIdx, photographerIdx, userIdx);
         return new ResponseDTO.Update(result);
     }
 

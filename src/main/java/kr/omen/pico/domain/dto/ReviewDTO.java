@@ -41,5 +41,6 @@ public class ReviewDTO {
     public static class Update {
         private String content;
         private Float grade;
+        private Long userIdx;
     }
 }
