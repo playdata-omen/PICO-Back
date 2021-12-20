@@ -1,6 +1,7 @@
 package kr.omen.pico.controller;
 
 import kr.omen.pico.domain.Review;
+import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import kr.omen.pico.service.ApplyService;
@@ -23,9 +24,11 @@ public class ReviewController {
     private final PhotographerService photographerService;
 
 
-    @PostMapping("/review/enroll/{pID}")
-    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
-        Review saveReview = reviewService.saveReview(dto, pID);
+    @PostMapping("/review")
+//    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
+    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto) {
+
+        Review saveReview = reviewService.saveReview(dto);
 
         boolean result = false;
         Long reviewIdx = null;
@@ -46,21 +49,23 @@ public class ReviewController {
         return new ResponseDTO.Delete(result);
     }
 
-    @PutMapping("/review/update/{reviewIdx}/photographer/{photographerIdx}/user/{userIdx}")
-    public ResponseDTO.Update deleteReview(@RequestBody ReviewDTO.Update dto, @PathVariable Long reviewIdx, @PathVariable Long photographerIdx, @PathVariable Long userIdx){
-        boolean result = reviewService.updateReview(dto, reviewIdx, photographerIdx, userIdx);
+    @PutMapping("/review/update")
+//    @PutMapping("/review/update/{reviewIdx}/photographer/{photographerIdx}/user/{userIdx}")
+    public ResponseDTO.Update updateReview(@RequestBody ReviewDTO.Update dto){
+//    public ResponseDTO.Update updateReview(@RequestBody ReviewDTO.Update dto, @PathVariable Long reviewIdx, @PathVariable Long photographerIdx, @PathVariable Long userIdx){
+        User user = userService.getUser();
+        boolean result = reviewService.updateReview(dto, user.getUserIdx());
+//        boolean result = reviewService.updateReview(dto, reviewIdx, photographerIdx, userIdx);
+
         return new ResponseDTO.Update(result);
     }
 
-    @GetMapping("/review/average/{photographerIdx}")
-    public ResponseDTO.gradeAverage gradeAverage(@PathVariable Long photographerIdx){
-        Float gradeAverage = reviewService.gradeAverage(photographerIdx);
-        return new ResponseDTO.gradeAverage(gradeAverage);
-    }
+//    photographerIdx userIdx로 찾아오기
+//    @GetMapping("/review/select/{photographerIdx}")
+    @GetMapping("/reviewList/{userIdx}")
+    public ResponseDTO.reviewListResponse findAllByPhotographer(@PathVariable Long userIdx) {
 
-    @GetMapping("/review/select/{photographerIdx}")
-    public ResponseDTO.reviewListResponse findAllByPhotographer(@PathVariable Long photographerIdx) {
-        List<Review> reviewList = reviewService.reviewListByPhotographer(photographerIdx);
+        List<ReviewDTO.Card> reviewList = reviewService.reviewListByPhotographer(userIdx);
         System.out.println(reviewList);
         return new ResponseDTO.reviewListResponse(reviewList);
     }

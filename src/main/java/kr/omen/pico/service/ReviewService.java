@@ -1,6 +1,5 @@
 package kr.omen.pico.service;
 
-import javassist.NotFoundException;
 import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.ReviewRepository;
@@ -11,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.validation.constraints.Null;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,7 +40,7 @@ public class ReviewService {
     리뷰를 작성하게 될시 status가 5 -> 6으로 변경되어 더 이상 쓸 수 없도록 작성
      */
     @Transactional
-    public Review saveReview(ReviewDTO.Create dto, Long pID) {
+    public Review saveReview(ReviewDTO.Create dto) {
 
         Review review = null;
 
@@ -49,7 +48,7 @@ public class ReviewService {
 //        리뷰가 작성되면 5-> 6 , 6은 매칭됐지만 댓글이 달리지 않은 상태
         try {
             Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
-            Photographer photographer = photographerRepository.findById(pID).get();
+            Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
             User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
 
             if (apply.getStatus().equals("5")) {
@@ -101,16 +100,16 @@ public class ReviewService {
     리뷰수정
      */
 
-    public boolean updateReview(ReviewDTO.Update dto, Long reviewIdx, Long photographerIdx, Long userIdx) {
+    public boolean updateReview(ReviewDTO.Update dto, Long userIdx) {
 
         boolean result = false;
 
-        Photographer photographer = photographerRepository.findById(photographerIdx).get();
+        Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
         List<Review> reviewList = reviewRepository.findAllByPhotographer(photographer);
         User user = userRepository.findById(userIdx).get();
         try {
             for (Review review2 : reviewList) {
-                if (reviewIdx.equals(review2.getReviewIdx()) && review2.getUser().getUserIdx().equals(user.getUserIdx())) {
+                if (dto.getReviewIdx().equals(review2.getReviewIdx()) && review2.getUser().getUserIdx().equals(user.getUserIdx())) {
                     Review review = reviewRepository.findById(review2.getReviewIdx()).get();
                     review.update(dto.getContent(), dto.getGrade());
                     reviewRepository.save(review);
@@ -144,13 +143,19 @@ public class ReviewService {
     /*
     작가들의 리뷰 리스트
      */
-    public List<Review> reviewListByPhotographer(Long photographerIdx){
+    public List<ReviewDTO.Card> reviewListByPhotographer(Long userIdx){
 
         List<Review> reviewList = null;
-        Photographer photographer = photographerRepository.findById(photographerIdx).get();
+//        User user = userRepository.findByUserIdx(userIdx);
+        User user = userRepository.findById(userIdx).get();
+        Photographer photographer = photographerRepository.findByUser(user);
         System.out.println(photographer.getPhotographerIdx());
-        reviewList = photographer.getReviewList();
+        reviewList = reviewRepository.findAllByPhotographer(photographer);
 //        List<Review reviewList = reviewRepository.find
-        return reviewList;
+        List<ReviewDTO.Card> testReivew = new ArrayList<>();
+        for(Review review : reviewList){
+            testReivew.add(new ReviewDTO.Card(review, user));
+        }
+        return testReivew;
     }
 }
