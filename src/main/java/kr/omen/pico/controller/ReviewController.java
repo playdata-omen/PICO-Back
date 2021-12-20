@@ -1,6 +1,5 @@
 package kr.omen.pico.controller;
 
-import javassist.NotFoundException;
 import kr.omen.pico.domain.Review;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.domain.dto.ReviewDTO;

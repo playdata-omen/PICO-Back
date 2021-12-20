@@ -27,11 +27,14 @@ public class Photo {
     @Column(name="file_size")
     private String fileSize;
 
+    private String label;
+
     @Builder
-    public Photo(Work work, String title, String storedFilePath, String fileSize) {
+    public Photo(Work work, String title, String storedFilePath, String fileSize,String label) {
         this.work=work;
         this.title=title;
         this.storedFilePath=storedFilePath;
         this.fileSize=fileSize;
+        this.label=label;
     }
 }
