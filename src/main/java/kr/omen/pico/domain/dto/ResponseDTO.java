@@ -1,6 +1,11 @@
 package kr.omen.pico.domain.dto;
 
+import kr.omen.pico.domain.Apply;
+import kr.omen.pico.domain.Estimate;
+import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.Review;
 import kr.omen.pico.domain.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -105,20 +110,45 @@ public class ResponseDTO {
         /**
          * 통합용 create ResponseDTO
          */
-        @Data
-        @AllArgsConstructor
-        public static class BaseResponse {
-            boolean success;
-        }
 
-        public static class Create extends BaseResponse {
-            Long id;
+    }
+    @Data
+    @AllArgsConstructor
+    public static class BaseResponse {
+        boolean success;
+    }
 
-            public Create(Long id, Boolean success) {
-                super(success);
-                this.id = id;
-            }
+    public static class Create extends BaseResponse {
+        Long id;
+
+        public Create(Long id, Boolean success) {
+            super(success);
+            this.id = id;
         }
+    }
+
+    public static class Delete extends BaseResponse {
+        public Delete(Boolean success){
+            super(success);
+        }
+    }
+
+    public static class Update extends BaseResponse {
+        public Update(Boolean success) {
+            super(success);
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class gradeAverage {
+        Float grade;
+    }
+
+    @Data
+    @AllArgsConstructor
+    public static class reviewListResponse{
+        private List<Review> reviewList;
     }
 
     /**
@@ -144,6 +174,7 @@ public class ResponseDTO {
             this.created=entity.getCreated();
             this.thumbnail=entity.getThumbnail();
         }
+
     }
 
 }

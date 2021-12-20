@@ -15,7 +15,7 @@ public class ReviewDTO {
     @Data
     public static class Create {
         private Long applyIdx;
-        private Long photographerIdx;
+//        private Long photographerIdx;
         private Timestamp created;
         private String content;
         private float grade;
@@ -29,5 +29,18 @@ public class ReviewDTO {
                     .grade(grade)
                     .build();
         }
+    }
+
+    @Data
+    public static class Delete {
+        private Long userIdx;
+        private Long photographerIdx;
+    }
+
+    @Data
+    public static class Update {
+        private String content;
+        private Float grade;
+        private Long userIdx;
     }
 }
