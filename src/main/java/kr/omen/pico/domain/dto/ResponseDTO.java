@@ -148,7 +148,7 @@ public class ResponseDTO {
     @Data
     @AllArgsConstructor
     public static class reviewListResponse{
-        private List<Review> reviewList;
+        private List<ReviewDTO.Card> reviewList;
     }
 
     /**
