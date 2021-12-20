@@ -9,7 +9,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Estimate {
@@ -19,13 +18,12 @@ public class Estimate {
     @Column(name="estimate_idx")
     private Long estimateIdx;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
     private User user;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_idx")
     @JsonManagedReference
@@ -52,10 +50,6 @@ public class Estimate {
     @Column(columnDefinition = "varchar(255) default '1'")
     private String status;
 
-//    @OneToMany(mappedBy = "estimate" , cascade = CascadeType.ALL)
-//    @JsonBackReference
-//    private final List<Apply> applyList = new ArrayList<>();
-
     @Builder
     public Estimate(User user, Category category, String content, Timestamp created,String city,String address,
                     LocalDate startDate,LocalDate endDate,String status){
@@ -70,4 +64,8 @@ public class Estimate {
         this.status=status;
     }
 
+    public Estimate updateStatus(String status){
+        this.status=status;
+        return this;
+    }
 }

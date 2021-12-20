@@ -8,7 +8,6 @@ import kr.omen.pico.dao.UserRepository;
 import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,11 +1,13 @@
 package kr.omen.pico.domain;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,7 +38,8 @@ public class Photographer {
 
     @Column(length = 100)
     private String activityAddress;
-
+    
+    // 변수명 변경 가능성 있음
     @Column(length= 100)
     private String studioCity;
 

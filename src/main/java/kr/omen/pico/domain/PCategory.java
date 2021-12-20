@@ -17,11 +17,11 @@ public class PCategory {
     @Column(name="p_category_idx")
     private Long pCategoryIdx;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="photographer_idx")
     private Photographer photographer;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="category_idx")
     private Category category;
 
