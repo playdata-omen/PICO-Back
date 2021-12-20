@@ -20,4 +20,8 @@ public class PhotographerController {
     public PhotographerDTO.PhotographerInfo getPhotographerInfo(@PathVariable Long userIdx){
         return photographerService.getPhotographerInfo(userIdx);
     }
+
+    // 카테고리로 작가 리스트 검색
+
+    // 작가 이름으로 작가 검색
 }

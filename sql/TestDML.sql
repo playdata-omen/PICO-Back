@@ -12,6 +12,9 @@ insert into user values(7,'lgh95m@kakao.com','kakao-12345',true,false,'이기환
 insert into category values(1,'웨딩');
 insert into category values(2,'스냅');
 insert into category values(3,'화보');
+insert into category values(4,'행사');
+insert into category values(5,'제품');
+insert into category values(6,'기타');
 
 -- photographer
 insert into photographer values(1,'기흥구','용인시',4.3,true,true,'기흥구','용인시',1);
