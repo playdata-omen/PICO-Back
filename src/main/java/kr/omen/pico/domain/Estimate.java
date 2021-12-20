@@ -18,6 +18,7 @@ public class Estimate {
     @Column(name="estimate_idx")
     private Long estimateIdx;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_idx")
     @JsonManagedReference
