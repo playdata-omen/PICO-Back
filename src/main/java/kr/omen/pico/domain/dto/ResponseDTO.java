@@ -3,9 +3,7 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.*;
-
+import kr.omen.pico.domain.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,6 +16,7 @@ public class ResponseDTO {
     /**
      * Estimate 관련 ResponseDTO
      */
+    // 변수명 변경 필요
     @Data
     public static class EstimateResponse {
         private Long id;

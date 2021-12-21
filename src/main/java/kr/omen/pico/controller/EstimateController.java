@@ -1,6 +1,7 @@
 package kr.omen.pico.controller;
 
 import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.EstimateService;
@@ -74,25 +75,15 @@ public class EstimateController {
     }
 
     //의뢰확정(해당 견적서 상태 3번/선택된 작가 지원상태3번/견적서에 지원했지만, 선택되지 못한 작가들 상태 4번 으로 번경)
-    @PutMapping("/photographer/{photographerIdx}/estimate/{estimateIdx}")
-    public String confirmOrder(@PathVariable Long estimateIdx,@PathVariable Long photographerIdx){
-        Boolean flag = estimateService.confirmOrder(estimateIdx,photographerIdx);
-        if(flag){
-            return "의뢰확정 성공";
-        }else{
-            return "의뢰확정 실패";
-        }
+    @PutMapping("/estimate/{estimateIdx}/confirmEstimate/photographer/{photographerIdx}")
+    public ApplyDTO.Get confirmEstimate(@PathVariable Long estimateIdx, @PathVariable Long photographerIdx){
+        return estimateService.confirmOrder(estimateIdx,photographerIdx);
     }
 
-    //거래완료(해당 견적서 상태 4번/선택된 작가 지원상태 5번으로 변경)
-    @PutMapping("/estimate/confirmEstimate/{estimateIdx}/{photographerIdx}")
-    public String confirmEstimate(@PathVariable Long estimateIdx,@PathVariable Long photographerIdx){
-        Boolean flag = estimateService.confirmEstimate(estimateIdx,photographerIdx);
-        if(flag){
-            return "거래확정 성공";
-        }else{
-            return "거래확정 실패";
-        }
+    // 거래완료(해당 견적서 상태 4번/선택된 작가 지원상태 5번으로 변경)
+    @PutMapping("/estimate/{estimateIdx}/confirmOrder/photographer/{photographerIdx}")
+    public ApplyDTO.Get confirmOrder(@PathVariable Long estimateIdx,@PathVariable Long photographerIdx){
+        return estimateService.confirmEstimate(estimateIdx,photographerIdx);
     }
 
 }
