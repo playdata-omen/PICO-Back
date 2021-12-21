@@ -64,7 +64,7 @@ public class WorkService {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
         // 저장할 파일 경로를 지정합니다.
-        String path = "resources/static/images/" + current.format(format);
+        String path = "src/main/resources/static/images/" + current.format(format);
         File file = new File(path);
         if(!file.exists()) {
             file.mkdir();
@@ -102,6 +102,7 @@ public class WorkService {
                                 .build());
                 if(i==0){
                     work.updateThumbnail(url);
+                    workRepository.save(work);
                 }
 
             }
