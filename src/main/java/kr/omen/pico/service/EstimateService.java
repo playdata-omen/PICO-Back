@@ -171,6 +171,15 @@ public class EstimateService {
                 }
             }
         }
+        //지원한작가가 선택받은 경우
+        else if(estimate.getStatus().equals("3") || (estimate.getStatus().equals("5") || (estimate.getStatus().equals("6")))){
+            for(Apply apply : applies){
+                if(apply.getIsApplied()){
+                    Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
+                }
+            }
+        }
 
         return  new ResponseDTO.EstimateDetailResponse(estimate,names);
     }

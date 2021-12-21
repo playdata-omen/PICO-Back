@@ -35,36 +35,28 @@ public class ApplyService {
         return apply;
     }
 
-    public Boolean applyEstimate(Long estimateId,Long photographerId){
-        Estimate estimate = estimateRepository.findById(estimateId).get();
-        Photographer photographer = photographerRepository.findById(photographerId).get();
+    public ApplyDTO.Get applyEstimate(Long estimateIdx,Long photographerIdx){
+        Estimate estimate = estimateRepository.findById(estimateIdx).get();
+        Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
-        if(apply.getIsApplied()){
-           return false;
-        }else{
-            apply.updateApplied(true);
-            applyRepository.save(apply);
-            return true;
-        }
+        apply.updateApplied(true);
+        applyRepository.save(apply);
+        return new ApplyDTO.Get(apply);
     }
 
-    public Boolean rejectEstimate(Long estimateId,Long photographerId){
+    public ApplyDTO.Get rejectEstimate(Long estimateIdx,Long photographerIdx){
 
         Boolean flag = false;
-        Estimate estimate = estimateRepository.findById(estimateId).get();
-        Photographer photographer = photographerRepository.findById(photographerId).get();
+        Estimate estimate = estimateRepository.findById(estimateIdx).get();
+        Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
-        try {
-            apply.update("8");
-            applyRepository.save(apply);
-            estimate.updateStatus("5");
-            estimateRepository.save(estimate);
-            flag = true;
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        apply.update("8");
+        applyRepository.save(apply);
+        estimate.updateStatus("5");
+        estimateRepository.save(estimate);
 
-        return flag;
+        ApplyDTO.Get dto = new ApplyDTO.Get(apply);
+        return dto;
     }
 
     public ApplyDTO.Get getApply(Long applyIdx){
