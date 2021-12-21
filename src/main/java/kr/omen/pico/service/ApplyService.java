@@ -10,6 +10,7 @@ import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ApplyDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public class ApplyService {
 
     private final UserRepository userRepository;
 
+    private final EstimateService estimateService;
+
     // 뭐하는놈인지 물어보기
     public Apply findOne(Long applyIdx) throws NotFoundException{
         Apply apply = null;
@@ -35,17 +38,19 @@ public class ApplyService {
         return apply;
     }
 
-    public ApplyDTO.Get applyEstimate(Long estimateIdx,Long photographerIdx){
+    public ResponseDTO.EstimateDetailResponse applyEstimate(Long estimateIdx, Long photographerIdx){
+
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         apply.updateApplied(true);
         applyRepository.save(apply);
-        return new ApplyDTO.Get(apply);
+
+        return estimateService.getUserOneEstimate(estimateIdx);
+//        return new ApplyDTO.Get(apply);
     }
 
     public ApplyDTO.Get rejectEstimate(Long estimateIdx,Long photographerIdx){
-
         Boolean flag = false;
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
