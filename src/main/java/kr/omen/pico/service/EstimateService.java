@@ -34,7 +34,7 @@ public class EstimateService {
     public ResponseDTO.EstimateResponse createGlobalEstimate(EstimateDTO.Create estimateDTO){
 
         User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
-        Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
+        Category category = categoryRepository.findById(estimateDTO.getCategoryIdx()).get();
         Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
         ResponseDTO.EstimateResponse responsedto = new ResponseDTO.EstimateResponse(estimate);
         //글로벌 견적 요청 후 저장 시, 해당 견적서에 설정된 City가 주 활동지역인 작가들의 list 뽑아낸 후
@@ -51,47 +51,56 @@ public class EstimateService {
         //1순위 저장(카테고리/시/구/ 3가지 매칭 시)
         while(iter.hasNext()){
             PCategory pc = iter.next();
-            if(i>=5)
+            if (i>=5) {
                 break;
+            }
             Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-            if(photographer == null)
+            if (photographer == null) {
                 continue;
+            }
             if(photographer.getActivityCity().equals(estimate.getCity()) && photographer.getActivityAddress().equals(estimate.getAddress())){
                 plist.add(photographer);
                 iter.remove();
                 i++;
             }
         }
+
         iter=list1.iterator();
+        System.out.println(iter.hasNext());
         //2순위 저장(카테고리/시 2가지 매칭 시)
-            while(iter.hasNext()){
-                PCategory pc = iter.next();
-                if (i >= 5)
-                    break;
-                Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-                if (photographer == null)
-                    continue;
-                if (photographer.getActivityCity().equals(estimate.getCity())) {
-                    plist.add(photographer);
-                    iter.remove();
-                    i++;
-                }
+        while(iter.hasNext()){
+            PCategory pc = iter.next();
+            if (i >= 5) {
+                break;
             }
+            Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
+            if (photographer == null) {
+                continue;
+            }
+            if (photographer.getActivityCity().equals(estimate.getCity())) {
+                plist.add(photographer);
+                iter.remove();
+                i++;
+            }
+        }
+
         iter=list1.iterator();
         //3순위 저장(카테고리가 일치하며 타지역 협의여부 true로 설정 한 나머지)
-            while(iter.hasNext()){
-                PCategory pc = iter.next();
-                if (i >= 5)
-                    break;
-                Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-                if (photographer == null)
-                    continue;
-                if (photographer.getHasStudio()) {
-                    plist.add(photographer);
-                    iter.remove();
-                    i++;
-                }
+        while(iter.hasNext()){
+            PCategory pc = iter.next();
+            if (i >= 5) {
+                break;
             }
+            Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
+            if (photographer == null) {
+                continue;
+            }
+            if (photographer.getIsOtherArea()) {
+                plist.add(photographer);
+                iter.remove();
+                i++;
+            }
+        }
 
         for(Photographer photographer : plist){
             applyRepository.save(Apply.builder()
@@ -109,8 +118,8 @@ public class EstimateService {
     public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO){
 
         Photographer photographer = photographerRepository.findById(estimateDTO.getPhotographerIdx()).get();
-        Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
-        User user = userRepository.findById(estimateDTO.getUser()).get();
+        Category category = categoryRepository.findById(estimateDTO.getCategoryIdx()).get();
+        User user = userRepository.findById(estimateDTO.getUserIdx()).get();
 
         Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
         ResponseDTO.EstimateResponse responseDTO = new ResponseDTO.EstimateResponse(estimate);
