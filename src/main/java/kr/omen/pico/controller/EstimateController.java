@@ -28,6 +28,8 @@ public class EstimateController {
     //견적요청
     @PostMapping(value = "/estimate")
     public ResponseDTO.EstimateResponse insertGlobalEstimate(@RequestBody EstimateDTO.Create pdto){
+        User user = userService.getUser();
+        pdto.setUserIdx(user.getUserIdx());
         //글로벌 견적일 경우
         if(pdto.getPhotographerIdx()==null){
             pdto.setStatus("1");
