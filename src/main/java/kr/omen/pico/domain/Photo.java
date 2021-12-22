@@ -1,11 +1,21 @@
 package kr.omen.pico.domain;
 
-import lombok.*;
+import com.vladmihalcea.hibernate.type.json.JsonType;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 
 @Getter
 @Entity
+@TypeDef(
+        name = "json",
+        typeClass = JsonType.class
+)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Photo {
 
@@ -27,10 +37,12 @@ public class Photo {
     @Column(name="file_size")
     private String fileSize;
 
+    @Type(type="json")
+    @Column(name="label", columnDefinition = "json")
     private String label;
 
     @Builder
-    public Photo(Work work, String title, String storedFilePath, String fileSize,String label) {
+    public Photo(Work work, String title, String storedFilePath, String fileSize, String label) {
         this.work=work;
         this.title=title;
         this.storedFilePath=storedFilePath;

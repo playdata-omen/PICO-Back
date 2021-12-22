@@ -52,6 +52,7 @@ public class UserDTO {
     }
 
     @Getter
+    @Builder
     public static class UserInfo {
         Long userIdx;
         String name;

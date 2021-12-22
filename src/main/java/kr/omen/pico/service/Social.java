@@ -1,5 +1,6 @@
 package kr.omen.pico.service;
 
+import kr.omen.pico.domain.dto.oauth.GoogleUserInfo;
 import kr.omen.pico.domain.dto.oauth.KakaoUserInfo;
 import kr.omen.pico.domain.dto.oauth.NaverUserInfo;
 import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
@@ -19,6 +20,8 @@ import java.net.URLDecoder;
 public class Social {
 
     public static OauthUserInfo kakao (String code) {
+        ResponseEntity<JSONObject> response = null;
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -32,7 +35,8 @@ public class Social {
 
         HttpEntity<MultiValueMap<String, String>> kakaoRequest = new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<JSONObject> response = restTemplate.exchange(
+        try {
+        response = restTemplate.exchange(
                 "https://kauth.kakao.com/oauth/token",
                 HttpMethod.POST,
                 kakaoRequest,
@@ -51,14 +55,18 @@ public class Social {
                 kakaoRequest,
                 JSONObject.class
         );
+        } catch (HttpStatusCodeException e) {
+            e.printStackTrace();
+        }
 
         OauthUserInfo oauthUserInfo = new KakaoUserInfo(response.getBody());
-
 
         return oauthUserInfo;
     }
 
     public static OauthUserInfo naver (String code) {
+        ResponseEntity<JSONObject> response = null;
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -73,25 +81,29 @@ public class Social {
         HttpEntity<MultiValueMap<String, String>> naverRequest =
                 new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<JSONObject> response = restTemplate.exchange(
-                "https://nid.naver.com/oauth2.0/token",
-                HttpMethod.POST,
-                naverRequest,
-                JSONObject.class
-        );
+        try {
+            response = restTemplate.exchange(
+                    "https://nid.naver.com/oauth2.0/token",
+                    HttpMethod.POST,
+                    naverRequest,
+                    JSONObject.class
+            );
 
-        JSONObject responseBody = response.getBody();
+            JSONObject responseBody = response.getBody();
 
-        headers.clear();
-        data.clear();
-        headers.add("Authorization", "Bearer "+responseBody.get("access_token"));
-        naverRequest = new HttpEntity<>(data, headers);
-        response = restTemplate.exchange(
-                "https://openapi.naver.com/v1/nid/me",
-                HttpMethod.POST,
-                naverRequest,
-                JSONObject.class
-        );
+            headers.clear();
+            data.clear();
+            headers.add("Authorization", "Bearer "+responseBody.get("access_token"));
+            naverRequest = new HttpEntity<>(data, headers);
+            response = restTemplate.exchange(
+                    "https://openapi.naver.com/v1/nid/me",
+                    HttpMethod.POST,
+                    naverRequest,
+                    JSONObject.class
+            );
+        } catch (HttpStatusCodeException e) {
+            e.printStackTrace();
+        }
 
         OauthUserInfo oauthUserInfo = new NaverUserInfo(response.getBody());
 
@@ -99,7 +111,7 @@ public class Social {
     }
 
     public static OauthUserInfo google (String code) throws UnsupportedEncodingException {
-
+        ResponseEntity<JSONObject> response = null;
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
@@ -110,66 +122,37 @@ public class Social {
         data.add("client_id", "575105020669-jq0rvnltn9eedtg5il8q1mhtrs5m0qu7.apps.googleusercontent.com");
         data.add("client_secret", "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");
         data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
+//        data.add("redirect_uri", "http://localhost:3000/oauth/callback/google");
         data.add("grant_type", "authorization_code");
 
-        HttpEntity<MultiValueMap<String, String>> googleRequest =
-                new HttpEntity<>(data, headers);
+        HttpEntity<MultiValueMap<String, String>> googleRequest = new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<JSONObject> response = restTemplate.exchange(
+            response = restTemplate.exchange(
                     "https://oauth2.googleapis.com/token",
                     HttpMethod.POST,
                     googleRequest,
                     JSONObject.class
             );
-            System.out.println(response.getBody());
-        } catch ( HttpStatusCodeException e ) {
-            System.out.println(e.getResponseBodyAsString());
+            String idToken = (String) response.getBody().get("id_token");
+
+            headers.clear();
+            data.clear();
+            String decodeIdToken = URLDecoder.decode(idToken, "UTF-8");
+            data.add("id_token", decodeIdToken);
+            googleRequest = new HttpEntity<>(data, headers);
+            response = restTemplate.exchange(
+                    "https://oauth2.googleapis.com/tokeninfo",
+                    HttpMethod.POST,
+                    googleRequest,
+                    JSONObject.class
+            );
+        } catch (HttpStatusCodeException e) {
+            e.printStackTrace();
         }
+        OauthUserInfo oauthUserInfo = new GoogleUserInfo(response.getBody());
 
+        return oauthUserInfo;
 
-        // 성공ver
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Content-type", "application/x-www-form-urlencoded");
-//
-//        // body
-//        MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
-//        data.add("grant_type", "authorization_code");
-//        data.add("client_id", "575105020669-jq0rvnltn9eedtg5il8q1mhtrs5m0qu7.apps.googleusercontent.com");
-//        data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
-////        data.add("redirect_uri", "http://localhost:3000/oauth/callback/google");
-//        data.add("code", code);
-//        data.add("client_secret", "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");
-//        System.out.println(1);
-//
-//        HttpEntity<MultiValueMap<String, String>> googleRequest =
-//                new HttpEntity<>(headers);
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        try {
-//            String url = URLDecoder.decode("https://oauth2.googleapis.com/token?grant_type=authorization_code&client_id=575105020669-jq0rvnltn9eedtg5il8q1mhtrs5m0qu7.apps.googleusercontent.com&redirect_uri=http://localhost:5500/testtest/login.html&code="+code+"&client_secret=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", "UTF-8");
-//
-//            ResponseEntity<JSONObject> response = restTemplate.exchange(
-//                    url,
-//                    HttpMethod.POST,
-//                    googleRequest,
-//                    JSONObject.class
-//            );
-//            System.out.println(3);
-//            System.out.println(response);
-//            JSONObject responseBody = response.getBody();
-//            System.out.println("me ---------------- " + response.getBody());
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        } catch ( HttpStatusCodeException e ) {
-//            System.out.println(e.getResponseBodyAsString());
-//        }
-
-
-//        OauthUserInfo oauthUserInfo = new GoogleUserInfo(response.getBody());
-
-//        return oauthUserInfo;
-
-        return null;
     }
 }

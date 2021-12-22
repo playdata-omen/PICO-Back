@@ -3,9 +3,7 @@ package kr.omen.pico.domain.dto;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.*;
-
+import kr.omen.pico.domain.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -18,6 +16,7 @@ public class ResponseDTO {
     /**
      * Estimate 관련 ResponseDTO
      */
+    // 변수명 변경 필요
     @Data
     public static class EstimateResponse {
         private Long id;
@@ -29,7 +28,7 @@ public class ResponseDTO {
         private String address;
         private LocalDate startDate;
         private LocalDate endDate;
-        private String status;
+        private Integer status;
 
         public EstimateResponse(Estimate entity) {
             this.id = entity.getEstimateIdx();
@@ -54,7 +53,7 @@ public class ResponseDTO {
         private String content;
         private String city;
         private String address;
-        private String status;
+        private Integer status;
         private LocalDate startDate;
         private LocalDate endDate;
         private List<SimplePhotographerCard> applyList;
@@ -77,7 +76,7 @@ public class ResponseDTO {
     @Data
     public static class SimpleCard {
         private Long estimateIdx;
-        private String status;
+        private Integer status;
         private Timestamp created;
 
         public SimpleCard(Estimate entity) {
@@ -96,13 +95,15 @@ public class ResponseDTO {
     public static class SimplePhotographerCard {
 
         private Long applyIdx;
-        private String status;
+        private Integer status;
+        private Boolean isApplied;
         private UserDTO.SimpleUser user;
         private PhotographerDTO.SimplePhotographer photographer;
 
         public SimplePhotographerCard(Photographer entity, Apply apply) {
             this.applyIdx = apply.getApplyIdx();
             this.status = apply.getStatus();
+            this.isApplied=apply.getIsApplied();
             this.user=new UserDTO.SimpleUser(entity.getUser());
             this.photographer=new PhotographerDTO.SimplePhotographer(entity);
         }

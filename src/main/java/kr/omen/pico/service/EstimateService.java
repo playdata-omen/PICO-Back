@@ -3,6 +3,7 @@ package kr.omen.pico.service;
 import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
+import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class EstimateService {
     public ResponseDTO.EstimateResponse createGlobalEstimate(EstimateDTO.Create estimateDTO){
 
         User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
-        Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
+        Category category = categoryRepository.findById(estimateDTO.getCategoryIdx()).get();
         Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
         ResponseDTO.EstimateResponse responsedto = new ResponseDTO.EstimateResponse(estimate);
         //글로벌 견적 요청 후 저장 시, 해당 견적서에 설정된 City가 주 활동지역인 작가들의 list 뽑아낸 후
@@ -51,55 +52,61 @@ public class EstimateService {
         //1순위 저장(카테고리/시/구/ 3가지 매칭 시)
         while(iter.hasNext()){
             PCategory pc = iter.next();
-            if(i>=5)
+            if (i>=5) {
                 break;
+            }
             Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-            if(photographer == null)
+            if (photographer == null) {
                 continue;
+            }
             if(photographer.getActivityCity().equals(estimate.getCity()) && photographer.getActivityAddress().equals(estimate.getAddress())){
                 plist.add(photographer);
                 iter.remove();
                 i++;
-                System.out.println("1순위");
             }
         }
+
         iter=list1.iterator();
+        System.out.println(iter.hasNext());
         //2순위 저장(카테고리/시 2가지 매칭 시)
-            while(iter.hasNext()){
-                PCategory pc = iter.next();
-                if (i >= 5)
-                    break;
-                Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-                if (photographer == null)
-                    continue;
-                if (photographer.getActivityCity().equals(estimate.getCity())) {
-                    plist.add(photographer);
-                    iter.remove();
-                    i++;
-                    System.out.println("2순위");
-                }
+        while(iter.hasNext()){
+            PCategory pc = iter.next();
+            if (i >= 5) {
+                break;
             }
+            Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
+            if (photographer == null) {
+                continue;
+            }
+            if (photographer.getActivityCity().equals(estimate.getCity())) {
+                plist.add(photographer);
+                iter.remove();
+                i++;
+            }
+        }
+
         iter=list1.iterator();
         //3순위 저장(카테고리가 일치하며 타지역 협의여부 true로 설정 한 나머지)
-            while(iter.hasNext()){
-                PCategory pc = iter.next();
-                if (i >= 5)
-                    break;
-                Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
-                if (photographer == null)
-                    continue;
-                if (photographer.getHasStudio()) {
-                    plist.add(photographer);
-                    iter.remove();
-                    i++;
-                    System.out.println("3순위");
-                }
+        while(iter.hasNext()){
+            PCategory pc = iter.next();
+            if (i >= 5) {
+                break;
             }
+            Photographer photographer = photographerRepository.findById(pc.getPhotographer().getPhotographerIdx()).get();
+            if (photographer == null) {
+                continue;
+            }
+            if (photographer.getIsOtherArea()) {
+                plist.add(photographer);
+                iter.remove();
+                i++;
+            }
+        }
 
         for(Photographer photographer : plist){
             applyRepository.save(Apply.builder()
                     .estimate(estimate)
-                    .status("1")
+                    .status(1)
                     .photographer(photographer)
                     .isApplied(false)
                     .build());
@@ -112,14 +119,14 @@ public class EstimateService {
     public ResponseDTO.EstimateResponse createPickedEstimate(EstimateDTO.Create estimateDTO){
 
         Photographer photographer = photographerRepository.findById(estimateDTO.getPhotographerIdx()).get();
-        Category category = categoryRepository.findById(estimateDTO.getCategory()).get();
-        User user = userRepository.findById(estimateDTO.getUser()).get();
+        Category category = categoryRepository.findById(estimateDTO.getCategoryIdx()).get();
+        User user = userRepository.findById(estimateDTO.getUserIdx()).get();
 
         Estimate estimate = estimateRepository.save(estimateDTO.toEntity(user,category));
         ResponseDTO.EstimateResponse responseDTO = new ResponseDTO.EstimateResponse(estimate);
 
         applyRepository.save(Apply.builder()
-                .status("2")
+                .status(2)
                 .estimate(estimate)
                 .photographer(photographer)
                 .isApplied(false)
@@ -138,18 +145,17 @@ public class EstimateService {
             list2.add(new ResponseDTO.SimpleCard(estimate));
         }
 
-        System.out.println("--- " + list2);
         return list2;
     }
 
-    //견적요청 상세 list 조회
-    //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
+    // 견적요청 상세 list 조회
+    // 해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
     public ResponseDTO.EstimateDetailResponse getUserOneEstimate(Long estimateIdx){
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         List<Apply> applies = applyRepository.findAllByEstimate(estimate);
         List<ResponseDTO.SimplePhotographerCard> names = new ArrayList<>();
         //작가지정 견적서인 경우
-        if(estimate.getStatus().equals("2")){
+        if(estimate.getStatus()==2){
             for(Apply apply : applies){
                 if(apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
@@ -158,9 +164,18 @@ public class EstimateService {
             }
         }
         //글로벌 견적서인 경우
-        else if(estimate.getStatus().equals("1")){
+        else if(estimate.getStatus()==1){
             for (Apply apply : applies) {
                 if (apply.getIsApplied()) {
+                    Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
+                }
+            }
+        }
+        //지원한작가가 선택받은 경우
+        else if(estimate.getStatus()==3 || (estimate.getStatus()==5 || (estimate.getStatus()==6))){
+            for(Apply apply : applies){
+                if(apply.getIsApplied()){
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
                     names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
                 }
@@ -176,7 +191,7 @@ public class EstimateService {
         List<Apply> applies = applyRepository.findAllByPhotographer(photographer);
         List<ResponseDTO.SimpleCard> estimates = new ArrayList<>();
         for(Apply apply : applies){
-            if(apply.getStatus().equals("1") || apply.getStatus().equals("2")){
+            if(apply.getStatus()==1 || apply.getStatus()==2){
                 estimates.add(
                         new ResponseDTO.SimpleCard(
                                 estimateRepository.findById(apply.getEstimate().getEstimateIdx()).get()
@@ -193,7 +208,7 @@ public class EstimateService {
         Boolean cancel = false;
         try {
             for(Apply apply : list){
-                apply.update("7");
+                apply.update(7);
                 applyRepository.save(apply);
             }
             estimateRepository.delete(estimate);
@@ -204,59 +219,56 @@ public class EstimateService {
         return cancel;
     }
 
-    public Boolean confirmOrder(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get confirmEstimate(Long estimateIdx, Long photographerIdx){
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
-        estimate.updateStatus("3");
+        estimate.updateStatus(3);
         estimateRepository.save(estimate);
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Apply> list = applyRepository.findAllByEstimate(estimate);
-        Boolean flag = false;
+        ApplyDTO.Get result = null;
         try {
             for (Apply apply : list) {
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() != photographer.getPhotographerIdx()) {
-                    apply.update("4");
+                    apply.update(4);
                     applyRepository.save(apply);
                 }
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() == photographer.getPhotographerIdx()) {
-                    apply.update("3");
+                    apply.update(3);
                     applyRepository.save(apply);
+
+                    result = new ApplyDTO.Get(apply);
                 }
                 if(!apply.getIsApplied()){
-                    apply.update("4");
+                    apply.update(4);
                     applyRepository.save(apply);
                 }
             }
-            flag = true;
-
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return flag;
+        return result;
     }
 
-    public Boolean confirmEstimate(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get confirmOrder(Long estimateIdx,Long photographerIdx){
+        ApplyDTO.Get result = null;
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
-        Boolean flag = false;
 
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         try {
-            if(apply.getStatus().equals("3") && estimate.getStatus().equals("3")) {
-                apply.update("5");
+            if(apply.getStatus()==3 && estimate.getStatus()==3) {
+                apply.update(5);
                 applyRepository.save(apply);
-                estimate.updateStatus("4");
+                estimate.updateStatus(4);
                 estimateRepository.save(estimate);
-                flag = true;
-            }else{
-                return flag;
-            }
 
+                result = new ApplyDTO.Get(apply);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return flag;
+        return result;
     }
 
 }

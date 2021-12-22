@@ -52,7 +52,7 @@ public class PhotographerService {
         return photographerInfo;
     }
 
-    // 뭐하는앤지 확인 필요
+    // 채팅에서 쓰인거로 추정되며 채팅 수정시 삭제예정
     public Photographer findOne(Long photographerIdx) throws NotFoundException{
         Photographer photographer = null;
         try {

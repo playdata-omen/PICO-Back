@@ -3,6 +3,7 @@ package kr.omen.pico.service;
 import javassist.NotFoundException;
 import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.config.jwt.TokenProvider;
+import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.UserDTO;
@@ -23,7 +24,7 @@ import java.util.Objects;
 public class UserService {
 
     private final UserRepository userRepository;
-    
+    private final PhotographerRepository photographerRepository;
     private final TokenProvider tokenProvider;
     
     // naver or google or kakao
@@ -82,10 +83,9 @@ public class UserService {
 
     }
 
+    // 토큰 유저 객체로 변경
     public User getUser() {
-        User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
-        System.out.println(user);
-        return user;
+        return userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
     }
 
     // 유저 일반 회원가입(isRegister가 false일때) 및 회원정보 수정
@@ -111,7 +111,6 @@ public class UserService {
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(user.getUserIdx(), null, AuthorityUtils.createAuthorityList("ROLE_USER"));
 
-
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = tokenProvider.createToken(authentication);
             result.setAccessToken(jwt);
@@ -120,8 +119,22 @@ public class UserService {
         return result;
     }
 
+    // 채팅에서 쓰인거로 추정되며 채팅 수정시 삭제예정
     public User findOne(Long userIdx) throws NotFoundException{
         User user = userRepository.findByUserIdx(userIdx);
         return user;
+    }
+
+    public UserDTO.UserInfo photographerIdxGetUser(Long photographerIdx) {
+        User user = userRepository.findById(photographerRepository.findById(photographerIdx).get().getUser().getUserIdx()).get();
+
+        return UserDTO.UserInfo.builder()
+                .userIdx(user.getUserIdx())
+                .name(user.getName())
+                .nickName(user.getNickName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .isPhotographer(user.getIsPhotographer())
+                .build();
     }
 }

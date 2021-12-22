@@ -6,6 +6,7 @@ import kr.omen.pico.domain.Work;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -15,6 +16,7 @@ public class WorkDTO {
     @Getter
     @Setter
     @RequiredArgsConstructor
+    @ToString
     public static class Create{
 
         private Long photographerIdx;
@@ -71,10 +73,12 @@ public class WorkDTO {
     @RequiredArgsConstructor
     public static class WorkCard{
         Long workIdx;
+        String thumbnail;
         String title;
 
         public WorkCard(Work entity){
             this.workIdx=entity.getWorkIdx();
+            this.thumbnail=entity.getThumbnail();
             this.title=entity.getTitle();
         }
     }

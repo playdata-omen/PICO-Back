@@ -43,7 +43,6 @@ public class WorkService {
             String[] base = file.split(",");
             int a = base[0].indexOf("/")+1;
             int b = base[0].indexOf(";");
-            System.out.println(base[0].substring(a,b));
             type.add(base[0].substring(a,b));
             base64.add(base[1]);
         }
@@ -55,11 +54,13 @@ public class WorkService {
             result.put("isFileInserted", false);
             result.put("uploadStatus", "FileIsNull");
             return result;
-        } else if(fileBase64.get(0).length() > 400000) {
-            result.put("isFileInserted", false);
-            result.put("uploadStatus", "FileIsTooBig");
-            return result;
         }
+        // 파일 업로드시 최대 길이(크기) 제한이지만 이게 있으면 작동안되는 경우가 많아서 주석처리
+//        } else if(fileBase64.get(0).length() > 400000) {
+//            result.put("isFileInserted", false);
+//            result.put("uploadStatus", "FileIsTooBig");
+//            return result;
+//        }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
         // 저장할 파일 경로를 지정합니다.
@@ -101,6 +102,7 @@ public class WorkService {
                                 .build());
                 if(i==0){
                     work.updateThumbnail(url);
+                    workRepository.save(work);
                 }
 
             }
