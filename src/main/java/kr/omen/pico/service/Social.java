@@ -1,10 +1,10 @@
 
 package kr.omen.pico.service;
 
-import kr.omen.pico.service.domain.dto.oauth.GoogleUserInfo;
-import kr.omen.pico.service.domain.dto.oauth.KakaoUserInfo;
-import kr.omen.pico.service.domain.dto.oauth.NaverUserInfo;
-import kr.omen.pico.service.domain.dto.oauth.OauthUserInfo;
+import kr.omen.pico.domain.dto.oauth.GoogleUserInfo;
+import kr.omen.pico.domain.dto.oauth.KakaoUserInfo;
+import kr.omen.pico.domain.dto.oauth.NaverUserInfo;
+import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

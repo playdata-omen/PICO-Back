@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.service.domain.dto.UserDTO;
+import kr.omen.pico.domain.dto.UserDTO;
 //import kr.omen.pico.model.LoginInfo;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;

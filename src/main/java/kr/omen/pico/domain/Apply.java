@@ -1,4 +1,4 @@
-package kr.omen.pico.service.domain;
+package kr.omen.pico.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;

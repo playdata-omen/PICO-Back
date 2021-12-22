@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.service.domain.dto.CategoryDTO;
+import kr.omen.pico.domain.dto.CategoryDTO;
 import kr.omen.pico.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

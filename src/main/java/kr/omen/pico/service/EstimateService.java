@@ -2,10 +2,10 @@ package kr.omen.pico.service;
 
 import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.dao.*;
-import kr.omen.pico.service.domain.*;
-import kr.omen.pico.service.domain.dto.ApplyDTO;
-import kr.omen.pico.service.domain.dto.EstimateDTO;
-import kr.omen.pico.service.domain.dto.ResponseDTO;
+import kr.omen.pico.domain.*;
+import kr.omen.pico.domain.dto.ApplyDTO;
+import kr.omen.pico.domain.dto.EstimateDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

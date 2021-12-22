@@ -6,11 +6,11 @@ import kr.omen.pico.dao.CategoryRepository;
 import kr.omen.pico.dao.PCategoryRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
-import kr.omen.pico.service.domain.Category;
-import kr.omen.pico.service.domain.PCategory;
-import kr.omen.pico.service.domain.Photographer;
-import kr.omen.pico.service.domain.User;
-import kr.omen.pico.service.domain.dto.PhotographerDTO;
+import kr.omen.pico.domain.Category;
+import kr.omen.pico.domain.PCategory;
+import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.PhotographerDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
