@@ -5,11 +5,8 @@ import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.EstimateRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
-import kr.omen.pico.dao.chatdao.ChatRoomRepo;
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Estimate;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.User;
+import kr.omen.pico.dao.ChatRoomRepository;
+import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +27,11 @@ public class ApplyService {
 
     private final UserRepository userRepository;
 
-    private final ChatRoomRepo chatRoomRepo;
+    private final ChatRoomRepository chatRoomRepo;
 
     private final EstimateService estimateService;
 
+    private final ChatRoomRepository chatRoomRepository;
     // 뭐하는놈인지 물어보기
     public Apply findOne(Long applyIdx) throws NotFoundException{
         Apply apply = null;
@@ -41,15 +39,22 @@ public class ApplyService {
         return apply;
     }
 
-    public ResponseDTO.EstimateDetailResponse applyEstimate(Long estimateIdx, Long photographerIdx){
+    public ResponseDTO.EstimateChatRoomDetail applyEstimate(Long estimateIdx, Long photographerIdx){
 
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
+        User user = userRepository.findById(estimate.getUser().getUserIdx()).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         apply.updateApplied(true);
         applyRepository.save(apply);
+        ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
+                        .estimate(estimate)
+                        .user(user)
+                        .photographer(photographer)
+                        .build());
 
-        return estimateService.getUserOneEstimate(estimateIdx);
+
+        return new ResponseDTO.EstimateChatRoomDetail(estimateService.getUserOneEstimate(estimateIdx),chatRoom);
 //        return new ApplyDTO.Get(apply);
     }
 

@@ -1,11 +1,10 @@
 package kr.omen.pico.domain.dto;
 
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Estimate;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Work;
+import kr.omen.pico.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -72,6 +71,51 @@ public class ResponseDTO {
         }
     }
 
+    @Getter
+    @RequiredArgsConstructor
+    public static class EstimateChatRoomDetail{
+        private Long estimateIdx;
+        private Long userIdx;
+        private Long categoryIdx;
+        private SimpleChatRoom chatRoom;
+        private String content;
+        private String city;
+        private String address;
+        private Integer status;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private List<SimplePhotographerCard> applyList;
+
+        public EstimateChatRoomDetail(EstimateDetailResponse entity,ChatRoom chatRoom) {
+            this.estimateIdx = entity.getEstimateIdx();
+            this.userIdx = entity.userIdx;
+            this.categoryIdx = entity.getCategoryIdx();
+            this.chatRoom = new SimpleChatRoom(chatRoom);
+            this.content = entity.getContent();
+            this.city = entity.getCity();
+            this.address = entity.getAddress();
+            this.status = entity.getStatus();
+            this.startDate = entity.getStartDate();
+            this.endDate = entity.getEndDate();
+            this.applyList = entity.getApplyList();
+        }
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    public static class SimpleChatRoom{
+        private Long chatRoomIdx;
+        private Long userIdx;
+        private Long photographerIdx;
+        private Long estimateIdx;
+
+        public SimpleChatRoom(ChatRoom entity){
+            this.chatRoomIdx=entity.getChatRoomIdx();
+            this.userIdx=entity.getUser().getUserIdx();
+            this.photographerIdx=entity.getPhotographer().getPhotographerIdx();
+            this.estimateIdx=entity.getEstimate().getEstimateIdx();
+        }
+    }
     //목록 출력 시 최소한의 정보만을 뿌려줄 DTO
     @Data
     public static class SimpleCard {

@@ -23,7 +23,7 @@ public class ApplyController {
 
     // 할당된 견적요청서에 지원.
     @PutMapping("estimate/{estimateIdx}/photographer/{photographerIdx}/apply")
-    public ResponseDTO.EstimateDetailResponse applyEstimate(@PathVariable Long estimateIdx, @PathVariable Long photographerIdx){
+    public ResponseDTO.EstimateChatRoomDetail applyEstimate(@PathVariable Long estimateIdx, @PathVariable Long photographerIdx){
         return applyService.applyEstimate(estimateIdx,photographerIdx);
     }
 
