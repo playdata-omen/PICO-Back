@@ -1,8 +1,8 @@
-package kr.omen.pico.domain.dto;
+package kr.omen.pico.service.domain.dto;
 
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.User;
+import kr.omen.pico.service.domain.Photographer;
+import kr.omen.pico.service.domain.Review;
+import kr.omen.pico.service.domain.User;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
-package kr.omen.pico.domain.dto;
+package kr.omen.pico.service.domain.dto;
 
 
-import kr.omen.pico.domain.*;
+import kr.omen.pico.service.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -88,7 +88,7 @@ public class ResponseDTO {
         private LocalDate endDate;
         private List<SimplePhotographerCard> applyList;
 
-        public EstimateChatRoomDetail(EstimateDetailResponse entity,ChatRoom chatRoom) {
+        public EstimateChatRoomDetail(EstimateDetailResponse entity, ChatRoom chatRoom) {
             this.estimateIdx = entity.getEstimateIdx();
             this.userIdx = entity.userIdx;
             this.categoryIdx = entity.getCategoryIdx();

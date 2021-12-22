@@ -2,8 +2,8 @@ package kr.omen.pico.service;
 
 import kr.omen.pico.common.S3Uploader;
 import kr.omen.pico.dao.*;
-import kr.omen.pico.domain.*;
-import kr.omen.pico.domain.dto.WorkDTO;
+import kr.omen.pico.service.domain.*;
+import kr.omen.pico.service.domain.dto.WorkDTO;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;

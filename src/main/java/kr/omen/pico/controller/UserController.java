@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.domain.dto.UserDTO;
+import kr.omen.pico.service.domain.dto.UserDTO;
 //import kr.omen.pico.model.LoginInfo;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +25,10 @@ public class UserController {
     @GetMapping("/user/{photographerIdx}")
     public UserDTO.UserInfo photographerIdxGetUser(@PathVariable Long photographerIdx) {
         return userService.photographerIdxGetUser(photographerIdx);
+    }
+
+    @GetMapping("/user/{userIdx}")
+    public UserDTO.UserInfo userIdxGetUser(@PathVariable Long userIdx) {
+        return userService.userIdxGetUser(userIdx);
     }
 }

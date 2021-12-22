@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.domain.dto.PhotographerDTO;
+import kr.omen.pico.service.domain.dto.PhotographerDTO;
 import kr.omen.pico.service.PhotographerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +22,9 @@ public class PhotographerController {
     }
 
     // 카테고리로 작가 리스트 검색
-
+    public String searchByCategoryPhotographer(@PathVariable Long categoryIdx) {
+        photographerService.searchByCategoryPhotographer(categoryIdx);
+        return null;
+    }
     // 작가 이름으로 작가 검색
 }

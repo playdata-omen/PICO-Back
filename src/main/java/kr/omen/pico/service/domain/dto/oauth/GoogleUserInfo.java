@@ -1,4 +1,4 @@
-package kr.omen.pico.domain.dto.oauth;
+package kr.omen.pico.service.domain.dto.oauth;
 
 import java.util.Map;
 

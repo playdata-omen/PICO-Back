@@ -1,4 +1,4 @@
-package kr.omen.pico.domain;
+package kr.omen.pico.service.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;

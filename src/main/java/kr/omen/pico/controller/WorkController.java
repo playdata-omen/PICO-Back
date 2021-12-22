@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.domain.dto.WorkDTO;
+import kr.omen.pico.service.domain.dto.WorkDTO;
 import kr.omen.pico.service.WorkService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

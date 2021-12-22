@@ -1,16 +1,10 @@
 package kr.omen.pico.service;
 
 import javassist.NotFoundException;
-import kr.omen.pico.dao.ApplyRepository;
-import kr.omen.pico.dao.EstimateRepository;
-import kr.omen.pico.dao.PhotographerRepository;
-import kr.omen.pico.dao.UserRepository;
-
-import kr.omen.pico.dao.ChatRoomRepository;
-import kr.omen.pico.domain.*;
-
-import kr.omen.pico.domain.dto.ApplyDTO;
-import kr.omen.pico.domain.dto.ResponseDTO;
+import kr.omen.pico.dao.*;
+import kr.omen.pico.service.domain.*;
+import kr.omen.pico.service.domain.dto.ApplyDTO;
+import kr.omen.pico.service.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +60,7 @@ public class ApplyService {
 //        return new ApplyDTO.Get(apply);
     }
 
-    public ApplyDTO.Get rejectEstimate(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get rejectEstimate(Long estimateIdx, Long photographerIdx){
         Boolean flag = false;
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();

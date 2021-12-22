@@ -1,4 +1,4 @@
-package kr.omen.pico.domain.dto;
+package kr.omen.pico.service.domain.dto;
 
 import lombok.Data;
 
