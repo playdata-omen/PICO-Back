@@ -1,9 +1,9 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.service.domain.User;
-import kr.omen.pico.service.domain.dto.ApplyDTO;
-import kr.omen.pico.service.domain.dto.EstimateDTO;
-import kr.omen.pico.service.domain.dto.ResponseDTO;
+import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.ApplyDTO;
+import kr.omen.pico.domain.dto.EstimateDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.EstimateService;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;

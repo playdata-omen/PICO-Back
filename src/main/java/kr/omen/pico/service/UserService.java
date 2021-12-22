@@ -5,9 +5,9 @@ import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
-import kr.omen.pico.service.domain.User;
-import kr.omen.pico.service.domain.dto.UserDTO;
-import kr.omen.pico.service.domain.dto.oauth.OauthUserInfo;
+import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.UserDTO;
+import kr.omen.pico.domain.dto.oauth.OauthUserInfo;
 
 import lombok.RequiredArgsConstructor;
 

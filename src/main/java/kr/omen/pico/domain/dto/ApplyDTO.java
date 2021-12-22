@@ -1,6 +1,6 @@
-package kr.omen.pico.service.domain.dto;
+package kr.omen.pico.domain.dto;
 
-import kr.omen.pico.service.domain.Apply;
+import kr.omen.pico.domain.Apply;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

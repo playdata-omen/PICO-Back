@@ -1,7 +1,7 @@
-package kr.omen.pico.service.domain.dto;
+package kr.omen.pico.domain.dto;
 
 
-import kr.omen.pico.service.domain.*;
+import kr.omen.pico.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

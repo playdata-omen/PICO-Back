@@ -1,6 +1,6 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.service.domain.dto.PhotographerDTO;
+import kr.omen.pico.domain.dto.PhotographerDTO;
 import kr.omen.pico.service.PhotographerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

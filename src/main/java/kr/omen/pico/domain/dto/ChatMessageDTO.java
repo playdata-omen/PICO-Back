@@ -1,8 +1,8 @@
-package kr.omen.pico.service.domain.dto;
+package kr.omen.pico.domain.dto;
 
-import kr.omen.pico.service.domain.User;
-import kr.omen.pico.service.domain.ChatMessage;
-import kr.omen.pico.service.domain.ChatRoom;
+import kr.omen.pico.domain.ChatMessage;
+import kr.omen.pico.domain.ChatRoom;
+import kr.omen.pico.domain.User;
 import lombok.Data;
 
 import java.sql.Timestamp;
