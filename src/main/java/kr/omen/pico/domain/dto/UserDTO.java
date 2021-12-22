@@ -96,4 +96,5 @@ public class UserDTO {
             name= entity.getName();
         }
     }
+
 }

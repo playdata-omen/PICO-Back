@@ -5,6 +5,7 @@ import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.EstimateRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
+import kr.omen.pico.dao.chatdao.ChatRoomRepo;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
@@ -28,6 +29,8 @@ public class ApplyService {
     private final ApplyRepository applyRepository;
 
     private final UserRepository userRepository;
+
+    private final ChatRoomRepo chatRoomRepo;
 
     private final EstimateService estimateService;
 
