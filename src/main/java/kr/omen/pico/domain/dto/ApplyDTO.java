@@ -36,12 +36,14 @@ public class ApplyDTO {
         private Long photographerIdx;
         private Integer status;
         private Timestamp created;
+        private Boolean isApplied;
 
         public Card(Apply entity){
             this.applyIdx=entity.getApplyIdx();
             this.estimateIdx=entity.getEstimate().getEstimateIdx();
             this.photographerIdx=entity.getPhotographer().getPhotographerIdx();
             this.status=entity.getStatus();
+            this.isApplied=entity.getIsApplied();
             this.created=entity.getCreated();
         }
     }
