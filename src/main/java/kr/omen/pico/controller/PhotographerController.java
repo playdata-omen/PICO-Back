@@ -16,15 +16,15 @@ public class PhotographerController {
         return photographerService.photographerRegister(data);
     }
   
-    @GetMapping("photographer/{userIdx}")
+    @GetMapping("/user/{userIdx}/photographer")
     public PhotographerDTO.PhotographerInfo getPhotographerInfo(@PathVariable Long userIdx){
         return photographerService.getPhotographerInfo(userIdx);
     }
 
     // 카테고리로 작가 리스트 검색
-    public String searchByCategoryPhotographer(@PathVariable Long categoryIdx) {
+    public void searchByCategoryPhotographer(@PathVariable Long categoryIdx) {
         photographerService.searchByCategoryPhotographer(categoryIdx);
-        return null;
+
     }
     // 작가 이름으로 작가 검색
 }
