@@ -1,23 +1,17 @@
 package kr.omen.pico.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import kr.omen.pico.domain.Photo;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
-public class ChatRoom implements Serializable {
+public class ChatRoom {
 
-    private static final long serialVersionUID = 6494678977089006639L;
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,10 +28,16 @@ public class ChatRoom implements Serializable {
     @JsonIgnore
     private Photographer photographer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="estimate_idx")
+    @JsonIgnore
+    private Estimate estimate;
+
     @Builder
-    public ChatRoom(User user, Photographer photographer){
+    public ChatRoom(User user, Photographer photographer, Estimate estimate){
         this.user = user;
         this.photographer = photographer;
+        this.estimate = estimate;
     }
 
 }
