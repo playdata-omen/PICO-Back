@@ -154,12 +154,21 @@ public class ResponseDTO {
             this.user=new UserDTO.SimpleUser(entity.getUser());
             this.photographer=new PhotographerDTO.SimplePhotographer(entity);
         }
-
-        /**
-         * 통합용 create ResponseDTO
-         */
-
     }
+
+    @Data
+    public static class searchPhotographerCard {
+        private UserDTO.SimpleUser user;
+        private PhotographerDTO.SimplePhotographer photographer;
+
+        public searchPhotographerCard(Photographer entity) {
+            this.user=new UserDTO.SimpleUser(entity.getUser());
+            this.photographer=new PhotographerDTO.SimplePhotographer(entity);
+        }
+    }
+    /**
+     * 통합용 create ResponseDTO
+     */
     @Data
     @AllArgsConstructor
     public static class BaseResponse {
