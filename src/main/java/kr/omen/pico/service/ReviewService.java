@@ -51,7 +51,7 @@ public class ReviewService {
             Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
             User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
 
-            if (apply.getStatus().equals(5)) {
+            if (apply.getStatus().equals("5")) {
                 apply.update(6);
                 review = reviewRepository.save(new Review(user, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
             } else if (apply.getStatus()==6) {
