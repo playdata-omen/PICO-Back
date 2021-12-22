@@ -3,6 +3,7 @@ package kr.omen.pico.service;
 import kr.omen.pico.config.SecurityUtil;
 import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
+import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -147,8 +148,8 @@ public class EstimateService {
         return list2;
     }
 
-    //견적요청 상세 list 조회
-    //해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
+    // 견적요청 상세 list 조회
+    // 해당하는 견적서 상세정보와 신청한 작가 list(Apply list)들 출력
     public ResponseDTO.EstimateDetailResponse getUserOneEstimate(Long estimateIdx){
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         List<Apply> applies = applyRepository.findAllByEstimate(estimate);
@@ -218,13 +219,13 @@ public class EstimateService {
         return cancel;
     }
 
-    public Boolean confirmOrder(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get confirmEstimate(Long estimateIdx, Long photographerIdx){
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         estimate.updateStatus(3);
         estimateRepository.save(estimate);
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Apply> list = applyRepository.findAllByEstimate(estimate);
-        Boolean flag = false;
+        ApplyDTO.Get result = null;
         try {
             for (Apply apply : list) {
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() != photographer.getPhotographerIdx()) {
@@ -234,25 +235,25 @@ public class EstimateService {
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() == photographer.getPhotographerIdx()) {
                     apply.update(3);
                     applyRepository.save(apply);
+
+                    result = new ApplyDTO.Get(apply);
                 }
                 if(!apply.getIsApplied()){
                     apply.update(4);
                     applyRepository.save(apply);
                 }
             }
-            flag = true;
-
         }catch (Exception e){
             e.printStackTrace();
         }
 
-        return flag;
+        return result;
     }
 
-    public Boolean confirmEstimate(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get confirmOrder(Long estimateIdx,Long photographerIdx){
+        ApplyDTO.Get result = null;
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
-        Boolean flag = false;
 
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         try {
@@ -261,16 +262,13 @@ public class EstimateService {
                 applyRepository.save(apply);
                 estimate.updateStatus(4);
                 estimateRepository.save(estimate);
-                flag = true;
-            }else{
-                return flag;
-            }
 
+                result = new ApplyDTO.Get(apply);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
-
-        return flag;
+        return result;
     }
 
 }

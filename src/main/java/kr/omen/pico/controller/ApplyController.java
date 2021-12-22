@@ -2,6 +2,7 @@ package kr.omen.pico.controller;
 
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ApplyDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.ApplyService;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class ApplyController {
 
     private final UserService userService;
 
-    //할당된 견적요청서에 지원.
+    // 할당된 견적요청서에 지원.
     @PutMapping("estimate/{estimateIdx}/photographer/{photographerIdx}/apply")
-    public ApplyDTO.Get applyEstimate(@PathVariable Long estimateIdx,@PathVariable Long photographerIdx){
+    public ResponseDTO.EstimateDetailResponse applyEstimate(@PathVariable Long estimateIdx, @PathVariable Long photographerIdx){
         return applyService.applyEstimate(estimateIdx,photographerIdx);
     }
 

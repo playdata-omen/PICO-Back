@@ -16,6 +16,7 @@ public class ResponseDTO {
     /**
      * Estimate 관련 ResponseDTO
      */
+    // 변수명 변경 필요
     @Data
     public static class EstimateResponse {
         private Long id;
