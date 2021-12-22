@@ -5,11 +5,13 @@ import kr.omen.pico.dao.ApplyRepository;
 import kr.omen.pico.dao.EstimateRepository;
 import kr.omen.pico.dao.PhotographerRepository;
 import kr.omen.pico.dao.UserRepository;
+import kr.omen.pico.dao.chatdao.ChatRoomRepo;
 import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ApplyDTO;
+import kr.omen.pico.domain.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,8 @@ public class ApplyService {
 
     private final UserRepository userRepository;
 
+    private final ChatRoomRepo chatRoomRepo;
+
     public Apply findOne(Long applyIdx) throws NotFoundException{
         Apply apply = null;
         System.out.println("서비스전");
@@ -38,6 +42,7 @@ public class ApplyService {
 
     public Boolean applyEstimate(Long estimateId,Long photographerId){
         Estimate estimate = estimateRepository.findById(estimateId).get();
+        User user = userRepository.findById(estimate.getUser().getUserIdx()).get();
         Photographer photographer = photographerRepository.findById(photographerId).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         if(apply.getIsApplied()){
@@ -45,6 +50,7 @@ public class ApplyService {
         }else{
             apply.updateApplied(true);
             applyRepository.save(apply);
+            chatRoomRepo.save(new ChatRoom(user, photographer));
             return true;
         }
     }

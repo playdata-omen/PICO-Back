@@ -2,6 +2,7 @@ package kr.omen.pico.controller;
 
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.UserDTO;
+//import kr.omen.pico.model.LoginInfo;
 import kr.omen.pico.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,5 +33,4 @@ public class UserController {
         return result;
 
     }
-
 }

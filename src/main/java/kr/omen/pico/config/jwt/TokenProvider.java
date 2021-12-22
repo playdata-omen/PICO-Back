@@ -57,6 +57,7 @@ public class TokenProvider implements InitializingBean {
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
+
     }
 
     public Authentication getAuthentication(String token) {
