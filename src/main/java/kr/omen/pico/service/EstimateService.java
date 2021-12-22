@@ -173,9 +173,9 @@ public class EstimateService {
             }
         }
         //지원한작가가 선택받은 경우
-        else if(estimate.getStatus()==3 || (estimate.getStatus()==5 || (estimate.getStatus()==6))){
+        else if(estimate.getStatus()==3 || (estimate.getStatus()==4)){
             for(Apply apply : applies){
-                if(apply.getIsApplied()){
+                if(apply.getIsApplied() && (apply.getStatus()==3 || apply.getStatus()==5 || apply.getStatus()==6)){
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
                     names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
                 }
