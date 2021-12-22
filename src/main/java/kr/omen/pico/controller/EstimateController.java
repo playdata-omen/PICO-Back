@@ -32,12 +32,15 @@ public class EstimateController {
         User user = userService.getUser();
         pdto.setUserIdx(user.getUserIdx());
         //글로벌 견적일 경우
-        if(pdto.getPhotographerIdx()==null){
+
+        if(pdto.getPhotographerIdx() == null || pdto.getPhotographerIdx() == 0){
+
             pdto.setStatus(1);
             return estimateService.createGlobalEstimate(pdto);
         }
         //작가지정일 경우
-        else if(pdto.getPhotographerIdx()!=null){
+
+        else if(pdto.getPhotographerIdx()!=0 && pdto.getPhotographerIdx() != null){
             pdto.setStatus(2);
             return estimateService.createPickedEstimate(pdto);
         }
