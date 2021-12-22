@@ -1,9 +1,9 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.User;
-import kr.omen.pico.domain.dto.ResponseDTO;
-import kr.omen.pico.domain.dto.ReviewDTO;
+import kr.omen.pico.service.domain.Review;
+import kr.omen.pico.service.domain.User;
+import kr.omen.pico.service.domain.dto.ResponseDTO;
+import kr.omen.pico.service.domain.dto.ReviewDTO;
 import kr.omen.pico.service.ApplyService;
 import kr.omen.pico.service.PhotographerService;
 import kr.omen.pico.service.ReviewService;

@@ -1,8 +1,8 @@
-package kr.omen.pico.domain.dto;
+package kr.omen.pico.service.domain.dto;
 
-import kr.omen.pico.domain.Category;
-import kr.omen.pico.domain.Estimate;
-import kr.omen.pico.domain.User;
+import kr.omen.pico.service.domain.Category;
+import kr.omen.pico.service.domain.Estimate;
+import kr.omen.pico.service.domain.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -28,7 +28,7 @@ public class EstimateDTO {
         private LocalDate endDate;
         private Integer status;
 
-        public Create(Estimate entity,Long photographer) {
+        public Create(Estimate entity, Long photographer) {
 //            getEstimateIdx = entity.getEstimateIdx();
             userIdx = entity.getUser().getUserIdx();
             categoryIdx = entity.getCategory().getCategoryIdx();
@@ -42,7 +42,7 @@ public class EstimateDTO {
             photographerIdx = photographer;
         }
 
-        public Estimate toEntity(User user,Category category){
+        public Estimate toEntity(User user, Category category){
             return Estimate.builder()
                     .user(user)
                     .category(category)

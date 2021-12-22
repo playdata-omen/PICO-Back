@@ -1,8 +1,8 @@
 package kr.omen.pico.service;
 
 import kr.omen.pico.dao.CategoryRepository;
-import kr.omen.pico.domain.Category;
-import kr.omen.pico.domain.dto.CategoryDTO;
+import kr.omen.pico.service.domain.Category;
+import kr.omen.pico.service.domain.dto.CategoryDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

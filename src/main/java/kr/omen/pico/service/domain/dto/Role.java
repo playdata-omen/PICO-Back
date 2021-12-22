@@ -1,5 +1,5 @@
 
-package kr.omen.pico.domain.dto;
+package kr.omen.pico.service.domain.dto;
 
 public enum Role {
     ROLE_USER,

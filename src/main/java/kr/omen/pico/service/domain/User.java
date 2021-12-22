@@ -1,7 +1,7 @@
-package kr.omen.pico.domain;
+package kr.omen.pico.service.domain;
 
-import kr.omen.pico.domain.dto.Role;
-import kr.omen.pico.domain.dto.UserDTO;
+import kr.omen.pico.service.domain.dto.Role;
+import kr.omen.pico.service.domain.dto.UserDTO;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
