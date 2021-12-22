@@ -22,7 +22,7 @@ public class UserController {
         return userService.userRegister(data);
     }
 
-    @GetMapping("/user/{photographerIdx}")
+    @GetMapping("/photographer/{photographerIdx}/user")
     public UserDTO.UserInfo photographerIdxGetUser(@PathVariable Long photographerIdx) {
         return userService.photographerIdxGetUser(photographerIdx);
     }
