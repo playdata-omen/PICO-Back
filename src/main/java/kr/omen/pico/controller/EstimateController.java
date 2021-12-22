@@ -32,13 +32,13 @@ public class EstimateController {
         User user = userService.getUser();
         pdto.setUserIdx(user.getUserIdx());
         //글로벌 견적일 경우
-        if(pdto.getPhotographerIdx()==0){
-            pdto.setStatus("1");
+        if(pdto.getPhotographerIdx()==null){
+            pdto.setStatus(1);
             return estimateService.createGlobalEstimate(pdto);
         }
         //작가지정일 경우
-        else if(pdto.getPhotographerIdx()!=0){
-            pdto.setStatus("2");
+        else if(pdto.getPhotographerIdx()!=null){
+            pdto.setStatus(2);
             return estimateService.createPickedEstimate(pdto);
         }
         return null;
@@ -77,13 +77,13 @@ public class EstimateController {
     //의뢰확정(해당 견적서 상태 3번/선택된 작가 지원상태3번/견적서에 지원했지만, 선택되지 못한 작가들 상태 4번 으로 번경)
     @PutMapping("/estimate/{estimateIdx}/confirmEstimate/photographer/{photographerIdx}")
     public ApplyDTO.Get confirmEstimate(@PathVariable Long estimateIdx, @PathVariable Long photographerIdx){
-        return estimateService.confirmOrder(estimateIdx,photographerIdx);
+        return estimateService.confirmEstimate(estimateIdx,photographerIdx);
     }
 
     // 거래완료(해당 견적서 상태 4번/선택된 작가 지원상태 5번으로 변경)
     @PutMapping("/estimate/{estimateIdx}/confirmOrder/photographer/{photographerIdx}")
     public ApplyDTO.Get confirmOrder(@PathVariable Long estimateIdx,@PathVariable Long photographerIdx){
-        return estimateService.confirmEstimate(estimateIdx,photographerIdx);
+        return estimateService.confirmOrder(estimateIdx,photographerIdx);
     }
 
 }

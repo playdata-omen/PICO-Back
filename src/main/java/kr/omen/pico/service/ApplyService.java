@@ -55,9 +55,9 @@ public class ApplyService {
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
-        apply.update("8");
+        apply.update(8);
         applyRepository.save(apply);
-        estimate.updateStatus("5");
+        estimate.updateStatus(5);
         estimateRepository.save(estimate);
 
         ApplyDTO.Get dto = new ApplyDTO.Get(apply);

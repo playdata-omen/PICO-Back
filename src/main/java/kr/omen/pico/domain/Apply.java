@@ -27,8 +27,7 @@ public class Apply {
     @JoinColumn(name="photographer_idx")
     private Photographer photographer;
 
-    @Column(length = 1)
-    private String status;
+    private Integer status;
 
     @CreationTimestamp
     private Timestamp created;
@@ -36,7 +35,7 @@ public class Apply {
     private Boolean isApplied;
 
     @Builder
-    public Apply(Estimate estimate, Photographer photographer, String status, Timestamp created, Boolean isApplied) {
+    public Apply(Estimate estimate, Photographer photographer, Integer status, Timestamp created, Boolean isApplied) {
         this.estimate = estimate;
         this.photographer = photographer;
         this.status = status;
@@ -44,7 +43,7 @@ public class Apply {
         this.isApplied = isApplied;
     }
 
-    public Apply update(String status) {
+    public Apply update(Integer status) {
         this.status = status;
         return this;
     }

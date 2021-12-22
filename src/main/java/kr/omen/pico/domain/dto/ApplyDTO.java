@@ -13,8 +13,9 @@ public class ApplyDTO {
     public static class Get{
         private Long applyIdx;
         private Long photographerIdx;
-        private String status;
+        private Integer status;
         private Timestamp created;
+        private Boolean isApplied;
         private EstimateDTO.SimpleEstimate estimate;
 
         public Get(Apply entity){
@@ -22,6 +23,7 @@ public class ApplyDTO {
             this.photographerIdx=entity.getPhotographer().getPhotographerIdx();
             this.status=entity.getStatus();
             this.created=entity.getCreated();
+            this.isApplied=entity.getIsApplied();
             this.estimate=new EstimateDTO.SimpleEstimate(entity.getEstimate());
         }
     }
@@ -32,7 +34,7 @@ public class ApplyDTO {
         private Long applyIdx;
         private Long estimateIdx;
         private Long photographerIdx;
-        private String status;
+        private Integer status;
         private Timestamp created;
 
         public Card(Apply entity){

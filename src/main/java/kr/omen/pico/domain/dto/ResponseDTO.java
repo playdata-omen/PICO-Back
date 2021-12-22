@@ -28,7 +28,7 @@ public class ResponseDTO {
         private String address;
         private LocalDate startDate;
         private LocalDate endDate;
-        private String status;
+        private Integer status;
 
         public EstimateResponse(Estimate entity) {
             this.id = entity.getEstimateIdx();
@@ -53,7 +53,7 @@ public class ResponseDTO {
         private String content;
         private String city;
         private String address;
-        private String status;
+        private Integer status;
         private LocalDate startDate;
         private LocalDate endDate;
         private List<SimplePhotographerCard> applyList;
@@ -76,7 +76,7 @@ public class ResponseDTO {
     @Data
     public static class SimpleCard {
         private Long estimateIdx;
-        private String status;
+        private Integer status;
         private Timestamp created;
 
         public SimpleCard(Estimate entity) {
@@ -95,13 +95,15 @@ public class ResponseDTO {
     public static class SimplePhotographerCard {
 
         private Long applyIdx;
-        private String status;
+        private Integer status;
+        private Boolean isApplied;
         private UserDTO.SimpleUser user;
         private PhotographerDTO.SimplePhotographer photographer;
 
         public SimplePhotographerCard(Photographer entity, Apply apply) {
             this.applyIdx = apply.getApplyIdx();
             this.status = apply.getStatus();
+            this.isApplied=apply.getIsApplied();
             this.user=new UserDTO.SimpleUser(entity.getUser());
             this.photographer=new PhotographerDTO.SimplePhotographer(entity);
         }
