@@ -47,12 +47,11 @@ public class Estimate {
     @Column(name="end_date")
     private LocalDate endDate;
 
-    @Column(columnDefinition = "varchar(255) default '1'")
-    private String status;
+    private Integer status;
 
     @Builder
     public Estimate(User user, Category category, String content, Timestamp created,String city,String address,
-                    LocalDate startDate,LocalDate endDate,String status){
+                    LocalDate startDate,LocalDate endDate,Integer status){
         this.user=user;
         this.category=category;
         this.content=content;
@@ -64,7 +63,7 @@ public class Estimate {
         this.status=status;
     }
 
-    public Estimate updateStatus(String status){
+    public Estimate updateStatus(Integer status){
         this.status=status;
         return this;
     }

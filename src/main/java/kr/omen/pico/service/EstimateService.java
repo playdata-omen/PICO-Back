@@ -105,7 +105,7 @@ public class EstimateService {
         for(Photographer photographer : plist){
             applyRepository.save(Apply.builder()
                     .estimate(estimate)
-                    .status("1")
+                    .status(1)
                     .photographer(photographer)
                     .isApplied(false)
                     .build());
@@ -125,7 +125,7 @@ public class EstimateService {
         ResponseDTO.EstimateResponse responseDTO = new ResponseDTO.EstimateResponse(estimate);
 
         applyRepository.save(Apply.builder()
-                .status("2")
+                .status(2)
                 .estimate(estimate)
                 .photographer(photographer)
                 .isApplied(false)
@@ -154,7 +154,7 @@ public class EstimateService {
         List<Apply> applies = applyRepository.findAllByEstimate(estimate);
         List<ResponseDTO.SimplePhotographerCard> names = new ArrayList<>();
         //작가지정 견적서인 경우
-        if(estimate.getStatus().equals("2")){
+        if(estimate.getStatus()==2){
             for(Apply apply : applies){
                 if(apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
@@ -163,7 +163,7 @@ public class EstimateService {
             }
         }
         //글로벌 견적서인 경우
-        else if(estimate.getStatus().equals("1")){
+        else if(estimate.getStatus()==1){
             for (Apply apply : applies) {
                 if (apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
@@ -172,7 +172,7 @@ public class EstimateService {
             }
         }
         //지원한작가가 선택받은 경우
-        else if(estimate.getStatus().equals("3") || (estimate.getStatus().equals("5") || (estimate.getStatus().equals("6")))){
+        else if(estimate.getStatus()==3 || (estimate.getStatus()==5 || (estimate.getStatus()==6))){
             for(Apply apply : applies){
                 if(apply.getIsApplied()){
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
@@ -190,7 +190,7 @@ public class EstimateService {
         List<Apply> applies = applyRepository.findAllByPhotographer(photographer);
         List<ResponseDTO.SimpleCard> estimates = new ArrayList<>();
         for(Apply apply : applies){
-            if(apply.getStatus().equals("1") || apply.getStatus().equals("2")){
+            if(apply.getStatus()==1 || apply.getStatus()==2){
                 estimates.add(
                         new ResponseDTO.SimpleCard(
                                 estimateRepository.findById(apply.getEstimate().getEstimateIdx()).get()
@@ -207,7 +207,7 @@ public class EstimateService {
         Boolean cancel = false;
         try {
             for(Apply apply : list){
-                apply.update("7");
+                apply.update(7);
                 applyRepository.save(apply);
             }
             estimateRepository.delete(estimate);
@@ -220,7 +220,7 @@ public class EstimateService {
 
     public Boolean confirmOrder(Long estimateIdx,Long photographerIdx){
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
-        estimate.updateStatus("3");
+        estimate.updateStatus(3);
         estimateRepository.save(estimate);
         Photographer photographer = photographerRepository.findById(photographerIdx).get();
         List<Apply> list = applyRepository.findAllByEstimate(estimate);
@@ -228,15 +228,15 @@ public class EstimateService {
         try {
             for (Apply apply : list) {
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() != photographer.getPhotographerIdx()) {
-                    apply.update("4");
+                    apply.update(4);
                     applyRepository.save(apply);
                 }
                 if (apply.getIsApplied() && apply.getPhotographer().getPhotographerIdx() == photographer.getPhotographerIdx()) {
-                    apply.update("3");
+                    apply.update(3);
                     applyRepository.save(apply);
                 }
                 if(!apply.getIsApplied()){
-                    apply.update("4");
+                    apply.update(4);
                     applyRepository.save(apply);
                 }
             }
@@ -256,10 +256,10 @@ public class EstimateService {
 
         Apply apply = applyRepository.findByPhotographerAndEstimate(photographer,estimate);
         try {
-            if(apply.getStatus().equals("3") && estimate.getStatus().equals("3")) {
-                apply.update("5");
+            if(apply.getStatus()==3 && estimate.getStatus()==3) {
+                apply.update(5);
                 applyRepository.save(apply);
-                estimate.updateStatus("4");
+                estimate.updateStatus(4);
                 estimateRepository.save(estimate);
                 flag = true;
             }else{

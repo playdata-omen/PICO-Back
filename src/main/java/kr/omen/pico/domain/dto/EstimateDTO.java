@@ -26,7 +26,7 @@ public class EstimateDTO {
         private String address;
         private LocalDate startDate;
         private LocalDate endDate;
-        private String status;
+        private Integer status;
 
         public Create(Estimate entity,Long photographer) {
 //            getEstimateIdx = entity.getEstimateIdx();
@@ -61,7 +61,7 @@ public class EstimateDTO {
     @RequiredArgsConstructor
     public static class SimpleEstimate{
         private Long estimateIdx;
-        private String status;
+        private Integer status;
 
         public SimpleEstimate(Estimate entity){
             this.estimateIdx=entity.getEstimateIdx();
