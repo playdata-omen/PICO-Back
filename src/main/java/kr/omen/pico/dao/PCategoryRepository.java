@@ -11,5 +11,5 @@ public interface PCategoryRepository extends JpaRepository<PCategory,Long> {
     List<PCategory> findByCategory(Category category);
     List<PCategory> findByPhotographer(Photographer photographer);
 
-    List<PCategory> findAllByCategory(Long categoryIdx);
+//    List<PCategory> findAllByCategory(Catego categoryIdx);
 }

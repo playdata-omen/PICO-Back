@@ -11,6 +11,7 @@ import kr.omen.pico.domain.PCategory;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.PhotographerDTO;
+import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -105,9 +106,27 @@ public class PhotographerService {
         return result;
     }
 
-    public void searchByCategoryPhotographer(Long categoryIdx) {
-        List pCategoryList = pCategoryRepository.findAllByCategory(categoryIdx);
+    public List<ResponseDTO.searchPhotographerCard> searchByCategoryPhotographer(Long categoryIdx) {
+        List<PCategory> pCategoryList = pCategoryRepository.findByCategory(categoryRepository.findById(categoryIdx).get());
+        List<ResponseDTO.searchPhotographerCard> result = new ArrayList<>();
 
-        System.out.println(pCategoryList);
+        for (PCategory pCategory : pCategoryList) {
+            result.add(new ResponseDTO.searchPhotographerCard(pCategory.getPhotographer()));
+        }
+
+        return result;
+    }
+
+    public List<ResponseDTO.searchPhotographerCard> searchByNamePhotographer(String keyword) {
+        List<ResponseDTO.searchPhotographerCard> result = new ArrayList<>();
+        List<User> userList = userRepository.findByIsPhotographerAndNameContainingOrNickNameContaining(true, keyword, keyword);
+        for (User user : userList) {
+            System.out.println(user.getUserIdx()+"-------------------");
+            Photographer test = photographerRepository.findByUser(user);
+            System.out.println(test);
+            result.add(new ResponseDTO.searchPhotographerCard(photographerRepository.findByUser(user)));
+
+        }
+        return result;
     }
 }
