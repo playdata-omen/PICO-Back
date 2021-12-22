@@ -1,5 +1,6 @@
 package kr.omen.pico.domain.dto;
 
+
 import kr.omen.pico.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -71,6 +72,7 @@ public class ResponseDTO {
         }
     }
 
+
     @Getter
     @RequiredArgsConstructor
     public static class EstimateChatRoomDetail{
@@ -116,6 +118,7 @@ public class ResponseDTO {
             this.estimateIdx=entity.getEstimate().getEstimateIdx();
         }
     }
+
     //목록 출력 시 최소한의 정보만을 뿌려줄 DTO
     @Data
     public static class SimpleCard {

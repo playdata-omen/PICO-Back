@@ -1,3 +1,4 @@
+
 package kr.omen.pico.domain.dto.oauth;
 
 import java.util.Map;
@@ -35,3 +36,4 @@ public class NaverUserInfo implements OauthUserInfo {
         return "naver";
     }
 }
+

@@ -1,3 +1,4 @@
+
 package kr.omen.pico.domain.dto;
 
 public enum Role {

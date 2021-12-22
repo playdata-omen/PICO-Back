@@ -1,3 +1,4 @@
+
 package kr.omen.pico.domain.dto.oauth;
 
 import java.util.Map;
@@ -42,3 +43,4 @@ public class KakaoUserInfo implements OauthUserInfo {
         return "kakao";
     }
 }
+
