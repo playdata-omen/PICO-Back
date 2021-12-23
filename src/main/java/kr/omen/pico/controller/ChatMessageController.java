@@ -25,9 +25,9 @@ public class ChatMessageController {
     }
 
     @GetMapping("/chatmessage/{chatroomidx}")
-    public ResponseDTO.chatMessageListResponse findAllMessage(@PathVariable Long chatroomidx){
+    public ResponseDTO.ChatMessageListResponse findAllMessage(@PathVariable Long chatroomidx){
         List<ChatMessageDTO.Card> chatMessageList = chatMessageService.findMessageListByChatRoom(chatroomidx);
-        return new ResponseDTO.chatMessageListResponse(chatMessageList);
+        return new ResponseDTO.ChatMessageListResponse(chatMessageList);
     }
 
     @MessageMapping("/sendTo")

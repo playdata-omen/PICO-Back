@@ -20,6 +20,7 @@ public class ChatMessageService {
     private final ApplyRepository applyRepository;
     private final EstimateRepository estimateRepository;
     private final UserService userService;
+
     @Transactional
     public ChatMessage sendMessage(ChatMessageDTO.Create dto) {
         ChatMessage chatMessage = null;
@@ -44,9 +45,10 @@ public class ChatMessageService {
         ChatRoom chatroom = chatRoomRepository.findById(chatroomidx).get();
         chatList= chatMessageRepository.findAllByChatRoom(chatroom);
 
-        User user = chatroom.getUser();
+//        User user = chatroom.getUser();
         List<ChatMessageDTO.Card> testMessage = new ArrayList<>();
         for(ChatMessage chatMessage : chatList){
+            User user = userRepository.findById(chatMessage.getUser().getUserIdx()).get();
             testMessage.add(new ChatMessageDTO.Card(chatMessage, user));
         }
         return testMessage;
