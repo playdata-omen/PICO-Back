@@ -19,9 +19,9 @@ public class ResponseDTO {
     // 변수명 변경 필요
     @Data
     public static class EstimateResponse {
-        private Long id;
-        private Long user;
-        private Long category;
+        private Long estimateIdx;
+        private Long userIdx;
+        private Long categoryIdx;
         private Timestamp created;
         private String content;
         private String city;
@@ -31,9 +31,9 @@ public class ResponseDTO {
         private Integer status;
 
         public EstimateResponse(Estimate entity) {
-            this.id = entity.getEstimateIdx();
-            this.user = entity.getUser().getUserIdx();
-            this.category = entity.getCategory().getCategoryIdx();
+            this.estimateIdx = entity.getEstimateIdx();
+            this.userIdx = entity.getUser().getUserIdx();
+            this.categoryIdx = entity.getCategory().getCategoryIdx();
             this.created = entity.getCreated();
             this.content = entity.getContent();
             this.city = entity.getCity();
@@ -79,7 +79,6 @@ public class ResponseDTO {
         private Long estimateIdx;
         private Long userIdx;
         private Long categoryIdx;
-        private SimpleChatRoom chatRoom;
         private String content;
         private String city;
         private String address;
@@ -88,11 +87,10 @@ public class ResponseDTO {
         private LocalDate endDate;
         private List<SimplePhotographerCard> applyList;
 
-        public EstimateChatRoomDetail(EstimateDetailResponse entity, ChatRoom chatRoom) {
+        public EstimateChatRoomDetail(EstimateDetailResponse entity) {
             this.estimateIdx = entity.getEstimateIdx();
             this.userIdx = entity.userIdx;
             this.categoryIdx = entity.getCategoryIdx();
-            this.chatRoom = new SimpleChatRoom(chatRoom);
             this.content = entity.getContent();
             this.city = entity.getCity();
             this.address = entity.getAddress();
@@ -146,13 +144,15 @@ public class ResponseDTO {
         private Boolean isApplied;
         private UserDTO.SimpleUser user;
         private PhotographerDTO.SimplePhotographer photographer;
+        private SimpleChatRoom chatRoom;
 
-        public SimplePhotographerCard(Photographer entity, Apply apply) {
+        public SimplePhotographerCard(Photographer entity, Apply apply,ChatRoom chatRoom) {
             this.applyIdx = apply.getApplyIdx();
             this.status = apply.getStatus();
             this.isApplied=apply.getIsApplied();
             this.user=new UserDTO.SimpleUser(entity.getUser());
             this.photographer=new PhotographerDTO.SimplePhotographer(entity);
+            this.chatRoom=new SimpleChatRoom(chatRoom);
         }
     }
 

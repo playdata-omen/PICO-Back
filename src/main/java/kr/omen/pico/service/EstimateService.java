@@ -29,6 +29,8 @@ public class EstimateService {
 
     private final PCategoryRepository pCategoryRepository;
 
+    private final ChatRoomRepository chatRoomRepository;
+
     //글로벌 견적요청 API
     //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
     // principaldetail인가? 거기서 getUser 형식으로 가져와서 사용 할 것으로 예상됨.
@@ -159,7 +161,9 @@ public class EstimateService {
             for(Apply apply : applies){
                 if(apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
-                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
+                    ChatRoom chatRoom = chatRoomRepository
+                            .findByEstimateAndUserAndPhotographer(estimate,estimate.getUser(),photographer);
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply,chatRoom));
                 }
             }
         }
@@ -168,7 +172,9 @@ public class EstimateService {
             for (Apply apply : applies) {
                 if (apply.getIsApplied()) {
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
-                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
+                    ChatRoom chatRoom = chatRoomRepository
+                            .findByEstimateAndUserAndPhotographer(estimate,estimate.getUser(),photographer);
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply,chatRoom));
                 }
             }
         }
@@ -177,7 +183,9 @@ public class EstimateService {
             for(Apply apply : applies){
                 if(apply.getIsApplied() && (apply.getStatus()==3 || apply.getStatus()==5 || apply.getStatus()==6)){
                     Photographer photographer = photographerRepository.findById(apply.getPhotographer().getPhotographerIdx()).get();
-                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply));
+                    ChatRoom chatRoom = chatRoomRepository
+                            .findByEstimateAndUserAndPhotographer(estimate,estimate.getUser(),photographer);
+                    names.add(new ResponseDTO.SimplePhotographerCard(photographer,apply,chatRoom));
                 }
             }
         }

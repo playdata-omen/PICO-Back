@@ -59,4 +59,5 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
 }
