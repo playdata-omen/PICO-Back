@@ -28,7 +28,8 @@ public class ReviewController {
 //    public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto, @PathVariable Long pID) {
     public ResponseDTO.Create saveReview(@RequestBody ReviewDTO.Create dto) {
 
-        Review saveReview = reviewService.saveReview(dto);
+        User user = userService.getUser();
+        Review saveReview = reviewService.saveReview(dto, user.getUserIdx());
 
         boolean result = false;
         Long reviewIdx = null;
