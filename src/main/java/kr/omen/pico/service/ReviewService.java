@@ -25,7 +25,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final ApplyRepository applyRepository;
     private final PhotographerRepository photographerRepository;
-
+    private final UserService userService;
     public boolean isNotYetReview(User user, Photographer photographer){
 
         boolean flag = false;
@@ -43,7 +43,7 @@ public class ReviewService {
     리뷰를 작성하게 될시 status가 5 -> 6으로 변경되어 더 이상 쓸 수 없도록 작성
      */
     @Transactional
-    public Review saveReview(ReviewDTO.Create dto) {
+    public Review saveReview(ReviewDTO.Create dto, Long userIdx) {
 
         Review review = null;
 
@@ -52,11 +52,11 @@ public class ReviewService {
         try {
             Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
             Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
-            User user = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
-
-            if (apply.getStatus().equals(5)) {
+            User estimateUser = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
+            User tokenUser = userRepository.findById(userIdx).get();
+            if (apply.getStatus().equals(5) && estimateUser == tokenUser) {
                 apply.update(6);
-                review = reviewRepository.save(new Review(user, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
+                review = reviewRepository.save(new Review(tokenUser, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
             } else if (apply.getStatus()==6) {
                 System.out.println("이미 리뷰를 작성하였습니다.");
             } else {
