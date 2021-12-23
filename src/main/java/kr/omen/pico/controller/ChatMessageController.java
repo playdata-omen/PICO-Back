@@ -26,4 +26,5 @@ public class ChatMessageController {
         List<ChatMessageDTO.Card> chatMessageList = chatMessageService.findMessageListByChatRoom(chatroomidx);
         return new ResponseDTO.chatMessageListResponse(chatMessageList);
     }
+
 }

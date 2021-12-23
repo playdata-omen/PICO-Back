@@ -3,10 +3,8 @@ package kr.omen.pico.service;
 import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.ChatMessageDTO;
-import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -21,15 +19,14 @@ public class ChatMessageService {
     private final ChatMessageRepository chatMessageRepository;
     private final ApplyRepository applyRepository;
     private final EstimateRepository estimateRepository;
-
+    private final UserService userService;
     @Transactional
     public ChatMessage sendMessage(ChatMessageDTO.Create dto) {
         ChatMessage chatMessage = null;
         Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
-
+        User user = userService.getUser();
         ChatRoom chatRoom = chatRoomRepository.findById(dto.getChatRoomIdx()).get();
         Estimate estimate = estimateRepository.findById(apply.getEstimate().getEstimateIdx()).get();
-        User user = userRepository.findById(estimate.getUser().getUserIdx()).get();
         System.out.println("chatRoom: " + chatRoom.getChatRoomIdx());
         System.out.println("estimate: " + estimate.getEstimateIdx());
         System.out.println("user: " + user.getUserIdx());

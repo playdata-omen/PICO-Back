@@ -65,7 +65,7 @@ public class WorkService {
         ZonedDateTime current = ZonedDateTime.now();
         // 저장할 파일 경로를 지정합니다.
 
-        String path = "src/main/resources/static/images/" + current.format(format);
+        String path = "pico/src/main/resources/static/images/" + current.format(format);
 
         File file = new File(path);
         if(!file.exists()) {
