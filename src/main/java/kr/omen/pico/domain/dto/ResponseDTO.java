@@ -253,7 +253,24 @@ public class ResponseDTO {
 
     @Data
     @AllArgsConstructor
-    public static class chatMessageListResponse {
+    public static class ChatMessageListResponse {
         private List<ChatMessageDTO.Card> chatMessageList;
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class ChatRoomResponse {
+        private Long chatRoomIdx;
+        private Long userIdx;
+        private Long photographerIdx;
+        private Long estimateIdx;
+
+            public ChatRoomResponse(ChatRoom chatRoom){
+                this.chatRoomIdx=chatRoom.getChatRoomIdx();
+                this.userIdx = chatRoom.getUser().getUserIdx();
+                this.photographerIdx = chatRoom.getPhotographer().getPhotographerIdx();
+                this.estimateIdx = chatRoom.getEstimate().getEstimateIdx();
+            }
+    }
+
 }
