@@ -46,13 +46,13 @@ public class ChatMessageDTO {
         private Long chatMessageIdx;
         private String message;
         private Timestamp created;
-        private UserDTO.Info user;
+        private UserDTO.SimpleUser user;
 
         public Card(ChatMessage entity, User user){
             chatMessageIdx = entity.getChatMessageIdx();
             this.message = entity.getMessage();
             this.created = entity.getCreated();
-            this.user = new UserDTO.Info(user);
+            this.user = new UserDTO.SimpleUser(user);
         }
     }
 }

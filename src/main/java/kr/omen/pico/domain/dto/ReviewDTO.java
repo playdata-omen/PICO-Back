@@ -55,14 +55,14 @@ public class ReviewDTO {
         Timestamp created;
         String content;
         Float grade;
-        UserDTO.Info user;
+        UserDTO.SimpleUser user;
 
         public Card(Review entity,User user) {
             this.reviewIdx = entity.getReviewIdx();
             this.created=entity.getCreated();
             this.content=entity.getContent();
             this.grade=entity.getGrade();
-            this.user = new UserDTO.Info(user);
+            this.user = new UserDTO.SimpleUser(user);
 
         }
     }
