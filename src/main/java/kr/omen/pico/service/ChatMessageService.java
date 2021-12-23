@@ -1,9 +1,11 @@
 package kr.omen.pico.service;
 
+import kr.omen.pico.config.jwt.TokenProvider;
 import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.ChatMessageDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,23 +22,24 @@ public class ChatMessageService {
     private final ApplyRepository applyRepository;
     private final EstimateRepository estimateRepository;
     private final UserService userService;
+    private final PhotographerRepository photographerRepository;
+    private final TokenProvider tokenProvider;
+
 
     @Transactional
-    public ChatMessage sendMessage(ChatMessageDTO.Create dto) {
+    public ChatMessage sendMessage(Long roomIdx,String message,String token) {
+        Authentication Test = tokenProvider.getAuthentication(token);
         ChatMessage chatMessage = null;
-        Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
-        User user = userService.getUser();
-        ChatRoom chatRoom = chatRoomRepository.findById(dto.getChatRoomIdx()).get();
-        Estimate estimate = estimateRepository.findById(apply.getEstimate().getEstimateIdx()).get();
-        System.out.println("chatRoom: " + chatRoom.getChatRoomIdx());
-        System.out.println("estimate: " + estimate.getEstimateIdx());
-        System.out.println("user: " + user.getUserIdx());
+        ChatRoom chatRoom = chatRoomRepository.findById(roomIdx).get();
+        Photographer photographer = photographerRepository.findById(chatRoom.getPhotographer().getPhotographerIdx()).get();
+        System.out.println(Test.getName().getClass().getName());
+        Long idx = Long.parseLong(Test.getName());
+        User user = userRepository.findById(idx).get();
         chatMessage = chatMessageRepository.save(ChatMessage.builder()
-                                                            .chatRoom(chatRoom)
-                                                            .user(user)
-                                                            .message(dto.getMessage())
-                                                            .created(dto.getCreated())
-                                                            .build());
+                .chatRoom(chatRoom)
+                .user(user)
+                .message(message)
+                .build());
         return chatMessage;
     }
 
