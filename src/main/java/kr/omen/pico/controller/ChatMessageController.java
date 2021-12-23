@@ -5,6 +5,9 @@ import kr.omen.pico.domain.dto.ChatMessageDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.ChatMessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,4 +30,10 @@ public class ChatMessageController {
         return new ResponseDTO.chatMessageListResponse(chatMessageList);
     }
 
+    @MessageMapping("/sendTo")
+    @SendTo("/topics/sendTo")
+    public ResponseDTO.chatMessageResponse send(@Payload ChatMessageDTO.Create dto) throws Exception{
+        ChatMessage chatMessage = chatMessageService.sendMessage(dto);
+        return new ResponseDTO.chatMessageResponse(chatMessage);
+    }
 }

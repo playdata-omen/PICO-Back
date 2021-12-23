@@ -1,4 +1,4 @@
-package kr.omen.pico.controller;
+package kr.omen.pico.config;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
