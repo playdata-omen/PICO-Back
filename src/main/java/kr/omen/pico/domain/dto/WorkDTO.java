@@ -27,7 +27,7 @@ public class WorkDTO {
         private String thumbnail;
         private List<String> images;
 
-        public Create(Work entity,Long photographerIdx,Long categoryIdx,List<String> images){
+        public Create(Work entity, Long photographerIdx, Long categoryIdx, List<String> images){
             this.photographerIdx=photographerIdx;
             this.categoryIdx=categoryIdx;
             this.title=entity.getTitle();

@@ -1,14 +1,8 @@
 package kr.omen.pico.service;
 
 import javassist.NotFoundException;
-import kr.omen.pico.dao.ApplyRepository;
-import kr.omen.pico.dao.EstimateRepository;
-import kr.omen.pico.dao.PhotographerRepository;
-import kr.omen.pico.dao.UserRepository;
-
-import kr.omen.pico.dao.ChatRoomRepository;
+import kr.omen.pico.dao.*;
 import kr.omen.pico.domain.*;
-
 import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +38,7 @@ public class ApplyService {
     }
 
 
-    public ResponseDTO.EstimateChatRoomDetail applyEstimate(Long estimateIdx, Long photographerIdx){
+    public ResponseDTO.EstimateDetailResponse applyEstimate(Long estimateIdx, Long photographerIdx){
 
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         User user = userRepository.findById(estimate.getUser().getUserIdx()).get();
@@ -54,6 +48,7 @@ public class ApplyService {
         apply.updateApplied(true);
         applyRepository.save(apply);
 
+
         ChatRoom chatRoom = chatRoomRepository.save(ChatRoom.builder()
                         .estimate(estimate)
                         .user(user)
@@ -61,12 +56,12 @@ public class ApplyService {
                         .build());
 
 
-        return new ResponseDTO.EstimateChatRoomDetail(estimateService.getUserOneEstimate(estimateIdx),chatRoom);
+//        return new ResponseDTO.EstimateChatRoomDetail(estimateService.getUserOneEstimate(estimateIdx),chatRoom);
 
-//        return new ApplyDTO.Get(apply);
+        return estimateService.getUserOneEstimate(estimateIdx);
     }
 
-    public ApplyDTO.Get rejectEstimate(Long estimateIdx,Long photographerIdx){
+    public ApplyDTO.Get rejectEstimate(Long estimateIdx, Long photographerIdx){
         Boolean flag = false;
         Estimate estimate = estimateRepository.findById(estimateIdx).get();
         Photographer photographer = photographerRepository.findById(photographerIdx).get();

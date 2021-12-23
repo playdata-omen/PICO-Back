@@ -28,7 +28,7 @@ public class EstimateDTO {
         private LocalDate endDate;
         private Integer status;
 
-        public Create(Estimate entity,Long photographer) {
+        public Create(Estimate entity, Long photographer) {
 //            getEstimateIdx = entity.getEstimateIdx();
             userIdx = entity.getUser().getUserIdx();
             categoryIdx = entity.getCategory().getCategoryIdx();
@@ -42,7 +42,7 @@ public class EstimateDTO {
             photographerIdx = photographer;
         }
 
-        public Estimate toEntity(User user,Category category){
+        public Estimate toEntity(User user, Category category){
             return Estimate.builder()
                     .user(user)
                     .category(category)

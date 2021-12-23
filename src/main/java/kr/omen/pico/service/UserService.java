@@ -137,4 +137,17 @@ public class UserService {
                 .isPhotographer(user.getIsPhotographer())
                 .build();
     }
+
+    public UserDTO.UserInfo userIdxGetUser(Long userIdx) {
+        User user = userRepository.findById(userIdx).get();
+
+        return UserDTO.UserInfo.builder()
+                .userIdx(user.getUserIdx())
+                .name(user.getName())
+                .nickName(user.getNickName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .isPhotographer(user.getIsPhotographer())
+                .build();
+    }
 }

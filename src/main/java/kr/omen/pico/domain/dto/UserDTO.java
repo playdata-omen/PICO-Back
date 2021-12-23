@@ -79,10 +79,12 @@ public class UserDTO {
     public static class SimpleUser{
         private Long userIdx;
         private String name;
+        private String nickName;
 
         public SimpleUser(User entity){
             userIdx=entity.getUserIdx();
             name=entity.getName();
+            nickName=entity.getNickName();
         }
     }
 
@@ -96,6 +98,5 @@ public class UserDTO {
             name= entity.getName();
         }
     }
-
 
 }

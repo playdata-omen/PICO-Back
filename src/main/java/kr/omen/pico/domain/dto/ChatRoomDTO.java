@@ -1,8 +1,8 @@
 package kr.omen.pico.domain.dto;
 
+import kr.omen.pico.domain.ChatRoom;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
-import kr.omen.pico.domain.ChatRoom;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

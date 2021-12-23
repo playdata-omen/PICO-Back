@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @Entity
 @NoArgsConstructor
+
 public class ChatRoom {
 
 
@@ -39,7 +40,7 @@ public class ChatRoom {
     private Estimate estimate;
 
     @Builder
-    public ChatRoom(User user, Photographer photographer, Estimate estimate){
+    public ChatRoom (User user, Photographer photographer, Estimate estimate){
         this.user = user;
         this.photographer = photographer;
         this.estimate = estimate;
