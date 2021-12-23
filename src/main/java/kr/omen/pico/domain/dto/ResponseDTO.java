@@ -208,6 +208,23 @@ public class ResponseDTO {
         private List<ReviewDTO.Card> reviewList;
     }
 
+    @Data
+    @AllArgsConstructor
+    public static class chatMessageResponse{
+        private Long chatMessageIdx;
+        private Long chatRoomIdx;
+        private Long userIdx;
+        private String message;
+        private Timestamp created;
+
+        public chatMessageResponse(ChatMessage entity){
+            this.chatMessageIdx = entity.getChatMessageIdx();
+            this.chatRoomIdx = entity.getChatRoom().getChatRoomIdx();
+            this.userIdx = entity.getUser().getUserIdx();
+            this.message = entity.getMessage();
+            this.created = entity.getCreated();
+        }
+    }
     /**
      * Work 관련 ResponseDTO
      */
@@ -234,4 +251,9 @@ public class ResponseDTO {
 
     }
 
+    @Data
+    @AllArgsConstructor
+    public static class chatMessageListResponse {
+        private List<ChatMessageDTO.Card> chatMessageList;
+    }
 }

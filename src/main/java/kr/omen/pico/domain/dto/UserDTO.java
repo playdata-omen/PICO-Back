@@ -89,13 +89,14 @@ public class UserDTO {
     }
 
     @Data
-    public static class Review {
+    public static class Info {
         private Long userIdx;
         private String name;
 
-        public Review(User entity){
+        public Info(User entity){
             userIdx= entity.getUserIdx();
             name= entity.getName();
         }
     }
+
 }
