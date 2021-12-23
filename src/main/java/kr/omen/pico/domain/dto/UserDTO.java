@@ -88,15 +88,5 @@ public class UserDTO {
         }
     }
 
-    @Data
-    public static class Info {
-        private Long userIdx;
-        private String name;
-
-        public Info(User entity){
-            userIdx= entity.getUserIdx();
-            name= entity.getName();
-        }
-    }
 
 }
