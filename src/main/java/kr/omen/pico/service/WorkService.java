@@ -73,6 +73,7 @@ public class WorkService {
             result.put("uploadStatus", "FileIsNull");
             return result;
         }
+
         // 파일 업로드시 최대 길이(크기) 제한이지만 이게 있으면 작동안되는 경우가 많아서 주석처리
 //        } else if(fileBase64.get(0).length() > 400000) {
 //            result.put("isFileInserted", false);
