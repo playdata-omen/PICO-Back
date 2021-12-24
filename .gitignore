@@ -39,3 +39,5 @@ out/
 ### 설정파일 ###
 *.yml
 !.travis.yml
+!appspec.yml
+!deploy.sh
