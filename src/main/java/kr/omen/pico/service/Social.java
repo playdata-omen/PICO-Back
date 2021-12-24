@@ -18,8 +18,9 @@ import org.springframework.web.client.RestTemplate;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+// 팩토리패턴으로 리팩토링 필요
 public class Social {
-
+    
     public static OauthUserInfo kakao (String code) {
         ResponseEntity<JSONObject> response = null;
 
@@ -56,7 +57,7 @@ public class Social {
                     HttpMethod.POST,
                     kakaoRequest,
                     JSONObject.class
-        );
+            );
         } catch (HttpStatusCodeException e) {
             e.printStackTrace();
         }
