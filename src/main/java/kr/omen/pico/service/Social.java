@@ -36,25 +36,26 @@ public class Social {
 
         HttpEntity<MultiValueMap<String, String>> kakaoRequest = new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
+
         try {
-        response = restTemplate.exchange(
-                "https://kauth.kakao.com/oauth/token",
-                HttpMethod.POST,
-                kakaoRequest,
-                JSONObject.class
-        );
+            response = restTemplate.exchange(
+                    "https://kauth.kakao.com/oauth/token",
+                    HttpMethod.POST,
+                    kakaoRequest,
+                    JSONObject.class
+            );
 
-        JSONObject responseBody = response.getBody();
+            JSONObject responseBody = response.getBody();
 
-        headers.clear();
-        data.clear();
-        headers.add("Authorization", "Bearer "+responseBody.get("access_token"));
-        kakaoRequest = new HttpEntity<>(data, headers);
-        response = restTemplate.exchange(
-                "https://kapi.kakao.com/v2/user/me",
-                HttpMethod.POST,
-                kakaoRequest,
-                JSONObject.class
+            headers.clear();
+            data.clear();
+            headers.add("Authorization", "Bearer "+responseBody.get("access_token"));
+            kakaoRequest = new HttpEntity<>(data, headers);
+            response = restTemplate.exchange(
+                    "https://kapi.kakao.com/v2/user/me",
+                    HttpMethod.POST,
+                    kakaoRequest,
+                    JSONObject.class
         );
         } catch (HttpStatusCodeException e) {
             e.printStackTrace();
@@ -82,6 +83,7 @@ public class Social {
         HttpEntity<MultiValueMap<String, String>> naverRequest =
                 new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
+
         try {
             response = restTemplate.exchange(
                     "https://nid.naver.com/oauth2.0/token",
@@ -128,6 +130,7 @@ public class Social {
 
         HttpEntity<MultiValueMap<String, String>> googleRequest = new HttpEntity<>(data, headers);
         RestTemplate restTemplate = new RestTemplate();
+
         try {
             response = restTemplate.exchange(
                     "https://oauth2.googleapis.com/token",
