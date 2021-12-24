@@ -63,9 +63,9 @@ public class ReviewController {
 //    photographerIdx userIdx로 찾아오기
 //    @GetMapping("/review/select/{photographerIdx}")
     @GetMapping("/reviewList/{userIdx}")
-    public ResponseDTO.reviewListResponse findAllByPhotographer(@PathVariable Long userIdx) {
+    public List<ReviewDTO.Card> findAllByPhotographer(@PathVariable Long userIdx) {
 
-        List<ReviewDTO.Card> reviewList = reviewService.reviewListByPhotographer(userIdx);
-        return new ResponseDTO.reviewListResponse(reviewList);
+        return reviewService.reviewListByPhotographer(userIdx);
+//        return new ResponseDTO.reviewListResponse(reviewList);
     }
 }
