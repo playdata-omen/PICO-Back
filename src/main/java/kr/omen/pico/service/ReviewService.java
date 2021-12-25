@@ -8,6 +8,7 @@ import kr.omen.pico.domain.Apply;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.Review;
 import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.dto.PhotographerDTO;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,12 @@ public class ReviewService {
             if (apply.getStatus().equals(5) && estimateUser == tokenUser) {
                 apply.update(6);
                 review = reviewRepository.save(new Review(tokenUser, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
+
+                // 리뷰 작성 후 작가 정보 수정
+                // 임의로 @Setter 사용
+                Float newGradeAverage = gradeAverage(photographer.getPhotographerIdx());
+                photographer.setGrade(newGradeAverage);
+                photographerRepository.save(photographer);
             } else if (apply.getStatus()==6) {
                 System.out.println("이미 리뷰를 작성하였습니다.");
             } else {

@@ -27,7 +27,7 @@ public class ChatMessageService {
 
 
     @Transactional
-    public ChatMessage sendMessage(Long roomIdx,String message,String token) {
+    public ChatMessageDTO.Card sendMessage(Long roomIdx,String message,String token) {
         Authentication Test = tokenProvider.getAuthentication(token);
         ChatMessage chatMessage = null;
         ChatRoom chatRoom = chatRoomRepository.findById(roomIdx).get();
@@ -40,7 +40,8 @@ public class ChatMessageService {
                 .user(user)
                 .message(message)
                 .build());
-        return chatMessage;
+        return new ChatMessageDTO.Card(chatMessage, user);
+//        return chatMessage;
     }
 
     public List<ChatMessageDTO.Card> findMessageListByChatRoom(Long chatroomidx) {

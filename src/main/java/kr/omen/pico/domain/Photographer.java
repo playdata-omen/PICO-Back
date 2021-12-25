@@ -2,10 +2,7 @@ package kr.omen.pico.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,6 +26,7 @@ public class Photographer {
     private Boolean hasStudio;
 
     @Column
+    @Setter
     private Float grade;
 
     @Column(length = 100)
