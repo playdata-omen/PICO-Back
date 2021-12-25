@@ -40,4 +40,5 @@ out/
 *.yml
 !.travis.yml
 !appspec.yml
-!deploy.sh
+!scripts/deploy.sh
+ymlfile.tar
