@@ -163,7 +163,7 @@ public class ReviewService {
         reviewList = reviewRepository.findAllByPhotographer(photographer);
         List<ReviewDTO.Card> testReivew = new ArrayList<>();
         for(Review review : reviewList){
-            testReivew.add(new ReviewDTO.Card(review, user));
+            testReivew.add(new ReviewDTO.Card(review, review.getUser()));
         }
         return testReivew;
     }

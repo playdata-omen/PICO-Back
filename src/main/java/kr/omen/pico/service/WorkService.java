@@ -65,7 +65,7 @@ public class WorkService {
         ZonedDateTime current = ZonedDateTime.now();
         // 저장할 파일 경로를 지정합니다.
 
-        String path = "pico/src/main/resources/static/images/" + current.format(format);
+        String path = "src/main/resources/static/images/" + current.format(format);
 
         File file = new File(path);
         if(!file.exists()) {
@@ -169,5 +169,16 @@ public class WorkService {
             cards.add(new WorkDTO.WorkCard(work));
         }
         return cards;
+    }
+
+    public boolean deleteWork(Long workIdx){
+        Boolean flag = null;
+        try{
+            workRepository.deleteById(workIdx);
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
     }
 }

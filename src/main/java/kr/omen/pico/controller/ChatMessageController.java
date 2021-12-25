@@ -33,7 +33,7 @@ public class ChatMessageController {
                      @DestinationVariable("token") String token) throws Exception{
 
         ChatMessageDTO.Card messageCard = chatMessageService.sendMessage(roomIdx,message,token);
-        simpMessagingTemplate.convertAndSend("/topics/sendTo/1",messageCard);
+        simpMessagingTemplate.convertAndSend("/topics/sendTo/" + roomIdx, messageCard);
     }
 
     @MessageMapping("/Template")
