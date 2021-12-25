@@ -40,4 +40,4 @@ out/
 *.yml
 !.travis.yml
 !appspec.yml
-!script/deploy.sh
+!scripts/deploy.sh
