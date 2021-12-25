@@ -83,7 +83,6 @@ public class WorkService {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
 
-        // 저장할 파일 경로를 지정합니다.
         String path = "src/main/resources/static/images/" + current.format(format);
 
         File file = new File(path);
@@ -188,5 +187,16 @@ public class WorkService {
             cards.add(new WorkDTO.WorkCard(work));
         }
         return cards;
+    }
+
+    public boolean deleteWork(Long workIdx){
+        Boolean flag = null;
+        try{
+            workRepository.deleteById(workIdx);
+            flag = true;
+        } catch (Exception e) {
+            flag = false;
+        }
+        return flag;
     }
 }
