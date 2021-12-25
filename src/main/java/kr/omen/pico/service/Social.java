@@ -76,8 +76,8 @@ public class Social {
         MultiValueMap<String, String> data = new LinkedMultiValueMap<>();
         data.add("grant_type", "authorization_code");
         data.add("client_id", "DfreIVmVCHEh9U5dI5zU");
-//        data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
-        data.add("redirect_uri", "http://localhost:3000/oauth/callback/naver");
+       data.add("redirect_uri", "http://localhost:5500/testtest/login.html");
+        // data.add("redirect_uri", "http://localhost:3000/oauth/callback/naver");
         data.add("code", code);
         data.add("client_secret", "ULP15nQ8nr");
 
