@@ -26,7 +26,6 @@ public class Photographer {
     private Boolean hasStudio;
 
     @Column
-    @Setter
     private Float grade;
 
     @Column(length = 100)
@@ -57,6 +56,11 @@ public class Photographer {
         this.studioCity = studioCity;
         this.studioAddress = studioAddress;
         this.isOtherArea = isOtherArea;
+    }
+
+    public Photographer updateGrade(Float grade){
+        this.grade=grade;
+        return this;
     }
 
     @OneToMany(mappedBy = "photographer", cascade = CascadeType.PERSIST)
