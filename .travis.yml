@@ -26,7 +26,7 @@ before_deploy:
   - cp build/libs/*.jar before-deploy/
   - cd before-deploy && zip -r before-deploy *
   - cd ../ && mkdir -p deploy
-  - mv before-deploy/before-deploy.zip deploy/springboot-webservice.zip
+  - mv before-deploy/before-deploy.zip deploy/pico-back.zip
 
 deploy:
   - provider: s3
@@ -45,7 +45,7 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
 
     bucket: pico--bucket
-    key: springboot-webservice.zip
+    key: pico-back.zip
 
     bundle_type: zip
     application: pico
