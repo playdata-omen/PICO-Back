@@ -1,11 +1,22 @@
 package kr.omen.pico.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
@@ -19,12 +30,10 @@ public class Review {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_idx")
-    @JsonIgnore
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="photographer_idx")
-    @JsonIgnore
     private Photographer photographer;
 
     @CreationTimestamp

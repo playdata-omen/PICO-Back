@@ -1,0 +1,21 @@
+version: 0.0
+os : linux
+files :
+  - source : /
+    destination: /home/ubuntu/PICO/
+    overwrite : yes
+
+# codeDeploy에서 EC2서버로 넘겨준 파일을 ubuntu 권한을 갖게 한다.
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
+# codeDeploy 배포 단계에서 실행할 명령어 지정
+hooks:
+  # ApplicationStart 단계에서 deploy.sh를 ubuntu 권한으로 실행
+  ApplicationStart:
+    - location : deploy.sh
+      timeout: 60
+      runas: ubuntu

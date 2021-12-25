@@ -1,10 +1,20 @@
 package kr.omen.pico.service;
 
-import kr.omen.pico.common.S3Uploader;
-import kr.omen.pico.dao.*;
-import kr.omen.pico.domain.*;
-import kr.omen.pico.domain.dto.WorkDTO;
-import lombok.RequiredArgsConstructor;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -12,11 +22,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import kr.omen.pico.common.S3Uploader;
+import kr.omen.pico.dao.CategoryRepository;
+import kr.omen.pico.dao.PhotoRepository;
+import kr.omen.pico.dao.PhotographerRepository;
+import kr.omen.pico.dao.UserRepository;
+import kr.omen.pico.dao.WorkRepository;
+import kr.omen.pico.domain.Category;
+import kr.omen.pico.domain.Photo;
+import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.User;
+import kr.omen.pico.domain.Work;
+import kr.omen.pico.domain.dto.WorkDTO;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +73,7 @@ public class WorkService {
             result.put("uploadStatus", "FileIsNull");
             return result;
         }
+
         // 파일 업로드시 최대 길이(크기) 제한이지만 이게 있으면 작동안되는 경우가 많아서 주석처리
 //        } else if(fileBase64.get(0).length() > 400000) {
 //            result.put("isFileInserted", false);
@@ -63,7 +82,6 @@ public class WorkService {
 //        }
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
         ZonedDateTime current = ZonedDateTime.now();
-        // 저장할 파일 경로를 지정합니다.
 
         String path = "src/main/resources/static/images/" + current.format(format);
 

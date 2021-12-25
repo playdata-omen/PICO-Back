@@ -73,7 +73,6 @@ public class UserDTO {
         }
     }
 
-
     @Getter
     @RequiredArgsConstructor
     public static class SimpleUser{
