@@ -22,9 +22,9 @@ public class ChatMessageController {
     private final ChatMessageService chatMessageService;
 
     @GetMapping("/chatmessage/{chatroomidx}")
-    public ResponseDTO.ChatMessageListResponse findAllMessage(@PathVariable Long chatroomidx){
+    public List<ChatMessageDTO.Card> findAllMessage(@PathVariable Long chatroomidx){
         List<ChatMessageDTO.Card> chatMessageList = chatMessageService.findMessageListByChatRoom(chatroomidx);
-        return new ResponseDTO.ChatMessageListResponse(chatMessageList);
+        return chatMessageList;
     }
 
     @MessageMapping("/sendTo/{roomIdx}/{message}/{token}")
@@ -32,9 +32,8 @@ public class ChatMessageController {
                      @DestinationVariable("message") String message,
                      @DestinationVariable("token") String token) throws Exception{
 
-        ChatMessage chatMessage = chatMessageService.sendMessage(roomIdx,message,token);
-        ResponseDTO.chatMessageResponse dto = new ResponseDTO.chatMessageResponse(chatMessage);
-        simpMessagingTemplate.convertAndSend("/topics/sendTo/"+roomIdx,dto.toString());
+        ChatMessageDTO.Card messageCard = chatMessageService.sendMessage(roomIdx,message,token);
+        simpMessagingTemplate.convertAndSend("/topics/sendTo/" + roomIdx, messageCard);
     }
 
     @MessageMapping("/Template")

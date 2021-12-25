@@ -2,10 +2,7 @@ package kr.omen.pico.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -59,6 +56,11 @@ public class Photographer {
         this.studioCity = studioCity;
         this.studioAddress = studioAddress;
         this.isOtherArea = isOtherArea;
+    }
+
+    public Photographer updateGrade(Float grade){
+        this.grade=grade;
+        return this;
     }
 
     @OneToMany(mappedBy = "photographer", cascade = CascadeType.PERSIST)

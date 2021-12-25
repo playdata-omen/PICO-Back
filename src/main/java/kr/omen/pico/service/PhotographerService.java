@@ -28,7 +28,8 @@ public class PhotographerService {
     private final CategoryRepository categoryRepository;
     private final PCategoryRepository pCategoryRepository;
 
-    public PhotographerDTO.PhotographerInfo getPhotographerInfo(Long userIdx){
+    public PhotographerDTO.PhotographerInfo
+    getPhotographerInfo(Long userIdx){
         List<Long> category = new ArrayList<>();
 
         User user = userRepository.findById(userIdx).get();

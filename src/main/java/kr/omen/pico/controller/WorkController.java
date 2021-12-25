@@ -31,4 +31,9 @@ public class WorkController {
         List<WorkDTO.WorkCard> list = workService.getWorkList(userIdx);
         return list;
     }
+
+    @DeleteMapping("/work/{workIdx}/delete")
+    public Boolean deleteWork(@PathVariable Long workIdx){
+        return workService.deleteWork(workIdx);
+    }
 }
