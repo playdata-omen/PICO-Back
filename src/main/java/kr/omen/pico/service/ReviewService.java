@@ -1,13 +1,7 @@
 package kr.omen.pico.service;
 
-import kr.omen.pico.dao.ApplyRepository;
-import kr.omen.pico.dao.PhotographerRepository;
-import kr.omen.pico.dao.ReviewRepository;
-import kr.omen.pico.dao.UserRepository;
-import kr.omen.pico.domain.Apply;
-import kr.omen.pico.domain.Photographer;
-import kr.omen.pico.domain.Review;
-import kr.omen.pico.domain.User;
+import kr.omen.pico.dao.*;
+import kr.omen.pico.domain.*;
 import kr.omen.pico.domain.dto.PhotographerDTO;
 import kr.omen.pico.domain.dto.ReviewDTO;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +21,7 @@ public class ReviewService {
     private final ApplyRepository applyRepository;
     private final PhotographerRepository photographerRepository;
     private final UserService userService;
+    private final EstimateRepository estimateRepository;
     public boolean isNotYetReview(User user, Photographer photographer){
 
         boolean flag = false;
@@ -53,16 +48,19 @@ public class ReviewService {
         try {
             Apply apply = applyRepository.findById(dto.getApplyIdx()).get();
             Photographer photographer = photographerRepository.findById(dto.getPhotographerIdx()).get();
+            Estimate estimate = apply.getEstimate();
             User estimateUser = userRepository.findById(apply.getEstimate().getUser().getUserIdx()).get();
             User tokenUser = userRepository.findById(userIdx).get();
             if (apply.getStatus().equals(5) && estimateUser == tokenUser) {
                 apply.update(6);
+                estimate.updateStatus(6);
                 review = reviewRepository.save(new Review(tokenUser, photographer, dto.getCreated(), dto.getContent(), dto.getGrade()));
 
                 // 리뷰 작성 후 작가 정보 수정
                 // 임의로 @Setter 사용
                 Float newGradeAverage = gradeAverage(photographer.getPhotographerIdx());
-                photographer.setGrade(newGradeAverage);
+                photographer.updateGrade(newGradeAverage);
+                estimateRepository.save(estimate);
                 photographerRepository.save(photographer);
             } else if (apply.getStatus()==6) {
                 System.out.println("이미 리뷰를 작성하였습니다.");
@@ -95,6 +93,13 @@ public class ReviewService {
                     User user = userRepository.findById(review.getUser().getUserIdx()).get();
 
                     reviewRepository.deleteById(review.getReviewIdx());
+
+                    // 리뷰 작성 후 작가 정보 수정
+                    // 임의로 @Setter 사용
+                    Float newGradeAverage = gradeAverage(photographerIdx);
+                    photographer.updateGrade(newGradeAverage);
+                    photographerRepository.save(photographer);
+
                     result = true;
                 } else {
                     System.out.println("자신이 작성하지 않았거나  없는 리뷰입니다.");

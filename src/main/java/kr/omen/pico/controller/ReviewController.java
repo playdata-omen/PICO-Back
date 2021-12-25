@@ -43,7 +43,7 @@ public class ReviewController {
         return new ResponseDTO.Create(reviewIdx, result);
     }
 
-    @DeleteMapping("/review/delete/{reviewIdx}/photographer/{photographerIdx}")
+    @DeleteMapping("/review/{reviewIdx}/photographer/{photographerIdx}/delete")
     public ResponseDTO.Delete deleteReview(@PathVariable Long reviewIdx, @PathVariable Long photographerIdx){
         boolean result = reviewService.deleteReview(reviewIdx, photographerIdx);
         return new ResponseDTO.Delete(result);
@@ -64,7 +64,6 @@ public class ReviewController {
 //    @GetMapping("/review/select/{photographerIdx}")
     @GetMapping("/reviewList/{userIdx}")
     public List<ReviewDTO.Card> findAllByPhotographer(@PathVariable Long userIdx) {
-
         return reviewService.reviewListByPhotographer(userIdx);
 //        return new ResponseDTO.reviewListResponse(reviewList);
     }
