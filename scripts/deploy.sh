@@ -20,4 +20,4 @@ JAR_NAME=$(ls $REPOSITORY |grep 'pico' | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
-nohup java -jar -Dspring.profiles.active=prod --spring.config.location=./yml/application.yml,./yml/application-prod.yml $REPOSITORY/$JAR_NAME 2>&1 &
+nohup java -jar -Dspring.profiles.active=prod --Dspring.config.location=./yml/application.yml,./yml/application-prod.yml $REPOSITORY/$JAR_NAME 2>&1 &
