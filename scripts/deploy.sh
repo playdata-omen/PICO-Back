@@ -1,25 +1,27 @@
-#!/bin/bash
-
 REPOSITORY=/home/ubuntu/PICO
-PROJECT_NAME=pico-back
 
-echo "> root 권한 부여"
+echo "> 현재 구동중인 애플리케이션 pid 확인"
 
-sudo -i
+CURRENT_PID=$(pgrep -f pico)
 
-echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
+echo "$CURRENT_PID"
 
-if [ -z "$(pgrep java)" ]; then
-  echo "> 현재 구동 중인 애플리케이션이 없으므로 종료하지 않습니다.";
+if [ -z $CURRENT_PID ]; then
+    echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
 else
-     echo "> kill -15 $(pgrep java)"
-  kill -15 $(pgrep java);
+    echo "> kill -15 $CURRENT_PID"
+    kill -15 $CURRENT_PID
+    sleep 5
 fi
 
-echo "> $JAR_NAME 에 실행권한 추가"
+echo "> 새 어플리케이션 배포"
 
-chmod +x /home/ubuntu/PICO/pico-0.0.1-SNAPSHOT.jar
+echo "> Build 파일 복사"
 
-echo "> $JAR_NAME 실행"
+#cp $REPOSITORY/build/build/libs/*.jar $REPOSITORY/jar/
 
-nohup java -jar /home/ubuntu/PICO/pico-0.0.1-SNAPSHOT.jar /home/ubuntu/PICO/nohup.out 2>&1 &
+JAR_NAME=$(ls $REPOSITORY/jar/ |grep 'pico' | tail -n 1)
+
+echo "> JAR Name: $JAR_NAME"
+
+nohup java -jar $REPOSITORY/jar/$JAR_NAME &
