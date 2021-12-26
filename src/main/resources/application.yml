@@ -42,8 +42,8 @@ jwt:
 cloud:
   aws:
     credentials:
-      accessKey: $AWS_ACCESS_KEY
-      secretKey: $AWS_SECRET_KEY
+      accessKey: ${AWS_ACCESS_KEY}
+      secretKey: ${AWS_SECRET_KEY}
     s3:
       bucket: pico--bucket
     region:
