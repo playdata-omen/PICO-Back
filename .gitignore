@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### 설정파일 ###
-#*.yml
+*.yml
 !.travis.yml
 !appspec.yml
 !scripts/deploy.sh
