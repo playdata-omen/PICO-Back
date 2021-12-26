@@ -20,4 +20,4 @@ JAR_NAME=$(ls $REPOSITORY |grep 'pico' | tail -n 1)
 
 echo "> JAR Name: $JAR_NAME"
 
-nohup java -jar $REPOSITORY/jar/$JAR_NAME 2>&1 &
+nohup java -jar $REPOSITORY/$JAR_NAME 2>&1 &
