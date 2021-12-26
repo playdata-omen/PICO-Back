@@ -88,7 +88,7 @@ INFRA
 
 ---
 
-![Untitled](PICO%20a536c79cabb44aee9d91d3e7c70950eb/Untitled%201.png)
+![Untitled 1](https://user-images.githubusercontent.com/57335699/147416977-921800ff-e7fe-4963-851d-fcd9a88e8b2e.png)
 <br/>
 <br/>
 
@@ -103,8 +103,6 @@ INFRA
 
 ---
 
-![Untitled](PICO%20a536c79cabb44aee9d91d3e7c70950eb/Untitled%202.png)
-
-![Untitled](PICO%20a536c79cabb44aee9d91d3e7c70950eb/Untitled%203.png)
-
-![Untitled](PICO%20a536c79cabb44aee9d91d3e7c70950eb/Untitled%204.png)
+![Untitled 2](https://user-images.githubusercontent.com/57335699/147416968-47e20552-c5d9-4d8d-ab57-efd931443e3b.png)
+![Untitled 3](https://user-images.githubusercontent.com/57335699/147416972-a23fcced-bec3-4a2b-9e6e-315454a7a797.png)
+![Untitled 4](https://user-images.githubusercontent.com/57335699/147416975-52cd0da4-5dd1-4b08-b472-497a6ff5ef41.png)
