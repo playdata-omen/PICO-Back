@@ -3,6 +3,10 @@
 REPOSITORY=/home/ubuntu/PICO
 PROJECT_NAME=pico-back
 
+echo "> root 권한 부여"
+
+sudo -i
+
 echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
 if [ -z "$(pgrep java)" ]; then
