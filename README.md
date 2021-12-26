@@ -1,8 +1,6 @@
 # 📸PICO
 <br/>
 
-# 🧾 Service Intro
-
 **PICO**는 **‘PICture Of ___’** 의 합성어로 다양한 분야의 작품과 정보를 통해 자신에게 필요한 사진작가를 찾고 작업을 의뢰하는 사진작가 중개 플랫폼입니다.
 
 자신이 원하는 조건을 설정 후 다수의 작가들에게 견적서를 보내고 해당하는 견적서에 관한 지원신청을 받습니다.
@@ -36,33 +34,23 @@
 
 # 📜 Skill Stack
 
-FE
+#### FE
 
-`javascript`
+`javascript` `react` `html` `redux`
 
-`react`
+#### BE
 
-`html`
+`java` `spring boot`
 
-`redux`
+#### AI
 
-BE
+`python` `flask`
 
-`java`
-
-`spring boot`
-
-AI
-
-`python`
-
-`flask`
-
-DB
+#### DB
 
 `MySql`
 
-INFRA
+#### INFRA
 
 `AWS (EC2, RDS ,S3)`
 <br/>
