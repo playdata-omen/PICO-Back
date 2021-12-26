@@ -80,7 +80,7 @@ INFRA
 
 ---
 
-![Untitled](PICO%20a536c79cabb44aee9d91d3e7c70950eb/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/57335699/147416945-052dd1dc-80c4-46d5-b2a1-7c27fa300494.png)
 <br/>
 <br/>
 
