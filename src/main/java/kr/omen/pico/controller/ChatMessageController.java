@@ -1,21 +1,21 @@
 package kr.omen.pico.controller;
 
-import kr.omen.pico.domain.ChatMessage;
-import kr.omen.pico.domain.dto.ChatMessageDTO;
-import kr.omen.pico.domain.dto.ResponseDTO;
-import kr.omen.pico.service.ChatMessageService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import kr.omen.pico.domain.dto.ChatMessageDTO;
+import kr.omen.pico.service.ChatMessageService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 public class ChatMessageController {
-
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 

@@ -1,18 +1,24 @@
 package kr.omen.pico.controller;
 
+import java.util.List;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import kr.omen.pico.domain.dto.PhotographerDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import kr.omen.pico.service.PhotographerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 public class PhotographerController {
 
-    @Autowired
-    private PhotographerService photographerService;
+    private final PhotographerService photographerService;
 
     @PostMapping("/photographer/register")
     public PhotographerDTO.PhotographerInfo photographerRegister(@RequestBody PhotographerDTO.PhotographerRegister data) {
