@@ -51,3 +51,50 @@ insert into review values(1,'최고에용',now(),4.2,1,2);
 insert into apply values(1,NOW(),true,'1',1,1);
 insert into apply values(2,NOW(),true,'1',1,2);
 insert into apply values(3,NOW(),false,'1',1,3);
+
+
+-- user
+select * from user;
+INSERT into user values(null, "test3@test.com", true, true, "테스트3", "테스트3", "010-1234-5678", "kakao", "12345test3", "ROLE_USER", "12345test3@kakao.social");
+INSERT into user values(null, "test4@test.com", true, true, "테스트4", "테스트4", "010-1234-5678", "kakao", "12345test4", "ROLE_USER", "12345test4@kakao.social");
+INSERT into user values(null, "test5@test.com", true, true, "테스트5", "테스트5", "010-1234-5678", "kakao", "12345test5", "ROLE_USER", "12345test5@kakao.social");
+INSERT into user values(null, "test6@test.com", true, true, "테스트6", "테스트6", "010-1234-5678", "kakao", "12345test6", "ROLE_USER", "12345test6@kakao.social");
+INSERT into user values(null, "test7@test.com", true, true, "테스트7", "테스트7", "010-1234-5678", "kakao", "12345test7", "ROLE_USER", "12345test7@kakao.social");
+INSERT into user values(null, "test8@test.com", true, true, "테스트8", "테스트8", "010-1234-5678", "kakao", "12345test8", "ROLE_USER", "12345test8@kakao.social");
+INSERT into user values(null, "test9@test.com", true, true, "테스트9", "테스트9", "010-1234-5678", "kakao", "12345test9", "ROLE_USER", "12345test9@kakao.social");
+INSERT into user values(null, "test10@test.com", true, true, "테스트10", "테스트10", "010-1234-5678", "kakao", "12345test10", "ROLE_USER", "12345test10@kakao.social");
+INSERT into user values(null, "test11@test.com", true, true, "테스트11", "테스트11", "010-1234-5678", "kakao", "12345test11", "ROLE_USER", "12345test11@kakao.social");
+INSERT into user values(null, "test12@test.com", true, true, "테스트12", "테스트12", "010-1234-5678", "kakao", "12345test12", "ROLE_USER", "12345test12@kakao.social");
+INSERT into user values(null, "test13@test.com", true, true, "테스트13", "테스트13", "010-1234-5678", "kakao", "12345test13", "ROLE_USER", "12345test13@kakao.social");
+
+
+-- photographer
+select * from photographer;
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 8);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 9);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 10);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 11);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 12);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 13);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 14);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 15);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 16);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 17);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 18);
+insert into photographer values(null, "전체", "서울특별시", null, false, false, null, null, 19);
+
+-- p_category
+select * from p_category;
+INSERT into p_category values(null, "스냅", 2, 6);
+INSERT into p_category values(null, "스냅", 2, 7);
+INSERT into p_category values(null, "스냅", 2, 8);
+INSERT into p_category values(null, "스냅", 2, 9);
+INSERT into p_category values(null, "스냅", 2, 10);
+INSERT into p_category values(null, "스냅", 2, 11);
+INSERT into p_category values(null, "스냅", 2, 12);
+INSERT into p_category values(null, "스냅", 2, 13);
+INSERT into p_category values(null, "스냅", 2, 14);
+INSERT into p_category values(null, "스냅", 2, 15);
+INSERT into p_category values(null, "스냅", 2, 16);
+INSERT into p_category values(null, "스냅", 2, 17);
+INSERT into p_category values(null, "스냅", 2, 18);
