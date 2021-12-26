@@ -1,13 +1,15 @@
 package kr.omen.pico.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import kr.omen.pico.domain.ChatRoom;
 import kr.omen.pico.domain.Estimate;
 import kr.omen.pico.domain.Photographer;
 import kr.omen.pico.domain.User;
-import org.springframework.data.jpa.repository.JpaRepository;
 
+@Repository
 public interface ChatRoomRepository extends JpaRepository<ChatRoom,Long> {
-//    ChatRoom findChatRoomByRoomId(String roomId);
 
     ChatRoom findByEstimateAndUserAndPhotographer(Estimate estimate, User user, Photographer photographer);
 }

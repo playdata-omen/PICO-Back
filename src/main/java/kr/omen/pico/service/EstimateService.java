@@ -1,17 +1,30 @@
 package kr.omen.pico.service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import kr.omen.pico.config.SecurityUtil;
-import kr.omen.pico.dao.*;
-import kr.omen.pico.domain.*;
+import kr.omen.pico.dao.ApplyRepository;
+import kr.omen.pico.dao.CategoryRepository;
+import kr.omen.pico.dao.ChatRoomRepository;
+import kr.omen.pico.dao.EstimateRepository;
+import kr.omen.pico.dao.PCategoryRepository;
+import kr.omen.pico.dao.PhotographerRepository;
+import kr.omen.pico.dao.UserRepository;
+import kr.omen.pico.domain.Apply;
+import kr.omen.pico.domain.Category;
+import kr.omen.pico.domain.ChatRoom;
+import kr.omen.pico.domain.Estimate;
+import kr.omen.pico.domain.PCategory;
+import kr.omen.pico.domain.Photographer;
+import kr.omen.pico.domain.User;
 import kr.omen.pico.domain.dto.ApplyDTO;
 import kr.omen.pico.domain.dto.EstimateDTO;
 import kr.omen.pico.domain.dto.ResponseDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,8 +45,6 @@ public class EstimateService {
     private final ChatRoomRepository chatRoomRepository;
 
     //글로벌 견적요청 API
-    //여기서 현재는 수동으로 입력받는 useridx는 추후에 sns 시큐리티 적용되면,
-    // principaldetail인가? 거기서 getUser 형식으로 가져와서 사용 할 것으로 예상됨.
     public ResponseDTO.EstimateResponse createGlobalEstimate(EstimateDTO.Create estimateDTO){
 
         User user = userRepository.findById(SecurityUtil.getCurrentUserIdx()).get();
