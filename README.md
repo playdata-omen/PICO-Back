@@ -27,8 +27,6 @@
 # 🗓 PICO RoadMap
 
 [12월, 다섯 남자들의 RoadMap](https://www.notion.so/03253714932740e8a8f595ea2f54f1ab) 
-
-[PICO - ROADMAP](https://henrynoowah.notion.site/03253714932740e8a8f595ea2f54f1ab?v=7bd4dbacb4824681b41abd621af5d7ee)
 <br/>
 <br/>
 
